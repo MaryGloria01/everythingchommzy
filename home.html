@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Everything Chommzy - Premium wigs, fashion, shoes & accessories. Curated luxury collections at affordable prices.">
+    <title>Everything Chommzy - The Art of Style</title>
+
+    <!-- DNS Prefetch for external resources -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+
+    <!-- Preconnect to critical third-party origins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.pexels.com" crossorigin>
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+
+    <!-- Critical CSS inline for faster first paint -->
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,sans-serif;background:#fff}
+        .main-header{background:#fff;position:sticky;top:0;z-index:1000}
+        .container{max-width:1400px;margin:0 auto;padding:0 1rem}
+        .brand-logo{font-size:1.5rem;font-weight:700;color:#1a1a1a;text-decoration:none}
+        .brand-logo span{color:#e85a2c}
+        .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:skeleton 1.5s infinite}
+        @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    </style>
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="chommzy.css?v=19" as="style">
+    <link rel="preload" href="chommzy.js?v=19" as="script">
+
+    <!-- Fonts with display swap for faster text rendering -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+
+    <!-- Font Awesome - load async -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar">
+        Free shipping on orders over &#8358;100,000 &nbsp;|&nbsp; <a href="https://wa.me/2347062719113" target="_blank">WhatsApp: +234 706 271 9113</a>
+    </div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-auth-buttons" id="header-auth-buttons">
+                        <a href="login" class="btn btn-outline-header">Login</a>
+                        <a href="signup" class="btn btn-primary-header">Sign Up</a>
+                    </div>
+                    <a href="account" class="header-action-btn auth-header-btn logged-in-only" title="Account"><i class="fas fa-user"></i></a>
+                    <a href="account" data-section="notifications" class="header-action-btn logged-in-only" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge notif-count" style="display:none;">0</span>
+                    </a>
+                    <a href="wishlist" class="header-action-btn" title="Wishlist">
+                        <i class="far fa-heart"></i>
+                        <span class="badge wishlist-count" style="display:none;">0</span>
+                    </a>
+                    <a href="cart" class="header-action-btn" title="Cart">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span class="badge cart-count" style="display:none;">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" aria-label="Menu"><i class="fas fa-bars"></i> Menu</button>
+                <div class="nav-links" id="main-nav">
+                    <a href="home" class="nav-link active">Home</a>
+                    <a href="products" class="nav-link">Shop</a>
+                    <a href="products?category=wigs" class="nav-link">Wigs</a>
+                    <a href="products?category=clothing" class="nav-link">Clothing</a>
+                    <a href="products?category=shoes" class="nav-link">Shoes</a>
+                    <a href="products?category=accessories" class="nav-link">Accessories</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-slide active" >
+            <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">New Collection</span>
+                <h1>Discover Your Perfect Style</h1>
+                <p>Curated collections of premium wigs, fashion, shoes, and accessories for the modern woman.</p>
+                <a href="products" class="btn btn-outline-white btn-lg">Shop Now</a>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Premium Quality</span>
+                <h1>Luxury Wigs That Turn Heads</h1>
+                <p>100% human hair wigs crafted for the most natural, stunning look.</p>
+                <a href="products?category=wigs" class="btn btn-outline-white btn-lg">Explore Wigs</a>
+            </div>
+        </div>
+        <div class="hero-slide">
+            <div class="hero-slide-bg" style="background-image: url('https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');"></div>
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <span class="hero-tag">Exclusive</span>
+                <h1>Elegant Fashion for Every Occasion</h1>
+                <p>From casual to evening wear, find pieces that express your unique personality.</p>
+                <a href="products?category=clothing" class="btn btn-outline-white btn-lg">Shop Fashion</a>
+            </div>
+        </div>
+        <div class="hero-dots">
+            <button class="hero-dot active" aria-label="Slide 1"></button>
+            <button class="hero-dot" aria-label="Slide 2"></button>
+            <button class="hero-dot" aria-label="Slide 3"></button>
+        </div>
+    </section>
+
+    <!-- USP Bar -->
+    <section class="usp-bar">
+        <div class="container">
+            <div class="usp-item"><i class="fas fa-truck"></i> Upto 20% Discount on all Purchases Made on the Website<!-- &#8358;100K --></div>
+            <div class="usp-item"><i class="fas fa-gem"></i> Premium Quality</div>
+            <div class="usp-item"><i class="fas fa-shield-alt"></i> Secure Payments</div>
+            <div class="usp-item"><i class="fab fa-whatsapp"></i> 24/7 Support</div>
+        </div>
+    </section>
+
+    <!-- Category Showcase -->
+    <section class="category-showcase">
+        <div class="container">
+            <div class="section-header">
+                <h2>Shop by Category</h2>
+                <p>Find exactly what you're looking for</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="category-grid">
+                <a href="products?category=wigs" class="category-card">
+                    <img src="https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wigs Collection">
+                    <div class="category-card-overlay">
+                        <h3>Wigs</h3>
+                        <span>8 Products</span>
+                        <span class="shop-link">Shop Now &rarr;</span>
+                    </div>
+                </a>
+                <a href="products?category=clothing" class="category-card">
+                    <img src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Clothing Collection">
+                    <div class="category-card-overlay">
+                        <h3>Clothing</h3>
+                        <span>8 Products</span>
+                        <span class="shop-link">Shop Now &rarr;</span>
+                    </div>
+                </a>
+                <a href="products?category=shoes" class="category-card">
+                    <img src="https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Shoes Collection">
+                    <div class="category-card-overlay">
+                        <h3>Shoes</h3>
+                        <span>6 Products</span>
+                        <span class="shop-link">Shop Now &rarr;</span>
+                    </div>
+                </a>
+                <a href="products?category=accessories" class="category-card">
+                    <img src="https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Accessories Collection">
+                    <div class="category-card-overlay">
+                        <h3>Accessories</h3>
+                        <span>6 Products</span>
+                        <span class="shop-link">Shop Now &rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section>
+        <div class="container">
+            <div class="section-header">
+                <h2>Featured Products</h2>
+                <p>Handpicked pieces you'll love</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="product-grid" id="featured-products-grid"></div>
+            <div class="load-more-wrapper">
+                <a href="products" class="btn btn-outline">View All Products</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Banner -->
+    <section>
+        <div class="container">
+            <div class="featured-banner" style="background-image: url('https://images.pexels.com/photos/2878741/pexels-photo-2878741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+                <div class="featured-banner-overlay"></div>
+                <div class="featured-banner-content">
+                    <h2>Premium Wig Collection</h2>
+                    <p>Explore our latest range of 100% human hair wigs. From body wave to deep curls, find your perfect match.</p>
+                    <a href="products?category=wigs" class="btn btn-outline-white">Explore Collection</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flash Deals -->
+    <section>
+        <div class="container">
+            <div class="flash-deal-header">
+                <div>
+                    <h2 style="font-size: 1.6rem;">Flash Deals</h2>
+                    <p class="text-muted">Hurry, these deals won't last long!</p>
+                </div>
+                <div class="countdown-timer">
+                    <div class="countdown-box"><span class="number">00</span><span class="label">Days</span></div>
+                    <div class="countdown-box"><span class="number">00</span><span class="label">Hrs</span></div>
+                    <div class="countdown-box"><span class="number">00</span><span class="label">Min</span></div>
+                    <div class="countdown-box"><span class="number">00</span><span class="label">Sec</span></div>
+                </div>
+            </div>
+            <div class="product-grid" id="flash-deals-grid"></div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section style="background: var(--bg-alt);">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Customers Say</h2>
+                <p>Real reviews from real customers</p>
+                <div class="accent-line"></div>
+            </div>
+            <div class="testimonial-grid" id="testimonials-grid"></div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section>
+        <div class="newsletter-section">
+            <h2>Join Our Community</h2>
+            <p>Subscribe for exclusive deals, new arrivals, and style inspiration.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Enter your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3>Everything <span>Chommzy</span></h3>
+                        <p>Your one-stop destination for premium wigs, fashion, shoes, and accessories. Curated with love for the modern woman.</p>
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/jullykatty_001?igsh=bjc0c2R1ODhsbHR2&utm_source=qr" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@jullykatty001" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://www.facebook.com/chioma.juliet.ezeugo?mibextid=wwXIfr" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://wa.me/2347062719113" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="mailto:support@everythingchommzy.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Shop</h4>
+                        <a href="products">All Products</a>
+                        <a href="products?category=wigs">Wigs</a>
+                        <a href="products?category=clothing">Clothing</a>
+                        <a href="products?category=shoes">Shoes</a>
+                        <a href="products?category=accessories">Accessories</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Account</h4>
+                        <a href="login">Login</a>
+                        <a href="signup">Register</a>
+                        <a href="cart">Cart</a>
+                        <a href="wishlist">Wishlist</a>
+                        <a href="account">My Orders</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="contact">Contact Us</a>
+                        <a href="faq">FAQ</a>
+                        <a href="faq#shipping">Shipping Info</a>
+                        <a href="faq#returns">Returns Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <p>&copy; 2026 Everything Chommzy. All Rights Reserved.</p>
+                <div><a href="privacy" style="color:inherit;margin-right:15px;">Privacy Policy</a><a href="terms" style="color:inherit;">Terms & Conditions</a></div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/2347062719113" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+
+    <!-- Back to Top -->
+    <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="chommzy.js?v=19" defer></script>
+</body>
+</html>

@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Dashboard - Everything Chommzy</title>
+    <script>
+        // Admin session check - redirect if not admin
+        (function() {
+            const adminSession = localStorage.getItem('chommzyAdminSession');
+            if (!adminSession) {
+                window.location.href = 'ec-mgt-9k7x2.html';
+            }
+        })();
+    </script>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body class="admin-body">
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <h1 class="admin-logo">EC<span>.</span></h1>
+            <nav class="admin-nav">
+                <a href="#" data-section="section-dashboard" class="active"><i class="fas fa-th-large"></i> Dashboard</a>
+                <a href="#" data-section="section-products"><i class="fas fa-box-open"></i> Products</a>
+                <a href="#" data-section="section-orders"><i class="fas fa-receipt"></i> Orders</a>
+                <a href="#" data-section="section-bank"><i class="fas fa-university"></i> Bank Accounts</a>
+                <a href="#" data-section="section-customers"><i class="fas fa-users"></i> Customers</a>
+                <a href="#" data-section="section-referrals"><i class="fas fa-gift"></i> Referrals</a>
+                <a href="#" data-section="section-announcements"><i class="fas fa-bullhorn"></i> Announcements</a>
+                <a href="#" data-section="section-flash-deals"><i class="fas fa-bolt"></i> Flash Deals</a>
+                <a href="#" data-section="section-security"><i class="fas fa-shield-alt"></i> Security</a>
+                <a href="#" data-section="section-subscribers"><i class="fas fa-envelope"></i> Subscribers</a>
+                <a href="#" data-section="section-settings"><i class="fas fa-cog"></i> Settings</a>
+            </nav>
+            <div class="admin-user-section">
+                <div class="admin-user-avatar">CA</div>
+                <div class="user-info">
+                    <div class="name">Chommzy Admin</div>
+                    <div class="role">Administrator</div>
+                </div>
+            </div>
+            <div style="padding:0.75rem 1.5rem;border-top:1px solid rgba(255,255,255,0.1);">
+                <a href="home" style="color:rgba(255,255,255,0.5);font-size:0.85rem;display:flex;align-items:center;gap:8px;"><i class="fas fa-store"></i> View Store</a>
+            </div>
+            <div style="padding:0.75rem 1.5rem;">
+                <a href="#" class="logout-btn" style="color:rgba(255,255,255,0.5);font-size:0.85rem;display:flex;align-items:center;gap:8px;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <header class="admin-header">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <button type="button" id="admin-mobile-toggle" class="admin-mobile-toggle" style="display:none;"><i class="fas fa-bars"></i></button>
+                    <h1 id="admin-section-title">Dashboard</h1>
+                </div>
+                <a href="home" class="btn btn-outline btn-sm"><i class="fas fa-external-link-alt"></i> View Store</a>
+            </header>
+
+            <!-- ===== DASHBOARD SECTION ===== -->
+            <div class="admin-section active" id="section-dashboard">
+                <div class="admin-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon orders"><i class="fas fa-receipt"></i></div>
+                        <div class="stat-info"><h3 id="stat-total-orders">0</h3><p>Total Orders</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue"><i class="fas fa-naira-sign"></i></div>
+                        <div class="stat-info"><h3 id="stat-total-revenue">&#8358;0</h3><p>Total Revenue</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon pending"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="stat-pending-payments">0</h3><p>Pending Payments</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon products"><i class="fas fa-box-open"></i></div>
+                        <div class="stat-info"><h3 id="stat-total-products">0</h3><p>Total Products</p></div>
+                    </div>
+                </div>
+
+                <!-- Recent Orders in Dashboard -->
+                <div class="admin-table-wrapper">
+                    <div class="admin-table-header">
+                        <h3>Recent Orders</h3>
+                        <a href="#" class="btn-link" data-section="section-orders" onclick="document.querySelector('.admin-nav a[data-section=section-orders]').click(); return false;">View All</a>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Order ID</th><th>Customer</th><th>Total</th><th>Status</th><th>Date</th></tr>
+                            </thead>
+                            <tbody id="dashboard-recent-orders">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No orders yet. Orders will appear here when customers place them.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== PRODUCTS SECTION ===== -->
+            <div class="admin-section" id="section-products">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:1rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Products</h3>
+                    <button type="button" class="btn btn-primary btn-sm" id="add-product-btn"><i class="fas fa-plus"></i> Add Product</button>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="product-category-tabs" id="product-category-tabs">
+                    <button type="button" class="category-tab active" data-category="all">
+                        <i class="fas fa-th-large"></i> All <span class="tab-count" id="count-all">0</span>
+                    </button>
+                    <button type="button" class="category-tab" data-category="wigs">
+                        <i class="fas fa-cut"></i> Wigs <span class="tab-count" id="count-wigs">0</span>
+                    </button>
+                    <button type="button" class="category-tab" data-category="clothing">
+                        <i class="fas fa-tshirt"></i> Clothing <span class="tab-count" id="count-clothing">0</span>
+                    </button>
+                    <button type="button" class="category-tab" data-category="shoes">
+                        <i class="fas fa-shoe-prints"></i> Shoes <span class="tab-count" id="count-shoes">0</span>
+                    </button>
+                    <button type="button" class="category-tab" data-category="accessories">
+                        <i class="fas fa-gem"></i> Accessories <span class="tab-count" id="count-accessories">0</span>
+                    </button>
+                </div>
+
+                <div class="admin-table-wrapper">
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Product</th><th>Category</th><th>Price</th><th>Status</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="admin-products-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ORDERS SECTION ===== -->
+            <div class="admin-section" id="section-orders">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Orders Management</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Manage orders, confirm payments, and update delivery status.</p>
+                </div>
+                <div class="order-tabs">
+                    <button class="order-tab active" data-tab="active-orders"><i class="fas fa-clock"></i> Active Orders <span class="tab-count" id="active-orders-count">0</span></button>
+                    <button class="order-tab" data-tab="completed-orders"><i class="fas fa-check-double"></i> Completed <span class="tab-count" id="completed-orders-count">0</span></button>
+                </div>
+                <div class="order-tab-content active" id="active-orders">
+                    <div class="admin-table-wrapper">
+                        <div style="overflow-x:auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+                                </thead>
+                                <tbody id="admin-orders-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-tab-content" id="completed-orders">
+                    <div class="admin-table-wrapper">
+                        <div style="overflow-x:auto;">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr><th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Completed</th><th>Date</th></tr>
+                                </thead>
+                                <tbody id="admin-completed-orders-tbody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== BANK ACCOUNTS SECTION ===== -->
+            <div class="admin-section" id="section-bank">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem;">
+                    <div>
+                        <h3 style="font-family:var(--font-body);font-size:1.1rem;">Bank Accounts</h3>
+                        <p style="color:var(--text-secondary);font-size:0.88rem;">Add bank accounts for customers to pay into via bank transfer.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-sm" id="add-bank-btn"><i class="fas fa-plus"></i> Add Bank Account</button>
+                </div>
+                <div class="admin-bank-cards" id="admin-bank-cards"></div>
+            </div>
+
+            <!-- ===== CUSTOMERS SECTION ===== -->
+            <div class="admin-section" id="section-customers">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Customers</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">All registered customers on your store.</p>
+                </div>
+                <div class="admin-table-wrapper">
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Customer</th><th>Email</th><th>Orders</th><th>Total Spent</th></tr>
+                            </thead>
+                            <tbody id="admin-customers-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== REFERRALS SECTION ===== -->
+            <div class="admin-section" id="section-referrals">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Referral Program</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Track referrals and see how many customers each user has referred.</p>
+                </div>
+
+                <!-- Referral Stats Cards -->
+                <div class="admin-stats" style="margin-bottom:2rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);"><i class="fas fa-users"></i></div>
+                        <div class="stat-info"><h3 id="stat-total-referrals">0</h3><p>Total Referrals</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#11998e 0%,#38ef7d 100%);"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3 id="stat-completed-referrals">0</h3><p>Completed</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#f093fb 0%,#f5576c 100%);"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="stat-pending-referrals">0</h3><p>Pending</p></div>
+                    </div>
+                </div>
+
+                <!-- Top Referrers -->
+                <div class="admin-table-wrapper" style="margin-bottom:2rem;">
+                    <div class="admin-table-header">
+                        <h3><i class="fas fa-trophy" style="color:#f5a623;margin-right:8px;"></i>Top Referrers</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Customer</th><th>Email</th><th>Referral Code</th><th>Total Referrals</th><th>Successful</th></tr>
+                            </thead>
+                            <tbody id="admin-top-referrers-tbody">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No referrals yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- All Referrals -->
+                <div class="admin-table-wrapper">
+                    <div class="admin-table-header">
+                        <h3>All Referrals</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Referrer</th><th>Referred User</th><th>Status</th><th>Date</th></tr>
+                            </thead>
+                            <tbody id="admin-referrals-tbody">
+                                <tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--text-muted);">No referrals yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== ANNOUNCEMENTS SECTION ===== -->
+            <div class="admin-section" id="section-announcements">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Announcements</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Send announcements to all users. They'll appear in their notifications.</p>
+                </div>
+
+                <!-- Send Announcement Form -->
+                <div class="admin-card" style="margin-bottom:2rem;">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-paper-plane" style="color:var(--accent);margin-right:8px;"></i>Send New Announcement</h4>
+                    <form id="announcement-form">
+                        <div class="form-group">
+                            <label for="announcement-title">Title *</label>
+                            <input type="text" id="announcement-title" required placeholder="e.g. Flash Sale This Weekend!">
+                        </div>
+                        <div class="form-group">
+                            <label for="announcement-message">Message *</label>
+                            <textarea id="announcement-message" required rows="4" placeholder="Write your announcement message here..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Send To *</label>
+                            <div class="recipient-options" style="display:flex;flex-direction:column;gap:10px;margin-top:8px;">
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                    <input type="radio" name="recipient-type" value="all" checked style="width:18px;height:18px;">
+                                    <span>All Users</span>
+                                </label>
+                                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+                                    <input type="radio" name="recipient-type" value="selected" style="width:18px;height:18px;">
+                                    <span>Select Specific Users</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group" id="user-select-container" style="display:none;">
+                            <label>Select Users</label>
+                            <div id="user-checkboxes" style="max-height:200px;overflow-y:auto;border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;background:var(--bg-alt);"></div>
+                            <small style="color:var(--text-muted);margin-top:4px;display:block;">Select one or more users to receive this announcement</small>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-bullhorn"></i> Send Announcement</button>
+                    </form>
+                </div>
+
+                <!-- Past Announcements -->
+                <div class="admin-table-wrapper">
+                    <div class="admin-table-header">
+                        <h3><i class="fas fa-history" style="color:var(--accent);margin-right:8px;"></i>Past Announcements</h3>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr><th>Title</th><th>Message</th><th>Date Sent</th><th>Recipients</th><th>Actions</th></tr>
+                            </thead>
+                            <tbody id="admin-announcements-tbody">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">No announcements sent yet.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SETTINGS SECTION ===== -->
+            <!-- Flash Deals Section -->
+            <div class="admin-section" id="section-flash-deals">
+                <div style="margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
+                    <div>
+                        <h3 style="font-family:var(--font-body);font-size:1.1rem;">Flash Deals</h3>
+                        <p style="color:var(--text-secondary);font-size:0.88rem;">Create and manage time-limited deals for your store.</p>
+                    </div>
+                    <button class="btn btn-primary" id="create-flash-deal-btn"><i class="fas fa-plus"></i> Create Flash Deal</button>
+                </div>
+
+                <!-- Flash Deal Form (Hidden by default) -->
+                <div class="admin-card" id="flash-deal-form-card" style="display:none;margin-bottom:2rem;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                        <h4 style="font-size:1rem;"><i class="fas fa-bolt" style="color:#f5576c;margin-right:8px;"></i><span id="flash-deal-form-title">Create New Flash Deal</span></h4>
+                        <button type="button" class="btn-icon" id="close-flash-deal-form" style="background:none;border:none;font-size:1.25rem;cursor:pointer;color:var(--text-muted);"><i class="fas fa-times"></i></button>
+                    </div>
+                    <form id="flash-deals-form">
+                        <input type="hidden" id="flash-deal-edit-id">
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label for="flash-deals-title">Deal Title *</label>
+                            <input type="text" id="flash-deals-title" required placeholder="e.g. Weekend Flash Sale" value="">
+                        </div>
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label for="flash-deals-subtitle">Subtitle</label>
+                            <input type="text" id="flash-deals-subtitle" placeholder="e.g. Hurry, these deals won't last long!">
+                        </div>
+                        <div class="form-row" style="margin-bottom:1rem;">
+                            <div class="form-group">
+                                <label for="flash-deals-start-date">Start Date *</label>
+                                <input type="date" id="flash-deals-start-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="flash-deals-start-time">Start Time</label>
+                                <input type="time" id="flash-deals-start-time" value="00:00">
+                            </div>
+                        </div>
+                        <div class="form-row" style="margin-bottom:1rem;">
+                            <div class="form-group">
+                                <label for="flash-deals-end-date">End Date *</label>
+                                <input type="date" id="flash-deals-end-date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="flash-deals-end-time">End Time</label>
+                                <input type="time" id="flash-deals-end-time" value="23:59">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label for="flash-deals-discount">Discount Percentage *</label>
+                            <input type="number" id="flash-deals-discount" required placeholder="e.g. 20" min="1" max="90" value="20">
+                        </div>
+                        <div class="form-group" style="margin-bottom:1rem;">
+                            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+                                <input type="checkbox" id="flash-deals-enabled" style="width:18px;height:18px;" checked>
+                                <span>Enable this Flash Deal</span>
+                            </label>
+                        </div>
+                        <div style="display:flex;gap:1rem;">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Flash Deal</button>
+                            <button type="button" class="btn btn-outline" id="cancel-flash-deal-btn">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Flash Deals List -->
+                <div class="admin-card">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-list" style="color:var(--accent);margin-right:8px;"></i>All Flash Deals</h4>
+                    <div class="table-responsive">
+                        <table class="admin-table" id="flash-deals-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Discount</th>
+                                    <th>Start</th>
+                                    <th>End</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="flash-deals-list">
+                                <!-- Flash deals will be populated here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="no-flash-deals" style="text-align:center;padding:2rem;color:var(--text-muted);display:none;">
+                        <i class="fas fa-bolt" style="font-size:2rem;margin-bottom:0.5rem;opacity:0.3;"></i>
+                        <p>No flash deals yet. Create your first one!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SECURITY SECTION ===== -->
+            <div class="admin-section" id="section-security">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Security Center</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Manage 2FA, view security logs, and monitor threats.</p>
+                </div>
+
+                <!-- Security Stats -->
+                <div class="admin-stats" style="margin-bottom:1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-shield-alt"></i></div>
+                        <div class="stat-info"><h3 id="security-2fa-status">Disabled</h3><p>2FA Status</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706);"><i class="fas fa-exclamation-triangle"></i></div>
+                        <div class="stat-info"><h3 id="security-alerts-count">0</h3><p>Active Alerts</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><i class="fas fa-user-shield"></i></div>
+                        <div class="stat-info"><h3 id="security-failed-logins">0</h3><p>Failed Logins (24h)</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#6366f1,#4f46e5);"><i class="fas fa-history"></i></div>
+                        <div class="stat-info"><h3 id="security-events-today">0</h3><p>Events Today</p></div>
+                    </div>
+                </div>
+
+                <!-- Two-Factor Authentication -->
+                <div class="admin-card" style="margin-bottom:1.5rem;">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-mobile-alt" style="color:var(--accent);margin-right:8px;"></i>Two-Factor Authentication (2FA)</h4>
+
+                    <div id="2fa-status-container">
+                        <div id="2fa-disabled-view">
+                            <p style="color:var(--text-secondary);margin-bottom:1rem;">Add an extra layer of security to your admin account by enabling 2FA.</p>
+                            <button type="button" class="btn btn-primary" id="setup-2fa-btn"><i class="fas fa-lock"></i> Enable 2FA</button>
+                        </div>
+
+                        <div id="2fa-setup-view" style="display:none;">
+                            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                                <div>
+                                    <p style="margin-bottom:1rem;font-size:0.9rem;"><strong>Step 1:</strong> Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+                                    <div id="2fa-qr-code" style="background:#f5f5f5;padding:1rem;border-radius:8px;text-align:center;">
+                                        <img id="2fa-qr-img" src="" alt="QR Code" style="max-width:200px;">
+                                    </div>
+                                    <p style="margin-top:0.5rem;font-size:0.8rem;color:var(--text-muted);">Or enter manually: <code id="2fa-secret-key" style="background:#f0f0f0;padding:2px 6px;border-radius:4px;"></code></p>
+                                </div>
+                                <div>
+                                    <p style="margin-bottom:1rem;font-size:0.9rem;"><strong>Step 2:</strong> Enter the 6-digit code from your app to verify</p>
+                                    <form id="verify-2fa-form">
+                                        <div class="form-group" style="margin-bottom:1rem;">
+                                            <input type="text" id="2fa-verify-code" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="one-time-code" style="font-size:1.5rem;text-align:center;letter-spacing:8px;font-family:monospace;" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Verify & Enable</button>
+                                        <button type="button" class="btn btn-outline" id="cancel-2fa-setup" style="margin-left:0.5rem;">Cancel</button>
+                                    </form>
+                                    <div id="2fa-backup-codes" style="display:none;margin-top:1.5rem;padding:1rem;background:#fef3c7;border-radius:8px;">
+                                        <p style="font-weight:600;margin-bottom:0.5rem;"><i class="fas fa-exclamation-triangle" style="color:#d97706;"></i> Save these backup codes!</p>
+                                        <p style="font-size:0.85rem;margin-bottom:0.5rem;">Use these if you lose access to your authenticator app:</p>
+                                        <div id="backup-codes-list" style="font-family:monospace;background:#fff;padding:0.5rem;border-radius:4px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="2fa-enabled-view" style="display:none;">
+                            <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:#d1fae5;border-radius:8px;margin-bottom:1rem;">
+                                <i class="fas fa-check-circle" style="font-size:2rem;color:#10b981;"></i>
+                                <div>
+                                    <p style="font-weight:600;color:#065f46;">2FA is Enabled</p>
+                                    <p style="font-size:0.85rem;color:#047857;">Your account is protected with two-factor authentication.</p>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-outline" id="disable-2fa-btn" style="color:#dc2626;border-color:#dc2626;"><i class="fas fa-times"></i> Disable 2FA</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Disable 2FA Modal -->
+                <div id="disable-2fa-modal" class="modal-overlay" style="display:none;">
+                    <div class="modal-content" style="max-width:400px;">
+                        <button class="modal-close"><i class="fas fa-times"></i></button>
+                        <h3 style="margin-bottom:1rem;"><i class="fas fa-exclamation-triangle" style="color:#dc2626;"></i> Disable 2FA</h3>
+                        <p style="margin-bottom:1rem;color:var(--text-secondary);">Enter your password and current 2FA code to disable two-factor authentication.</p>
+                        <form id="disable-2fa-form">
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label>Password</label>
+                                <input type="password" id="disable-2fa-password" required placeholder="Enter your password">
+                            </div>
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label>2FA Code</label>
+                                <input type="text" id="disable-2fa-code" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="one-time-code" required>
+                            </div>
+                            <button type="submit" class="btn" style="background:#dc2626;color:#fff;width:100%;">Disable 2FA</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Security Alerts -->
+                <div class="admin-card" style="margin-bottom:1.5rem;">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-bell" style="color:#f59e0b;margin-right:8px;"></i>Security Alerts</h4>
+                    <div id="security-alerts-container">
+                        <p style="color:var(--text-muted);text-align:center;padding:1rem;">Loading alerts...</p>
+                    </div>
+                </div>
+
+                <!-- Security Logs -->
+                <div class="admin-card">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+                        <h4 style="font-size:1rem;"><i class="fas fa-list-alt" style="color:var(--accent);margin-right:8px;"></i>Recent Security Events</h4>
+                        <select id="security-log-filter" style="padding:6px 12px;border-radius:6px;border:1px solid var(--border-light);">
+                            <option value="">All Events</option>
+                            <option value="high">High Severity</option>
+                            <option value="medium">Medium Severity</option>
+                            <option value="low">Low Severity</option>
+                        </select>
+                    </div>
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Event</th>
+                                    <th>User</th>
+                                    <th>IP Address</th>
+                                    <th>Severity</th>
+                                </tr>
+                            </thead>
+                            <tbody id="security-logs-tbody">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:var(--text-muted);">Loading security logs...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== SUBSCRIBERS SECTION ===== -->
+            <div class="admin-section" id="section-subscribers">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Newsletter Subscribers</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Manage your email subscribers list.</p>
+                </div>
+
+                <!-- Subscriber Stats -->
+                <div class="admin-stats" style="margin-bottom:1.5rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#10b981,#059669);"><i class="fas fa-users"></i></div>
+                        <div class="stat-info"><h3 id="stat-active-subs">0</h3><p>Active Subscribers</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8);"><i class="fas fa-calendar-week"></i></div>
+                        <div class="stat-info"><h3 id="stat-week-subs">0</h3><p>This Week</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9);"><i class="fas fa-calendar-alt"></i></div>
+                        <div class="stat-info"><h3 id="stat-month-subs">0</h3><p>This Month</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><i class="fas fa-user-slash"></i></div>
+                        <div class="stat-info"><h3 id="stat-unsub">0</h3><p>Unsubscribed</p></div>
+                    </div>
+                </div>
+
+                <!-- Actions Bar -->
+                <div class="admin-card" style="margin-bottom:1.5rem;">
+                    <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;">
+                        <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
+                            <button type="button" class="btn btn-primary btn-sm" id="export-subs-btn"><i class="fas fa-download"></i> Export CSV</button>
+                            <select id="subs-status-filter" class="form-control" style="width:auto;padding:0.5rem 1rem;">
+                                <option value="all">All Subscribers</option>
+                                <option value="active" selected>Active Only</option>
+                                <option value="unsubscribed">Unsubscribed</option>
+                            </select>
+                        </div>
+                        <div style="display:flex;gap:0.5rem;align-items:center;">
+                            <input type="search" id="subs-search" placeholder="Search email..." class="form-control" style="width:200px;">
+                            <button type="button" class="btn btn-outline btn-sm" id="refresh-subs-btn"><i class="fas fa-sync-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscribers Table -->
+                <div class="admin-table-wrapper">
+                    <div style="overflow-x:auto;">
+                        <table class="admin-table" id="subscribers-table">
+                            <thead>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Source</th>
+                                    <th>Subscribed</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subscribers-tbody">
+                                <tr><td colspan="5" style="text-align:center;padding:2rem;color:#6b7c93;">Loading subscribers...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="subs-pagination" style="display:flex;justify-content:center;gap:0.5rem;margin-top:1rem;"></div>
+                </div>
+            </div>
+
+            <div class="admin-section" id="section-settings">
+                <div style="margin-bottom:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1.1rem;">Settings</h3>
+                    <p style="color:var(--text-secondary);font-size:0.88rem;">Manage your admin account settings.</p>
+                </div>
+
+                <!-- Change Admin Password -->
+                <div class="admin-card">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-lock" style="color:var(--accent);margin-right:8px;"></i>Change Admin Password</h4>
+
+                    <!-- Standard password change form -->
+                    <div id="password-change-standard">
+                        <form id="change-admin-password-form">
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label for="current-password">Current Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="current-password" required placeholder="Enter current password">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label for="new-password">New Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="new-password" required placeholder="Enter new password" minlength="6">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label for="confirm-password">Confirm New Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="confirm-password" required placeholder="Confirm new password">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> Change Password</button>
+                        </form>
+                        <p style="margin-top:1rem;font-size:0.85rem;color:#6b7c93;">
+                            Forgot your password? <a href="#" id="reset-via-email-btn" style="color:var(--accent);text-decoration:underline;">Reset via Email</a>
+                        </p>
+                    </div>
+
+                    <!-- OTP-based password reset -->
+                    <div id="password-reset-otp" style="display:none;">
+                        <p style="margin-bottom:1rem;color:#6b7c93;font-size:0.9rem;">We'll send a verification code to your admin email.</p>
+                        <button type="button" id="send-admin-otp-btn" class="btn btn-primary" style="margin-bottom:1rem;">
+                            <i class="fas fa-paper-plane"></i> Send Verification Code
+                        </button>
+
+                        <form id="admin-otp-reset-form" style="display:none;">
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label>Enter 6-digit code</label>
+                                <div class="otp-input-group" style="display:flex;gap:8px;justify-content:center;margin-top:0.5rem;">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" style="width:45px;height:50px;text-align:center;font-size:1.25rem;border:2px solid #e5e7eb;border-radius:8px;" autocomplete="one-time-code">
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label for="reset-new-password">New Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="reset-new-password" required placeholder="Enter new password" minlength="6">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom:1rem;">
+                                <label for="reset-confirm-password">Confirm New Password</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="reset-confirm-password" required placeholder="Confirm new password">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Reset Password</button>
+                        </form>
+
+                        <p style="margin-top:1rem;font-size:0.85rem;color:#6b7c93;">
+                            <a href="#" id="back-to-standard-btn" style="color:var(--accent);text-decoration:underline;"><i class="fas fa-arrow-left"></i> Back to standard change</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Immediately restore saved section before page renders completely
+        (function() {
+            var saved = localStorage.getItem('chommzyAdminSection');
+            if (saved && saved !== 'section-dashboard') {
+                var savedSection = document.getElementById(saved);
+                var savedLink = document.querySelector('.admin-nav a[data-section="' + saved + '"]');
+                if (savedSection && savedLink) {
+                    // Remove active from defaults
+                    var activeSection = document.querySelector('.admin-section.active');
+                    var activeLink = document.querySelector('.admin-nav a.active');
+                    if (activeSection) activeSection.classList.remove('active');
+                    if (activeLink) activeLink.classList.remove('active');
+                    // Add active to saved
+                    savedSection.classList.add('active');
+                    savedLink.classList.add('active');
+                    // Update header title
+                    var titleEl = document.getElementById('admin-section-title');
+                    if (titleEl) titleEl.textContent = savedLink.textContent.trim();
+                }
+            }
+        })();
+    </script>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="product-modal-title">Add New Product</h2>
+                <button type="button" class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="admin-product-form">
+                    <input type="hidden" id="product-form-id">
+                    <div class="form-group">
+                        <label for="pf-name">Product Name *</label>
+                        <input type="text" id="pf-name" required placeholder="e.g. Luxury Body Wave Wig">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pf-price">Price (&#8358;) *</label>
+                            <input type="number" id="pf-price" required step="100" placeholder="e.g. 85000">
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-original-price">Original Price (&#8358;)</label>
+                            <input type="number" id="pf-original-price" step="100" placeholder="Leave empty if no discount">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pf-category">Category *</label>
+                            <select id="pf-category" required>
+                                <option value="wigs">Wigs</option>
+                                <option value="clothing">Clothing</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="accessories">Accessories</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Color(s)</label>
+                            <div class="color-checkbox-grid" id="pf-color-grid">
+                                <label class="color-checkbox"><input type="checkbox" value="Black"><span class="color-swatch" style="background:#111;"></span> Black</label>
+                                <label class="color-checkbox"><input type="checkbox" value="White"><span class="color-swatch" style="background:#fff;border:1px solid #ddd;"></span> White</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Red"><span class="color-swatch" style="background:#D32F2F;"></span> Red</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Blue"><span class="color-swatch" style="background:#1976D2;"></span> Blue</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Green"><span class="color-swatch" style="background:#388E3C;"></span> Green</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Brown"><span class="color-swatch" style="background:#795548;"></span> Brown</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Gold"><span class="color-swatch" style="background:#c9a96e;"></span> Gold</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Pink"><span class="color-swatch" style="background:#E91E63;"></span> Pink</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Purple"><span class="color-swatch" style="background:#7B1FA2;"></span> Purple</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Orange"><span class="color-swatch" style="background:#F57C00;"></span> Orange</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Grey"><span class="color-swatch" style="background:#9E9E9E;"></span> Grey</label>
+                                <label class="color-checkbox"><input type="checkbox" value="Multi"><span class="color-swatch" style="background:linear-gradient(135deg,#ff6b6b,#4ecdc4,#ffe66d);"></span> Multi</label>
+                            </div>
+                            <div class="other-color-input">
+                                <label class="color-checkbox"><input type="checkbox" id="pf-color-other-check"> Other:</label>
+                                <input type="text" id="pf-color-other" placeholder="Enter custom color" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Image *</label>
+                        <div class="image-upload-area" id="pf-image-upload">
+                            <input type="file" id="pf-image" accept="image/*" hidden>
+                            <div class="upload-placeholder" id="pf-image-placeholder">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload image</p>
+                                <span>JPG, PNG, WEBP (Max 2MB)</span>
+                            </div>
+                            <div class="upload-preview hidden" id="pf-image-preview">
+                                <img id="pf-image-preview-img" src="" alt="Preview">
+                                <button type="button" class="remove-image-btn" id="pf-remove-image"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pf-description">Description</label>
+                        <textarea id="pf-description" placeholder="Product description..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="pf-sizes">Sizes (comma separated)</label>
+                        <input type="text" id="pf-sizes" placeholder='e.g. 14", 16", 18" or S, M, L'>
+                    </div>
+                    <div class="form-group">
+                        <label>Product Tags/Labels</label>
+                        <div class="badge-checkbox-grid" id="pf-badge-grid">
+                            <label class="badge-checkbox">
+                                <input type="checkbox" value="new">
+                                <span class="badge-preview new"><i class="fas fa-sparkles"></i> What's New</span>
+                            </label>
+                            <label class="badge-checkbox">
+                                <input type="checkbox" value="hot">
+                                <span class="badge-preview hot"><i class="fas fa-fire"></i> Hot Deal</span>
+                            </label>
+                            <label class="badge-checkbox">
+                                <input type="checkbox" value="sale">
+                                <span class="badge-preview sale"><i class="fas fa-tag"></i> Promo Sale</span>
+                            </label>
+                            <label class="badge-checkbox">
+                                <input type="checkbox" value="bestseller">
+                                <span class="badge-preview bestseller"><i class="fas fa-trophy"></i> Best Seller</span>
+                            </label>
+                            <label class="badge-checkbox">
+                                <input type="checkbox" value="limited">
+                                <span class="badge-preview limited"><i class="fas fa-clock"></i> Limited</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pf-stock">Stock Status</label>
+                            <select id="pf-stock">
+                                <option value="true">In Stock</option>
+                                <option value="false">Out of Stock</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Save Product</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bank Account Modal -->
+    <div class="modal-overlay" id="bank-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add Bank Account</h2>
+                <button type="button" class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="color:var(--text-secondary);margin-bottom:1.5rem;font-size:0.9rem;">Add a bank account where customers can transfer payment for their orders.</p>
+                <form id="add-bank-form">
+                    <div class="form-group">
+                        <label for="bank-name">Bank Name *</label>
+                        <select id="bank-name" required>
+                            <option value="">Select Bank</option>
+                            <option value="Access Bank">Access Bank</option>
+                            <option value="Citibank Nigeria">Citibank Nigeria</option>
+                            <option value="Ecobank Nigeria">Ecobank Nigeria</option>
+                            <option value="Fidelity Bank">Fidelity Bank</option>
+                            <option value="First Bank of Nigeria">First Bank of Nigeria</option>
+                            <option value="First City Monument Bank (FCMB)">First City Monument Bank (FCMB)</option>
+                            <option value="Globus Bank">Globus Bank</option>
+                            <option value="Guaranty Trust Bank (GTBank)">Guaranty Trust Bank (GTBank)</option>
+                            <option value="Heritage Bank">Heritage Bank</option>
+                            <option value="Keystone Bank">Keystone Bank</option>
+                            <option value="Kuda Bank">Kuda Bank</option>
+                            <option value="Moniepoint (TeamApt)">Moniepoint (TeamApt)</option>
+                            <option value="OPay">OPay</option>
+                            <option value="PalmPay">PalmPay</option>
+                            <option value="Polaris Bank">Polaris Bank</option>
+                            <option value="Providus Bank">Providus Bank</option>
+                            <option value="Stanbic IBTC Bank">Stanbic IBTC Bank</option>
+                            <option value="Standard Chartered Bank">Standard Chartered Bank</option>
+                            <option value="Sterling Bank">Sterling Bank</option>
+                            <option value="SunTrust Bank">SunTrust Bank</option>
+                            <option value="Titan Trust Bank">Titan Trust Bank</option>
+                            <option value="Union Bank of Nigeria">Union Bank of Nigeria</option>
+                            <option value="United Bank for Africa (UBA)">United Bank for Africa (UBA)</option>
+                            <option value="Unity Bank">Unity Bank</option>
+                            <option value="VFD Microfinance Bank">VFD Microfinance Bank</option>
+                            <option value="Wema Bank">Wema Bank</option>
+                            <option value="Zenith Bank">Zenith Bank</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-account-number">Account Number *</label>
+                        <input type="text" id="bank-account-number" required placeholder="10-digit account number" maxlength="10" pattern="[0-9]{10}">
+                    </div>
+                    <div class="form-group">
+                        <label for="bank-account-name">Account Name *</label>
+                        <input type="text" id="bank-account-name" required placeholder="e.g. Chioma Juliet Ezeugo">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Add Bank Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Detail Modal -->
+    <div class="modal-overlay" id="order-detail-modal">
+        <div class="modal-content" style="max-width:700px;">
+            <div class="modal-header">
+                <h2>Order Details</h2>
+                <button type="button" class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="order-detail-grid">
+                    <div class="order-detail-info">
+                        <h3 style="font-family:var(--font-body);font-size:1rem;margin-bottom:1rem;">Order Information</h3>
+                        <div class="info-row"><span class="label">Order ID</span><span class="value" id="od-order-id"></span></div>
+                        <div class="info-row"><span class="label">Status</span><span class="value" id="od-status"></span></div>
+                        <div class="info-row"><span class="label">Date</span><span class="value" id="od-date"></span></div>
+                        <div class="info-row"><span class="label">Total</span><span class="value fw-700" id="od-total"></span></div>
+                    </div>
+                    <div class="order-detail-info">
+                        <h3 style="font-family:var(--font-body);font-size:1rem;margin-bottom:1rem;">Customer Information</h3>
+                        <div class="info-row"><span class="label">Name</span><span class="value" id="od-customer"></span></div>
+                        <div class="info-row"><span class="label">Email</span><span class="value" id="od-email"></span></div>
+                        <div class="info-row"><span class="label">Phone</span><span class="value" id="od-phone"></span></div>
+                        <div class="info-row"><span class="label">Address</span><span class="value" id="od-address"></span></div>
+                    </div>
+                </div>
+
+                <div style="margin-top:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1rem;margin-bottom:1rem;">Order Items</h3>
+                    <div id="od-items"></div>
+                </div>
+
+                <div style="margin-top:1.5rem;">
+                    <h3 style="font-family:var(--font-body);font-size:1rem;margin-bottom:1rem;">Payment Proof</h3>
+                    <div id="od-payment-proof"></div>
+                </div>
+
+                <div style="margin-top:1.5rem;display:flex;gap:10px;justify-content:flex-end;" id="od-actions"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="chommzy.js?v=18" defer></script>
+    <script>
+        // Show mobile toggle on smaller screens
+        const mobileToggle = document.getElementById('admin-mobile-toggle');
+        function checkAdminMobile() {
+            if (mobileToggle) mobileToggle.style.display = window.innerWidth <= 992 ? 'flex' : 'none';
+        }
+        checkAdminMobile();
+        window.addEventListener('resize', checkAdminMobile);
+
+        // Populate dashboard recent orders
+        function updateDashboardOrders() {
+            const orders = JSON.parse(localStorage.getItem('chommzyOrders') || '[]').reverse().slice(0, 5);
+            const tbody = document.getElementById('dashboard-recent-orders');
+            if (!tbody || orders.length === 0) return;
+            const statusMap = { pending: 'Pending', reviewing: 'Under Review', confirmed: 'Confirmed', delivering: 'Being Delivered', delivered: 'Delivered' };
+            tbody.innerHTML = orders.map(o => `
+                <tr>
+                    <td><strong>${o.id}</strong></td>
+                    <td>${o.userName || 'Customer'}</td>
+                    <td><strong>\u20A6${o.total.toLocaleString()}</strong></td>
+                    <td><span class="status-badge ${o.status}">${statusMap[o.status] || o.status}</span></td>
+                    <td>${new Date(o.createdAt).toLocaleDateString('en-NG')}</td>
+                </tr>
+            `).join('');
+        }
+        updateDashboardOrders();
+    </script>
+</body>
+</html>

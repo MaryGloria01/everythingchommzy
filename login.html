@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <title>Login - Everything Chommzy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart" class="header-action-btn" title="Cart"><i class="fas fa-shopping-bag"></i><span class="badge cart-count" style="display:none;">0</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-page-split">
+            <div class="auth-image-side">
+                <div class="auth-brand">
+                    <div class="auth-icon"><i class="fas fa-lock"></i></div>
+                    <h2>Welcome to <span class="accent">Chommzy</span></h2>
+                    <p>Your gateway to premium fashion. Sign in to explore our exclusive collections.</p>
+                    <div class="auth-features">
+                        <div class="auth-feature"><i class="fas fa-check-circle"></i> Exclusive deals & discounts</div>
+                        <div class="auth-feature"><i class="fas fa-check-circle"></i> Track your orders easily</div>
+                        <div class="auth-feature"><i class="fas fa-check-circle"></i> Wishlist your favorites</div>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form-side">
+                <div class="auth-form-wrapper">
+                    <h1>Sign In</h1>
+                    <p>Welcome back! Please enter your details to continue.</p>
+                    <form class="auth-form" id="login-form">
+                        <div class="form-group">
+                            <label for="login-email"><i class="fas fa-envelope"></i> Email Address</label>
+                            <input type="email" id="login-email" required placeholder="your@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                            <div class="password-input-wrapper">
+                                <input type="password" id="login-password" required placeholder="Enter your password">
+                                <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="forgot-password-link">
+                            <a href="forgot-password">Forgot Password?</a>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-sign-in-alt"></i> Sign In</button>
+                    </form>
+
+                    <!-- 2FA Verification (hidden by default) -->
+                    <div id="login-2fa-section" style="display:none;">
+                        <div style="text-align:center;margin-bottom:1.5rem;">
+                            <div style="width:60px;height:60px;background:linear-gradient(135deg,#f47920,#ff9a56);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-bottom:1rem;">
+                                <i class="fas fa-shield-alt" style="font-size:1.5rem;color:#fff;"></i>
+                            </div>
+                            <h2 style="font-size:1.3rem;margin-bottom:0.25rem;">Two-Factor Authentication</h2>
+                            <p style="color:#6b7c93;font-size:0.9rem;">Enter the 6-digit code from your authenticator app</p>
+                        </div>
+                        <form id="login-2fa-form" class="auth-form">
+                            <div class="form-group">
+                                <input type="text" id="login-2fa-code" maxlength="6" inputmode="numeric" placeholder="000000"
+                                       style="font-size:1.8rem;text-align:center;letter-spacing:10px;font-family:monospace;" autocomplete="one-time-code">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check-circle"></i> Verify</button>
+                        </form>
+                        <p style="text-align:center;margin-top:1rem;">
+                            <a href="#" id="login-back-btn" style="color:#f47920;font-size:0.9rem;"><i class="fas fa-arrow-left"></i> Back to login</a>
+                        </p>
+                    </div>
+                    <div class="auth-divider">or</div>
+                    <div class="auth-options">
+                        <a href="products" class="btn btn-outline btn-lg guest-btn"><i class="fas fa-user"></i> Continue as Guest</a>
+                        <p>Don't have an account? <a href="signup">Create Account</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="chommzy.js?v=18" defer></script>
+</body>
+</html>

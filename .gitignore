@@ -1,0 +1,42 @@
+# Sensitive configuration files
+api/config.php
+
+# Claude Code settings
+.claude/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# IDE and editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# Uploaded files (if any)
+uploads/temp/
+
+# Node modules (if using build tools)
+node_modules/
+
+# Cache
+.cache/

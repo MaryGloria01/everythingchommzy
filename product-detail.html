@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <title>Product Detail - Everything Chommzy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+    <div class="announcement-bar">
+        Free shipping on orders over &#8358;100,000 &nbsp;|&nbsp; <a href="https://wa.me/2347062719113" target="_blank" rel="noopener">WhatsApp: +234 706 271 9113</a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-auth-buttons">
+                        <a href="login" class="btn btn-outline-header">Login</a>
+                        <a href="signup" class="btn btn-primary-header">Sign Up</a>
+                    </div>
+                    <a href="account" class="header-action-btn auth-header-btn logged-in-only" title="Account"><i class="fas fa-user"></i></a>
+                    <a href="account" data-section="notifications" class="header-action-btn logged-in-only" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge notif-count" style="display:none;">0</span>
+                    </a>
+                    <a href="wishlist" class="header-action-btn" title="Wishlist"><i class="far fa-heart"></i><span class="badge wishlist-count" style="display:none;">0</span></a>
+                    <a href="cart" class="header-action-btn" title="Cart"><i class="fas fa-shopping-bag"></i><span class="badge cart-count" style="display:none;">0</span></a>
+                </div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" type="button" aria-label="Menu"><i class="fas fa-bars"></i> Menu</button>
+                <div class="nav-links" id="main-nav">
+                    <a href="home" class="nav-link">Home</a>
+                    <a href="products" class="nav-link active">Shop</a>
+                    <a href="products?category=wigs" class="nav-link">Wigs</a>
+                    <a href="products?category=clothing" class="nav-link">Clothing</a>
+                    <a href="products?category=shoes" class="nav-link">Shoes</a>
+                    <a href="products?category=accessories" class="nav-link">Accessories</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section class="product-detail-section">
+        <div class="container">
+            <div class="product-detail-grid">
+                <!-- Product Gallery -->
+                <div class="product-gallery">
+                    <div class="product-gallery-main">
+                        <img id="detail-image" src="" alt="Product Image">
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-detail-info">
+                    <div class="breadcrumb">
+                        <a href="home">Home</a> <span>/</span>
+                        <a href="products">Shop</a> <span>/</span>
+                        <a href="#" id="detail-category-breadcrumb">Category</a>
+                    </div>
+
+                    <h1 id="detail-name">Product Name</h1>
+
+                    <div class="product-detail-rating">
+                        <span class="stars" id="detail-rating-stars"></span>
+                        <span class="reviews-count" id="detail-rating-count">(0 reviews)</span>
+                    </div>
+
+                    <div class="product-detail-price">
+                        <span class="current-price" id="detail-price"></span>
+                        <span class="old-price" id="detail-original-price" style="display:none;"></span>
+                        <span class="discount-tag" id="detail-discount" style="display:none;"></span>
+                    </div>
+
+                    <p class="product-detail-description" id="detail-description"></p>
+
+                    <!-- Sizes -->
+                    <div class="detail-options" id="detail-sizes-section" style="display:none;">
+                        <h4>Select Size</h4>
+                        <div class="size-options" id="detail-sizes"></div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="detail-options">
+                        <h4>Quantity</h4>
+                        <div class="quantity-selector">
+                            <button type="button" id="detail-qty-minus">-</button>
+                            <input type="number" id="detail-qty" value="1" min="1">
+                            <button type="button" id="detail-qty-plus">+</button>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="detail-actions">
+                        <button class="btn btn-primary btn-lg" id="detail-add-to-cart" type="button"><i class="fas fa-shopping-bag"></i> Add to Cart</button>
+                        <button class="btn btn-outline btn-lg" id="detail-wishlist-btn" type="button"><i class="far fa-heart"></i> Wishlist</button>
+                    </div>
+
+                    <!-- Meta -->
+                    <div class="product-meta">
+                        <div><strong>Category:</strong> <span id="detail-meta-category"></span></div>
+                        <div><strong>Color:</strong> <span id="detail-meta-color"></span></div>
+                        <div><strong>Availability:</strong> <span class="text-success">In Stock</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="product-tabs">
+                <div class="tab-headers">
+                    <button class="tab-header active" data-tab="tab-description" type="button">Description</button>
+                    <button class="tab-header" data-tab="tab-reviews" type="button">Reviews</button>
+                    <button class="tab-header" data-tab="tab-shipping" type="button">Shipping</button>
+                </div>
+                <div class="tab-content active" id="tab-description">
+                    <p id="detail-long-description"></p>
+                </div>
+                <div class="tab-content" id="tab-reviews">
+                    <div id="detail-reviews"></div>
+                </div>
+                <div class="tab-content" id="tab-shipping">
+                    <p>We deliver to all 36 states in Nigeria and the FCT. Standard delivery takes 3-7 business days depending on your location.</p>
+                    <p style="margin-top:0.5rem;"><strong>Free shipping</strong> on orders over &#8358;100,000. A flat rate of &#8358;5,000 applies to all other orders.</p>
+                    <p style="margin-top:0.5rem;">For urgent deliveries, please contact us via <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600;">WhatsApp</a>.</p>
+                </div>
+            </div>
+
+            <!-- Related Products -->
+            <section class="related-products">
+                <div class="section-header">
+                    <h2>You May Also Like</h2>
+                    <div class="accent-line"></div>
+                </div>
+                <div class="product-grid" id="related-products-grid"></div>
+            </section>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3>Everything <span>Chommzy</span></h3>
+                        <p>Your one-stop destination for premium wigs, fashion, shoes, and accessories.</p>
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/jullykatty_001" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@jullykatty001" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://www.facebook.com/chioma.juliet.ezeugo" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="mailto:support@everythingchommzy.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column"><h4>Shop</h4><a href="products">All Products</a><a href="products?category=wigs">Wigs</a><a href="products?category=clothing">Clothing</a><a href="products?category=shoes">Shoes</a></div>
+                    <div class="footer-column"><h4>Account</h4><a href="login">Login</a><a href="signup">Register</a><a href="cart">Cart</a><a href="account">My Orders</a></div>
+                    <div class="footer-column"><h4>Support</h4><a href="contact">Contact Us</a><a href="faq">FAQ</a><a href="faq#shipping">Shipping Info</a><a href="faq#returns">Returns Policy</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><p>&copy; 2026 Everything Chommzy. All Rights Reserved.</p><div><a href="privacy" style="color:inherit;margin-right:15px;">Privacy Policy</a><a href="terms" style="color:inherit;">Terms & Conditions</a></div></div></div>
+    </footer>
+
+    <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <button class="back-to-top" type="button" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+    <script src="chommzy.js?v=19" defer></script>
+</body>
+</html>

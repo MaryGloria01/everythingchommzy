@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <title>Checkout - Everything Chommzy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <div class="header-auth-buttons">
+                        <a href="login" class="btn btn-outline-header">Login</a>
+                        <a href="signup" class="btn btn-primary-header">Sign Up</a>
+                    </div>
+                    <a href="account" class="header-action-btn auth-header-btn logged-in-only" title="Account"><i class="fas fa-user"></i></a>
+                    <a href="account" data-section="notifications" class="header-action-btn logged-in-only" title="Notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge notif-count" style="display:none;">0</span>
+                    </a>
+                    <a href="cart" class="header-action-btn" title="Cart"><i class="fas fa-shopping-bag"></i><span class="badge cart-count" style="display:none;">0</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="checkout-page">
+        <div class="container">
+            <h1 class="page-title" style="text-align:center;margin-bottom:1rem;">Checkout</h1>
+
+            <!-- Steps Indicator -->
+            <div class="checkout-steps">
+                <div class="checkout-step active">
+                    <span class="step-number">1</span>
+                    <span>Shipping</span>
+                </div>
+                <div class="checkout-step-divider"></div>
+                <div class="checkout-step">
+                    <span class="step-number">2</span>
+                    <span>Payment</span>
+                </div>
+                <div class="checkout-step-divider"></div>
+                <div class="checkout-step">
+                    <span class="step-number">3</span>
+                    <span>Confirmation</span>
+                </div>
+            </div>
+
+            <div class="checkout-layout">
+                <!-- Main Content Area -->
+                <div>
+                    <!-- Step 1: Shipping -->
+                    <div class="checkout-step-content active" data-step="1">
+                        <div class="checkout-form-section">
+                            <h2><i class="fas fa-truck"></i> Shipping Information</h2>
+                            <form id="shipping-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="shipping-name">Full Name *</label>
+                                        <input type="text" id="shipping-name" name="shipping-name" required placeholder="Enter your full name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="shipping-email">Email Address *</label>
+                                        <input type="email" id="shipping-email" name="shipping-email" required placeholder="your@email.com">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-phone">Phone Number *</label>
+                                    <div class="phone-input-group">
+                                        <select id="shipping-phone-code" name="shipping-phone-code" class="phone-country-code" title="Phone country code">
+                                            <option value="+234" data-country="NG">🇳🇬 +234</option>
+                                            <option value="+213" data-country="DZ">🇩🇿 +213</option>
+                                            <option value="+244" data-country="AO">🇦🇴 +244</option>
+                                            <option value="+229" data-country="BJ">🇧🇯 +229</option>
+                                            <option value="+267" data-country="BW">🇧🇼 +267</option>
+                                            <option value="+226" data-country="BF">🇧🇫 +226</option>
+                                            <option value="+257" data-country="BI">🇧🇮 +257</option>
+                                            <option value="+238" data-country="CV">🇨🇻 +238</option>
+                                            <option value="+237" data-country="CM">🇨🇲 +237</option>
+                                            <option value="+236" data-country="CF">🇨🇫 +236</option>
+                                            <option value="+235" data-country="TD">🇹🇩 +235</option>
+                                            <option value="+269" data-country="KM">🇰🇲 +269</option>
+                                            <option value="+243" data-country="CD">🇨🇩 +243</option>
+                                            <option value="+242" data-country="CG">🇨🇬 +242</option>
+                                            <option value="+225" data-country="CI">🇨🇮 +225</option>
+                                            <option value="+253" data-country="DJ">🇩🇯 +253</option>
+                                            <option value="+20" data-country="EG">🇪🇬 +20</option>
+                                            <option value="+240" data-country="GQ">🇬🇶 +240</option>
+                                            <option value="+291" data-country="ER">🇪🇷 +291</option>
+                                            <option value="+268" data-country="SZ">🇸🇿 +268</option>
+                                            <option value="+251" data-country="ET">🇪🇹 +251</option>
+                                            <option value="+241" data-country="GA">🇬🇦 +241</option>
+                                            <option value="+220" data-country="GM">🇬🇲 +220</option>
+                                            <option value="+233" data-country="GH">🇬🇭 +233</option>
+                                            <option value="+224" data-country="GN">🇬🇳 +224</option>
+                                            <option value="+245" data-country="GW">🇬🇼 +245</option>
+                                            <option value="+254" data-country="KE">🇰🇪 +254</option>
+                                            <option value="+266" data-country="LS">🇱🇸 +266</option>
+                                            <option value="+231" data-country="LR">🇱🇷 +231</option>
+                                            <option value="+218" data-country="LY">🇱🇾 +218</option>
+                                            <option value="+261" data-country="MG">🇲🇬 +261</option>
+                                            <option value="+265" data-country="MW">🇲🇼 +265</option>
+                                            <option value="+223" data-country="ML">🇲🇱 +223</option>
+                                            <option value="+222" data-country="MR">🇲🇷 +222</option>
+                                            <option value="+230" data-country="MU">🇲🇺 +230</option>
+                                            <option value="+212" data-country="MA">🇲🇦 +212</option>
+                                            <option value="+258" data-country="MZ">🇲🇿 +258</option>
+                                            <option value="+264" data-country="NA">🇳🇦 +264</option>
+                                            <option value="+227" data-country="NE">🇳🇪 +227</option>
+                                            <option value="+250" data-country="RW">🇷🇼 +250</option>
+                                            <option value="+239" data-country="ST">🇸🇹 +239</option>
+                                            <option value="+221" data-country="SN">🇸🇳 +221</option>
+                                            <option value="+248" data-country="SC">🇸🇨 +248</option>
+                                            <option value="+232" data-country="SL">🇸🇱 +232</option>
+                                            <option value="+252" data-country="SO">🇸🇴 +252</option>
+                                            <option value="+27" data-country="ZA">🇿🇦 +27</option>
+                                            <option value="+211" data-country="SS">🇸🇸 +211</option>
+                                            <option value="+249" data-country="SD">🇸🇩 +249</option>
+                                            <option value="+255" data-country="TZ">🇹🇿 +255</option>
+                                            <option value="+228" data-country="TG">🇹🇬 +228</option>
+                                            <option value="+216" data-country="TN">🇹🇳 +216</option>
+                                            <option value="+256" data-country="UG">🇺🇬 +256</option>
+                                            <option value="+260" data-country="ZM">🇿🇲 +260</option>
+                                            <option value="+263" data-country="ZW">🇿🇼 +263</option>
+                                        </select>
+                                        <input type="tel" id="shipping-phone" name="shipping-phone" required placeholder="e.g. 8012345678">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-address">Delivery Address *</label>
+                                    <input type="text" id="shipping-address" name="shipping-address" required placeholder="Street address, house number">
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-country">Country *</label>
+                                    <select id="shipping-country" name="shipping-country" required>
+                                        <option value="Nigeria">Nigeria</option>
+                                        <option value="Algeria">Algeria</option>
+                                        <option value="Angola">Angola</option>
+                                        <option value="Benin">Benin</option>
+                                        <option value="Botswana">Botswana</option>
+                                        <option value="Burkina Faso">Burkina Faso</option>
+                                        <option value="Burundi">Burundi</option>
+                                        <option value="Cameroon">Cameroon</option>
+                                        <option value="Cape Verde">Cape Verde</option>
+                                        <option value="Central African Republic">Central African Republic</option>
+                                        <option value="Chad">Chad</option>
+                                        <option value="Comoros">Comoros</option>
+                                        <option value="DR Congo">DR Congo</option>
+                                        <option value="Republic of Congo">Republic of Congo</option>
+                                        <option value="Cote d'Ivoire">Cote d'Ivoire</option>
+                                        <option value="Djibouti">Djibouti</option>
+                                        <option value="Egypt">Egypt</option>
+                                        <option value="Equatorial Guinea">Equatorial Guinea</option>
+                                        <option value="Eritrea">Eritrea</option>
+                                        <option value="Eswatini">Eswatini</option>
+                                        <option value="Ethiopia">Ethiopia</option>
+                                        <option value="Gabon">Gabon</option>
+                                        <option value="Gambia">Gambia</option>
+                                        <option value="Ghana">Ghana</option>
+                                        <option value="Guinea">Guinea</option>
+                                        <option value="Guinea-Bissau">Guinea-Bissau</option>
+                                        <option value="Kenya">Kenya</option>
+                                        <option value="Lesotho">Lesotho</option>
+                                        <option value="Liberia">Liberia</option>
+                                        <option value="Libya">Libya</option>
+                                        <option value="Madagascar">Madagascar</option>
+                                        <option value="Malawi">Malawi</option>
+                                        <option value="Mali">Mali</option>
+                                        <option value="Mauritania">Mauritania</option>
+                                        <option value="Mauritius">Mauritius</option>
+                                        <option value="Morocco">Morocco</option>
+                                        <option value="Mozambique">Mozambique</option>
+                                        <option value="Namibia">Namibia</option>
+                                        <option value="Niger">Niger</option>
+                                        <option value="Rwanda">Rwanda</option>
+                                        <option value="Sao Tome and Principe">Sao Tome and Principe</option>
+                                        <option value="Senegal">Senegal</option>
+                                        <option value="Seychelles">Seychelles</option>
+                                        <option value="Sierra Leone">Sierra Leone</option>
+                                        <option value="Somalia">Somalia</option>
+                                        <option value="South Africa">South Africa</option>
+                                        <option value="South Sudan">South Sudan</option>
+                                        <option value="Sudan">Sudan</option>
+                                        <option value="Tanzania">Tanzania</option>
+                                        <option value="Togo">Togo</option>
+                                        <option value="Tunisia">Tunisia</option>
+                                        <option value="Uganda">Uganda</option>
+                                        <option value="Zambia">Zambia</option>
+                                        <option value="Zimbabwe">Zimbabwe</option>
+                                    </select>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="shipping-city">City *</label>
+                                        <input type="text" id="shipping-city" name="shipping-city" required placeholder="City">
+                                    </div>
+                                    <div class="form-group" id="state-group">
+                                        <label for="shipping-state">State *</label>
+                                        <select id="shipping-state" name="shipping-state" required>
+                                            <option value="">Select State</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" id="region-group" style="display:none;">
+                                        <label for="shipping-region">State/Region *</label>
+                                        <input type="text" id="shipping-region" name="shipping-region" placeholder="State or Region">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="shipping-notes">Order Notes (optional)</label>
+                                    <textarea id="shipping-notes" name="shipping-notes" placeholder="Special delivery instructions, landmarks, etc."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">Continue to Payment</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Payment -->
+                    <div class="checkout-step-content" data-step="2">
+                        <div class="checkout-form-section">
+                            <h2><i class="fas fa-university"></i> Bank Transfer Payment</h2>
+                            <p style="color:var(--text-secondary);margin-bottom:1.5rem;">Transfer the exact total amount to any of the bank accounts below, then upload your payment proof.</p>
+
+                            <h4 style="margin-bottom:1rem;font-family:var(--font-body);">Available Bank Accounts</h4>
+                            <div class="bank-accounts-grid" id="bank-accounts-checkout"></div>
+
+                            <h4 style="margin:1.5rem 0 1rem;font-family:var(--font-body);">Upload Payment Proof</h4>
+                            <p style="font-size:0.88rem;color:var(--text-secondary);margin-bottom:1rem;">Upload a screenshot or photo of your bank transfer receipt.</p>
+
+                            <div class="payment-proof-upload">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Click to upload payment proof</p>
+                                <p style="font-size:0.78rem;color:var(--text-muted);">PNG, JPG up to 5MB</p>
+                            </div>
+                            <input type="file" id="payment-proof-input" accept="image/*" class="hidden">
+
+                            <div style="display:flex;gap:10px;margin-top:1.5rem;">
+                                <button type="button" class="btn btn-outline" id="back-to-shipping"><i class="fas fa-arrow-left"></i> Back</button>
+                                <button type="button" class="btn btn-primary btn-lg" id="submit-payment" style="flex:1;"><i class="fas fa-check-circle"></i> Place Order</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Confirmation -->
+                    <div class="checkout-step-content" data-step="3">
+                        <div class="checkout-form-section">
+                            <div class="order-confirmation">
+                                <div class="success-icon"><i class="fas fa-check"></i></div>
+                                <h2>Order Placed Successfully!</h2>
+                                <p class="order-id" id="confirmation-order-id"></p>
+                                <p>Thank you for your order! We've received your payment information and will verify it shortly.</p>
+                                <p style="margin-bottom:2rem;color:var(--text-secondary);font-size:0.92rem;">You'll receive a notification once your payment is confirmed and your order is being prepared for delivery.</p>
+                                <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+                                    <a href="account" class="btn btn-primary">Track Your Order</a>
+                                    <a href="products" class="btn btn-outline">Continue Shopping</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="cart-summary">
+                    <h2>Order Summary</h2>
+                    <div id="checkout-items"></div>
+
+                    <!-- Promo Code Section -->
+                    <div class="promo-code-section">
+                        <div class="promo-code-input">
+                            <input type="text" id="promo-code" placeholder="Enter promo code">
+                            <button type="button" id="apply-promo-btn">Apply</button>
+                        </div>
+                        <div class="promo-message" id="promo-message"></div>
+                    </div>
+
+                    <div class="summary-row" style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border-light);">
+                        <span>Subtotal</span><span id="checkout-subtotal">&#8358;0</span>
+                    </div>
+                    <div class="summary-row promo-discount-row" id="discount-row" style="display:none;color:var(--green);">
+                        <span>Discount (<span id="discount-label"></span>)</span>
+                        <span>-<span id="checkout-discount">&#8358;0</span></span>
+                    </div>
+                    <div class="summary-row"><span>Shipping</span><span id="checkout-shipping">&#8358;0</span></div>
+                    <div class="summary-total"><span>Total</span><span id="checkout-total">&#8358;0</span></div>
+                    <div style="padding:1rem;background:var(--accent-light);border-radius:var(--radius-sm);margin-top:1rem;">
+                        <p style="font-size:0.82rem;color:var(--text-secondary);"><i class="fas fa-shield-alt" style="color:var(--accent);margin-right:6px;"></i> Your payment information is secure. We only accept bank transfers to verified accounts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-bottom">
+            <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <p>&copy; 2026 Everything Chommzy. All Rights Reserved.</p>
+                <p>Site by <a href="https://glosmotec.com" target="_blank" rel="noopener">Glosmotec</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <script src="chommzy.js?v=18" defer></script>
+</body>
+</html>

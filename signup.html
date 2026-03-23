@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <title>Create Account - Everything Chommzy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart" class="header-action-btn" title="Cart"><i class="fas fa-shopping-bag"></i><span class="badge cart-count" style="display:none;">0</span></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-page-split">
+            <div class="auth-image-side">
+                <div class="auth-brand">
+                    <div class="auth-icon"><i class="fas fa-user-plus"></i></div>
+                    <h2>Join <span class="accent">Chommzy</span></h2>
+                    <p>Create an account to unlock exclusive fashion collections and member-only perks.</p>
+                    <div class="auth-features">
+                        <div class="auth-feature"><i class="fas fa-gift"></i> Get 5% off with referral</div>
+                        <div class="auth-feature"><i class="fas fa-truck"></i> Free shipping over &#8358;100k</div>
+                        <div class="auth-feature"><i class="fas fa-heart"></i> Save your favorites</div>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-form-side">
+                <div class="auth-form-wrapper">
+                    <!-- Step 1: Signup Form -->
+                    <div id="signup-step-1" class="signup-step">
+                        <h1>Create Account</h1>
+                        <p>Join our community and start shopping today!</p>
+                        <form class="auth-form" id="signup-form">
+                            <div class="form-group">
+                                <label for="signup-name"><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="signup-name" required placeholder="Enter your full name">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-email"><i class="fas fa-envelope"></i> Email Address *</label>
+                                <input type="email" id="signup-email" required placeholder="your@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-phone"><i class="fas fa-phone"></i> Phone Number</label>
+                                <div class="phone-input-group">
+                                    <select id="phone-country-code" class="country-code-select" title="Select country code">
+                                        <option value="+234">🇳🇬 +234</option>
+                                        <option value="+250">🇷🇼 +250</option>
+                                        <option value="+254">🇰🇪 +254</option>
+                                        <option value="+255">🇹🇿 +255</option>
+                                        <option value="+256">🇺🇬 +256</option>
+                                        <option value="+257">🇧🇮 +257</option>
+                                        <option value="+243">🇨🇩 +243</option>
+                                        <option value="+27">🇿🇦 +27</option>
+                                        <option value="+233">🇬🇭 +233</option>
+                                        <option value="+225">🇨🇮 +225</option>
+                                        <option value="+237">🇨🇲 +237</option>
+                                        <option value="+221">🇸🇳 +221</option>
+                                        <option value="+212">🇲🇦 +212</option>
+                                        <option value="+20">🇪🇬 +20</option>
+                                        <option value="+251">🇪🇹 +251</option>
+                                        <option value="+263">🇿🇼 +263</option>
+                                        <option value="+260">🇿🇲 +260</option>
+                                        <option value="+265">🇲🇼 +265</option>
+                                        <option value="+258">🇲🇿 +258</option>
+                                        <option value="+267">🇧🇼 +267</option>
+                                        <option value="+264">🇳🇦 +264</option>
+                                        <option value="+229">🇧🇯 +229</option>
+                                        <option value="+228">🇹🇬 +228</option>
+                                        <option value="+226">🇧🇫 +226</option>
+                                        <option value="+223">🇲🇱 +223</option>
+                                        <option value="+227">🇳🇪 +227</option>
+                                        <option value="+235">🇹🇩 +235</option>
+                                        <option value="+241">🇬🇦 +241</option>
+                                        <option value="+240">🇬🇶 +240</option>
+                                        <option value="+236">🇨🇫 +236</option>
+                                        <option value="+242">🇨🇬 +242</option>
+                                        <option value="+244">🇦🇴 +244</option>
+                                        <option value="+231">🇱🇷 +231</option>
+                                        <option value="+232">🇸🇱 +232</option>
+                                        <option value="+224">🇬🇳 +224</option>
+                                        <option value="+245">🇬🇼 +245</option>
+                                        <option value="+220">🇬🇲 +220</option>
+                                        <option value="+222">🇲🇷 +222</option>
+                                        <option value="+216">🇹🇳 +216</option>
+                                        <option value="+213">🇩🇿 +213</option>
+                                        <option value="+218">🇱🇾 +218</option>
+                                        <option value="+249">🇸🇩 +249</option>
+                                        <option value="+211">🇸🇸 +211</option>
+                                        <option value="+291">🇪🇷 +291</option>
+                                        <option value="+253">🇩🇯 +253</option>
+                                        <option value="+252">🇸🇴 +252</option>
+                                        <option value="+269">🇰🇲 +269</option>
+                                        <option value="+261">🇲🇬 +261</option>
+                                        <option value="+230">🇲🇺 +230</option>
+                                        <option value="+248">🇸🇨 +248</option>
+                                        <option value="+238">🇨🇻 +238</option>
+                                        <option value="+239">🇸🇹 +239</option>
+                                    </select>
+                                    <input type="tel" id="signup-phone" placeholder="e.g. 8012345678">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password"><i class="fas fa-lock"></i> Password *</label>
+                                <div class="password-input-wrapper">
+                                    <input type="password" id="signup-password" required placeholder="Create a strong password" minlength="8">
+                                    <button type="button" class="password-toggle" aria-label="Toggle password visibility">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="form-hint"><i class="fas fa-shield-alt"></i> Min 8 characters with uppercase, lowercase, number & special character (!@#$%^&*)</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-referral"><i class="fas fa-gift"></i> Referral Code (Optional)</label>
+                                <input type="text" id="signup-referral" placeholder="Enter referral code if you have one">
+                                <div class="form-hint"><i class="fas fa-info-circle"></i> Got a referral code? Enter it to get 5% off your first order!</div>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane"></i> Send Verification Code</button>
+                        </form>
+                        <div class="auth-divider">or</div>
+                        <div class="auth-options">
+                            <a href="products" class="btn btn-outline btn-lg guest-btn"><i class="fas fa-shopping-bag"></i> Continue as Guest</a>
+                            <p>Already have an account? <a href="login">Sign In</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: OTP Verification -->
+                    <div id="signup-step-2" class="signup-step" style="display:none;">
+                        <h1><i class="fas fa-shield-alt" style="color:var(--accent);margin-right:10px;"></i>Verify Your Email</h1>
+                        <p>We've sent a 6-digit code to <strong id="signup-email-display"></strong></p>
+                        <form class="auth-form" id="signup-otp-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-key"></i> Enter Verification Code</label>
+                                <div class="otp-input-group">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                    <input type="text" class="otp-input" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                                </div>
+                            </div>
+                            <div class="otp-timer">
+                                <i class="fas fa-clock"></i> Code expires in <strong id="signup-otp-countdown">10:00</strong>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-check-circle"></i> Verify & Create Account</button>
+                        </form>
+                        <div class="auth-options" style="margin-top:1.5rem;">
+                            <p>Didn't receive the code? <a href="#" id="signup-resend-otp">Resend Code</a></p>
+                            <p><a href="#" id="signup-back-btn"><i class="fas fa-arrow-left"></i> Change email address</a></p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Success -->
+                    <div id="signup-step-3" class="signup-step" style="display:none;">
+                        <div class="reset-success">
+                            <div class="success-icon"><i class="fas fa-check"></i></div>
+                            <h1>Account Created!</h1>
+                            <p>Welcome to Everything Chommzy! Your account has been created successfully.</p>
+                            <a href="home" class="btn btn-primary btn-lg"><i class="fas fa-shopping-bag"></i> Start Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="chommzy.js?v=18" defer></script>
+</body>
+</html>

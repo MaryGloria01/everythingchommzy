@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <title>My Account - Everything Chommzy</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <link rel="stylesheet" href="chommzy.css?v=19">
+</head>
+<body>
+    <div class="announcement-bar">
+        Free shipping on orders over &#8358;100,000 &nbsp;|&nbsp; <a href="https://wa.me/2347062719113" target="_blank" rel="noopener">WhatsApp: +234 706 271 9113</a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-main">
+            <div class="container">
+                <a href="home" class="brand-logo">Everything <span>Chommzy</span></a>
+                <div class="search-bar-wrapper">
+                    <input type="search" placeholder="Search for wigs, dresses, shoes...">
+                    <button type="button" aria-label="Search"><i class="fas fa-search"></i></button>
+                </div>
+                <div class="header-actions">
+                    <a href="account" class="header-action-btn auth-header-btn" title="Account"><i class="fas fa-user"></i></a>
+                    <a href="wishlist" class="header-action-btn" title="Wishlist"><i class="far fa-heart"></i><span class="badge wishlist-count" style="display:none;">0</span></a>
+                    <a href="cart" class="header-action-btn" title="Cart"><i class="fas fa-shopping-bag"></i><span class="badge cart-count" style="display:none;">0</span></a>
+                </div>
+            </div>
+        </div>
+        <nav class="main-nav">
+            <div class="container">
+                <button class="mobile-nav-toggle" id="mobile-nav-toggle" type="button" aria-label="Menu"><i class="fas fa-bars"></i> Menu</button>
+                <div class="nav-links" id="main-nav">
+                    <a href="home" class="nav-link">Home</a>
+                    <a href="products" class="nav-link">Shop</a>
+                    <a href="products?category=wigs" class="nav-link">Wigs</a>
+                    <a href="products?category=clothing" class="nav-link">Clothing</a>
+                    <a href="products?category=shoes" class="nav-link">Shoes</a>
+                    <a href="products?category=accessories" class="nav-link">Accessories</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="account-page">
+        <div class="container">
+            <div class="account-layout">
+                <!-- Sidebar -->
+                <aside class="account-sidebar">
+                    <div class="account-user-info">
+                        <div class="account-avatar" id="account-initials">?</div>
+                        <h3 id="account-name">User</h3>
+                        <p id="account-email">user@email.com</p>
+                    </div>
+                    <nav class="account-nav">
+                        <a href="#" data-section="section-orders" class="active"><i class="fas fa-receipt"></i> My Orders</a>
+                        <a href="#" data-section="section-referrals"><i class="fas fa-gift"></i> Referrals</a>
+                        <a href="#" data-section="section-notifications"><i class="fas fa-bell"></i> Notifications <span class="notif-badge hidden" id="notif-count">0</span></a>
+                        <a href="#" data-section="section-profile"><i class="fas fa-user-edit"></i> Profile</a>
+                        <a href="#" data-section="section-security"><i class="fas fa-shield-alt"></i> Security</a>
+                        <a href="wishlist"><i class="far fa-heart"></i> Wishlist</a>
+                        <a href="#" class="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </nav>
+                </aside>
+
+                <!-- Content -->
+                <div class="account-content">
+                    <!-- Orders Section -->
+                    <div class="account-section active" id="section-orders">
+                        <h2>My Orders</h2>
+                        <div id="account-orders"></div>
+                    </div>
+
+                    <!-- Referrals Section -->
+                    <div class="account-section" id="section-referrals">
+                        <h2>Referral Program</h2>
+                        <div class="referral-section">
+                            <div class="referral-hero">
+                                <div class="referral-icon"><i class="fas fa-gift"></i></div>
+                                <h3>Invite Friends & Earn Rewards!</h3>
+                                <p>Share your referral code with friends. When they sign up and make their first purchase, you both get rewarded!</p>
+                            </div>
+
+                            <div class="referral-rewards">
+                                <div class="reward-card" style="max-width: 280px; margin: 0 auto;">
+                                    <div class="reward-icon"><i class="fas fa-user-plus"></i></div>
+                                    <h4>Your Friend Gets</h4>
+                                    <p class="reward-amount">5% OFF</p>
+                                    <span>Their First Order</span>
+                                </div>
+                            </div>
+
+                            <div class="referral-code-box">
+                                <label>Your Referral Code</label>
+                                <div class="code-display">
+                                    <span id="my-referral-code">------</span>
+                                    <button type="button" class="btn btn-sm btn-primary" id="copy-referral-code"><i class="fas fa-copy"></i> Copy</button>
+                                </div>
+                            </div>
+
+                            <div class="referral-link-box">
+                                <label for="my-referral-link">Share Your Link</label>
+                                <div class="link-display">
+                                    <input type="text" id="my-referral-link" readonly placeholder="Your referral link">
+                                    <button type="button" class="btn btn-sm btn-primary" id="copy-referral-link"><i class="fas fa-link"></i> Copy</button>
+                                </div>
+                            </div>
+
+                            <div class="share-buttons">
+                                <span>Share via:</span>
+                                <a href="#" id="share-whatsapp" class="share-btn whatsapp" title="Share on WhatsApp" aria-label="Share on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                                <a href="#" id="share-facebook" class="share-btn facebook" title="Share on Facebook" aria-label="Share on Facebook"><i class="fab fa-facebook"></i></a>
+                                <a href="#" id="share-twitter" class="share-btn twitter" title="Share on Twitter" aria-label="Share on Twitter"><i class="fab fa-twitter"></i></a>
+                            </div>
+
+                            <div class="referral-stats">
+                                <h4>Your Referral Stats</h4>
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="total-referrals">0</span>
+                                        <span class="stat-label">Total Referrals</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="successful-referrals">0</span>
+                                        <span class="stat-label">Successful</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-number" id="referral-earnings">&#8358;0</span>
+                                        <span class="stat-label">Total Earned</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="referral-history">
+                                <h4>Referral History</h4>
+                                <div id="referral-history-list"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Section -->
+                    <div class="account-section" id="section-notifications">
+                        <h2>Notifications</h2>
+                        <div id="notifications-list"></div>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div class="account-section" id="section-profile">
+                        <h2>My Profile</h2>
+                        <form id="profile-form" style="max-width:500px;">
+                            <div class="form-group">
+                                <label for="profile-name">Full Name</label>
+                                <input type="text" id="profile-name" disabled>
+                                <div class="form-hint">Name cannot be changed</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-email">Email Address</label>
+                                <input type="email" id="profile-email" disabled>
+                                <div class="form-hint">Email cannot be changed</div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profile-phone">Phone Number</label>
+                                <input type="tel" id="profile-phone" placeholder="e.g. 08012345678">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                        </form>
+                    </div>
+
+                    <!-- Security Section -->
+                    <div class="account-section" id="section-security">
+                        <h2>Security Settings</h2>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="account-card" style="max-width:600px;padding:1.5rem;border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:1.5rem;">
+                            <h3 style="font-size:1.1rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:8px;">
+                                <i class="fas fa-mobile-alt" style="color:#f47920;"></i> Two-Factor Authentication
+                            </h3>
+                            <p style="color:#6b7c93;font-size:0.9rem;margin-bottom:1rem;">Add an extra layer of security to your account using an authenticator app.</p>
+
+                            <div id="user-2fa-status">
+                                <!-- 2FA Disabled View -->
+                                <div id="user-2fa-disabled">
+                                    <button type="button" class="btn btn-primary" id="user-setup-2fa-btn">
+                                        <i class="fas fa-lock"></i> Enable 2FA
+                                    </button>
+                                </div>
+
+                                <!-- 2FA Setup View -->
+                                <div id="user-2fa-setup" style="display:none;">
+                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+                                        <div>
+                                            <p style="font-size:0.9rem;margin-bottom:0.75rem;"><strong>Step 1:</strong> Scan this QR code with Google Authenticator or Authy</p>
+                                            <div style="background:#f5f5f5;padding:1rem;border-radius:8px;text-align:center;">
+                                                <img id="user-2fa-qr-img" src="" alt="QR Code" style="max-width:180px;">
+                                            </div>
+                                            <p style="margin-top:0.5rem;font-size:0.75rem;color:#6b7c93;">Or enter manually: <code id="user-2fa-secret" style="background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:0.7rem;"></code></p>
+                                        </div>
+                                        <div>
+                                            <p style="font-size:0.9rem;margin-bottom:0.75rem;"><strong>Step 2:</strong> Enter the 6-digit code</p>
+                                            <form id="user-verify-2fa-form">
+                                                <div class="form-group" style="margin-bottom:1rem;">
+                                                    <input type="text" id="user-2fa-code" maxlength="6" inputmode="numeric" placeholder="000000" style="font-size:1.3rem;text-align:center;letter-spacing:6px;font-family:monospace;" autocomplete="one-time-code">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Verify & Enable</button>
+                                                <button type="button" class="btn btn-outline" id="user-cancel-2fa" style="margin-left:0.5rem;">Cancel</button>
+                                            </form>
+                                            <div id="user-backup-codes" style="display:none;margin-top:1rem;padding:0.75rem;background:#fef3c7;border-radius:8px;font-size:0.85rem;">
+                                                <p style="font-weight:600;margin-bottom:0.25rem;"><i class="fas fa-exclamation-triangle" style="color:#d97706;"></i> Save these backup codes!</p>
+                                                <div id="user-backup-codes-list" style="font-family:monospace;margin-top:0.5rem;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- 2FA Enabled View -->
+                                <div id="user-2fa-enabled" style="display:none;">
+                                    <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:#d1fae5;border-radius:8px;margin-bottom:1rem;">
+                                        <i class="fas fa-check-circle" style="font-size:1.5rem;color:#10b981;"></i>
+                                        <div>
+                                            <p style="font-weight:600;color:#065f46;margin:0;">2FA is Enabled</p>
+                                            <p style="font-size:0.85rem;color:#047857;margin:0;">Your account is protected.</p>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-outline" id="user-disable-2fa-btn" style="color:#dc2626;border-color:#dc2626;">
+                                        <i class="fas fa-times"></i> Disable 2FA
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disable 2FA Modal -->
+                        <div id="user-disable-2fa-modal" class="modal-overlay" style="display:none;">
+                            <div class="modal-content" style="max-width:400px;">
+                                <button class="modal-close"><i class="fas fa-times"></i></button>
+                                <h3 style="margin-bottom:1rem;"><i class="fas fa-exclamation-triangle" style="color:#dc2626;"></i> Disable 2FA</h3>
+                                <p style="margin-bottom:1rem;color:#6b7c93;font-size:0.9rem;">Enter your password and current 2FA code to disable.</p>
+                                <form id="user-disable-2fa-form">
+                                    <div class="form-group" style="margin-bottom:1rem;">
+                                        <label>Password</label>
+                                        <input type="password" id="user-disable-password" required placeholder="Enter your password">
+                                    </div>
+                                    <div class="form-group" style="margin-bottom:1rem;">
+                                        <label>2FA Code</label>
+                                        <input type="text" id="user-disable-code" maxlength="6" inputmode="numeric" placeholder="000000" autocomplete="one-time-code">
+                                    </div>
+                                    <button type="submit" class="btn" style="background:#dc2626;color:#fff;width:100%;">Disable 2FA</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Immediately restore saved section before page renders completely
+        (function() {
+            var saved = localStorage.getItem('chommzyAccountSection');
+            if (saved && saved !== 'section-orders') {
+                var savedSection = document.getElementById(saved);
+                var savedLink = document.querySelector('.account-nav a[data-section="' + saved + '"]');
+                if (savedSection && savedLink) {
+                    // Remove active from defaults
+                    var activeSection = document.querySelector('.account-section.active');
+                    var activeLink = document.querySelector('.account-nav a.active');
+                    if (activeSection) activeSection.classList.remove('active');
+                    if (activeLink) activeLink.classList.remove('active');
+                    // Add active to saved
+                    savedSection.classList.add('active');
+                    savedLink.classList.add('active');
+                }
+            }
+        })();
+    </script>
+
+    <footer class="main-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3>Everything <span>Chommzy</span></h3>
+                        <p>Your one-stop destination for premium wigs, fashion, shoes, and accessories.</p>
+                        <div class="footer-social">
+                            <a href="https://www.instagram.com/jullykatty_001" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://www.tiktok.com/@jullykatty001" target="_blank" rel="noopener" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                            <a href="https://www.facebook.com/chioma.juliet.ezeugo" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                            <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="mailto:support@everythingchommzy.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                        </div>
+                    </div>
+                    <div class="footer-column"><h4>Shop</h4><a href="products">All Products</a><a href="products?category=wigs">Wigs</a><a href="products?category=clothing">Clothing</a><a href="products?category=shoes">Shoes</a></div>
+                    <div class="footer-column"><h4>Account</h4><a href="login">Login</a><a href="signup">Register</a><a href="cart">Cart</a><a href="account">My Orders</a></div>
+                    <div class="footer-column"><h4>Support</h4><a href="contact">Contact Us</a><a href="faq">FAQ</a><a href="faq#shipping">Shipping Info</a><a href="faq#returns">Returns Policy</a></div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom"><div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;"><p>&copy; 2026 Everything Chommzy. All Rights Reserved.</p><div><a href="privacy" style="color:inherit;margin-right:15px;">Privacy Policy</a><a href="terms" style="color:inherit;">Terms & Conditions</a></div></div></div>
+    </footer>
+
+    <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
+    <button class="back-to-top" type="button" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
+    <script src="chommzy.js?v=19" defer></script>
+</body>
+</html>

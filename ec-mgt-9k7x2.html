@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//images.pexels.com">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Access</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="fav/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="fav/favicon-16x16.png">
+    <link rel="shortcut icon" href="fav/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #1a3a5c 0%, #0d1f30 100%);
+            padding: 20px;
+        }
+        .admin-login-container {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 420px;
+            padding: 3rem 2.5rem;
+        }
+        .admin-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .admin-logo i {
+            font-size: 3rem;
+            color: #1a3a5c;
+            background: linear-gradient(135deg, #f47920, #ff9a56);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .admin-logo h1 {
+            font-size: 1.5rem;
+            color: #1a3a5c;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+        .admin-logo p {
+            color: #6b7c93;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #1a3a5c;
+            margin-bottom: 0.5rem;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: #f47920;
+            box-shadow: 0 0 0 4px rgba(244, 121, 32, 0.1);
+        }
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #f47920, #ff9a56);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 0.5rem;
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(244, 121, 32, 0.3);
+        }
+        .error-message {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .error-message.show { display: block; }
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7c93;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .back-link:hover { color: #1a3a5c; }
+        .password-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .password-input-wrapper input {
+            padding-right: 45px;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #6b7c93;
+            font-size: 1rem;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .password-toggle:hover {
+            color: #1a3a5c;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-logo">
+            <i class="fas fa-shield-alt"></i>
+            <h1>Admin Access</h1>
+            <p>Everything Chommzy Management</p>
+        </div>
+
+        <div class="error-message" id="error-message">
+            Invalid credentials. Please try again.
+        </div>
+
+        <form id="admin-login-form">
+            <div class="form-group">
+                <label for="admin-email">Email Address</label>
+                <input type="email" id="admin-email" required placeholder="Enter admin email">
+            </div>
+            <div class="form-group">
+                <label for="admin-password">Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="admin-password" required placeholder="Enter password">
+                    <button type="button" class="password-toggle" id="toggle-password" aria-label="Toggle password visibility">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+            </div>
+            <button type="submit" class="login-btn">
+                <i class="fas fa-lock"></i> Sign In
+            </button>
+        </form>
+
+        <!-- 2FA Verification Form (hidden by default) -->
+        <div id="2fa-verification" style="display:none;">
+            <div style="text-align:center;margin-bottom:1.5rem;">
+                <i class="fas fa-shield-alt" style="font-size:3rem;color:#f47920;"></i>
+                <h3 style="margin-top:0.5rem;color:#1a3a5c;">Two-Factor Authentication</h3>
+                <p style="color:#6b7c93;font-size:0.9rem;">Enter the 6-digit code from your authenticator app</p>
+            </div>
+            <form id="2fa-form">
+                <div class="form-group">
+                    <input type="text" id="2fa-code" maxlength="6" inputmode="numeric" placeholder="000000"
+                           style="font-size:1.8rem;text-align:center;letter-spacing:10px;font-family:monospace;" autocomplete="one-time-code">
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-check-circle"></i> Verify
+                </button>
+            </form>
+            <p style="text-align:center;margin-top:1rem;font-size:0.85rem;color:#6b7c93;">
+                <a href="#" id="back-to-login" style="color:#f47920;"><i class="fas fa-arrow-left"></i> Back to login</a>
+            </p>
+        </div>
+
+        <a href="home" class="back-link"><i class="fas fa-arrow-left"></i> Back to Store</a>
+    </div>
+
+    <script>
+        const form = document.getElementById('admin-login-form');
+        const errorMsg = document.getElementById('error-message');
+        const submitBtn = form.querySelector('button[type="submit"]');
+
+        // Password visibility toggle
+        const togglePassword = document.getElementById('toggle-password');
+        const passwordInput = document.getElementById('admin-password');
+        togglePassword.addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            togglePassword.innerHTML = isPassword ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+        });
+
+        // Check if using API (not local file)
+        const useAPI = window.location.protocol !== 'file:' && !window.location.hostname.includes('localhost') && !window.location.hostname.includes('127.0.0.1');
+
+        // 2FA elements
+        const twoFASection = document.getElementById('2fa-verification');
+        const twoFAForm = document.getElementById('2fa-form');
+        const backToLogin = document.getElementById('back-to-login');
+        let pendingTempToken = null;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('admin-email').value.trim();
+            const password = document.getElementById('admin-password').value;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+
+            // Try API first if available
+            if (useAPI) {
+                try {
+                    const response = await fetch('/api/auth.php?action=admin-login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    const result = await response.json();
+
+                    if (result.success && result.data) {
+                        // Check if 2FA is required
+                        if (result.data.requires_2fa) {
+                            pendingTempToken = result.data.temp_token;
+                            form.style.display = 'none';
+                            twoFASection.style.display = 'block';
+                            document.getElementById('2fa-code').focus();
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = '<i class="fas fa-lock"></i> Sign In';
+                            return;
+                        }
+
+                        // Normal login success
+                        const adminSession = {
+                            id: result.data.id,
+                            email: result.data.email,
+                            name: result.data.name,
+                            role: 'admin',
+                            token: result.data.token,
+                            loggedInAt: new Date().toISOString()
+                        };
+                        localStorage.setItem('chommzyAdminSession', JSON.stringify(adminSession));
+                        localStorage.setItem('chommzyCurrentUser', JSON.stringify(adminSession));
+                        window.location.href = 'adminacc.html';
+                        return;
+                    }
+
+                    // Login failed
+                    errorMsg.textContent = result.message || 'Invalid credentials. Please try again.';
+                    errorMsg.classList.add('show');
+                    setTimeout(() => errorMsg.classList.remove('show'), 4000);
+                } catch (error) {
+                    console.log('API not available, using fallback');
+                }
+            }
+
+            // Admin login requires server authentication only - no client-side fallback
+            errorMsg.textContent = 'Invalid credentials. Please try again.';
+            errorMsg.classList.add('show');
+            setTimeout(() => errorMsg.classList.remove('show'), 4000);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="fas fa-lock"></i> Sign In';
+        });
+
+        // 2FA Form submission
+        twoFAForm?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const code = document.getElementById('2fa-code').value;
+            const verifyBtn = twoFAForm.querySelector('button[type="submit"]');
+
+            if (!pendingTempToken) {
+                errorMsg.textContent = 'Session expired. Please login again.';
+                errorMsg.classList.add('show');
+                backToLogin.click();
+                return;
+            }
+
+            verifyBtn.disabled = true;
+            verifyBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verifying...';
+
+            try {
+                const response = await fetch('/api/two-factor.php?action=verify-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ temp_token: pendingTempToken, code })
+                });
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    const adminSession = {
+                        id: result.data.id,
+                        email: result.data.email,
+                        name: result.data.name,
+                        role: 'admin',
+                        token: result.data.token,
+                        loggedInAt: new Date().toISOString()
+                    };
+                    localStorage.setItem('chommzyAdminSession', JSON.stringify(adminSession));
+                    localStorage.setItem('chommzyCurrentUser', JSON.stringify(adminSession));
+                    window.location.href = 'adminacc.html';
+                    return;
+                }
+
+                errorMsg.textContent = result.message || 'Invalid verification code';
+                errorMsg.classList.add('show');
+                setTimeout(() => errorMsg.classList.remove('show'), 4000);
+            } catch (error) {
+                errorMsg.textContent = 'Verification failed. Please try again.';
+                errorMsg.classList.add('show');
+            }
+
+            verifyBtn.disabled = false;
+            verifyBtn.innerHTML = '<i class="fas fa-check-circle"></i> Verify';
+        });
+
+        // Back to login
+        backToLogin?.addEventListener('click', (e) => {
+            e.preventDefault();
+            twoFASection.style.display = 'none';
+            form.style.display = 'block';
+            document.getElementById('2fa-code').value = '';
+            pendingTempToken = null;
+        });
+
+        // If already logged in as admin, redirect
+        const adminSession = localStorage.getItem('chommzyAdminSession');
+        if (adminSession) {
+            window.location.href = 'adminacc.html';
+        }
+    </script>
+</body>
+</html>
