@@ -1,6 +1,8 @@
 // ============================================
 // EVERYTHING CHOMMZY - Complete E-Commerce Engine
+// Version: 5.2 - Dynamic categories & colors from database
 // ============================================
+console.log('%c CHOMMZY JS v5.4 - DYNAMIC PRICE FIX ', 'background: #28a745; color: white; font-size: 14px; padding: 5px;');
 
 // ===========================================
 // SECURITY: HTML Escape function to prevent XSS attacks
@@ -95,45 +97,9 @@ if (window.location.protocol === 'file:') {
 }
 
 // ===========================================
-// 1. DATA STORE - Products, Default Admin, etc.
+// 1. DATA STORE - Default Admin, States, etc.
 // ===========================================
-const ALL_PRODUCTS = [
-    // --- WIGS ---
-    { id: 1, name: 'Luxury Body Wave Lace Front Wig', price: 85000, originalPrice: 110000, image: 'https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['14"','16"','18"','20"','22"'], description: 'Premium 100% human hair body wave lace front wig. Pre-plucked natural hairline with baby hairs for the most natural look. Heat resistant and can be styled, colored, and bleached.', rating: 4.8, reviews: 24, badge: 'hot', inStock: true },
-    { id: 2, name: 'Deep Wave HD Lace Closure Wig', price: 120000, originalPrice: 150000, image: 'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['16"','18"','20"','24"'], description: 'Invisible HD lace closure wig with deep wave texture. Melts seamlessly into all skin tones. Glueless design for easy wear and removal.', rating: 4.9, reviews: 31, badge: 'new', inStock: true },
-    { id: 3, name: 'Straight Bone Silk Wig', price: 95000, originalPrice: null, image: 'https://images.pexels.com/photos/3065171/pexels-photo-3065171.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['14"','16"','18"','20"'], description: 'Sleek and silky straight bone wig made from virgin human hair. Features a natural-looking hairline and comfortable adjustable cap.', rating: 4.7, reviews: 18, badge: null, inStock: true },
-    { id: 4, name: 'Kinky Curly Human Hair Wig', price: 110000, originalPrice: 135000, image: 'https://images.pexels.com/photos/973406/pexels-photo-973406.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Brown', sizes: ['14"','16"','18"'], description: 'Beautiful kinky curly texture wig that mimics natural African hair. Lightweight, breathable cap construction for all-day comfort.', rating: 4.6, reviews: 15, badge: 'sale', inStock: true },
-    { id: 5, name: 'Short Bob Cut Lace Front Wig', price: 65000, originalPrice: null, image: 'https://images.pexels.com/photos/3651597/pexels-photo-3651597.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['8"','10"','12"'], description: 'Chic and trendy bob cut wig perfect for a bold look. Easy to maintain and style for everyday wear.', rating: 4.5, reviews: 22, badge: null, inStock: true },
-    { id: 6, name: 'Water Wave Frontal Wig', price: 135000, originalPrice: 165000, image: 'https://images.pexels.com/photos/2878741/pexels-photo-2878741.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['18"','20"','22"','26"'], description: 'Stunning water wave texture on a 13x4 lace frontal. Creates beautiful, flowing waves that look completely natural.', rating: 4.9, reviews: 28, badge: 'hot', inStock: true },
-    { id: 7, name: 'Pixie Cut Short Wig', price: 45000, originalPrice: null, image: 'https://images.pexels.com/photos/3764579/pexels-photo-3764579.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Black', sizes: ['6"'], description: 'Bold and confident pixie cut wig. Low maintenance, high impact style perfect for the modern woman on the go.', rating: 4.4, reviews: 12, badge: null, inStock: true },
-    { id: 8, name: 'Burgundy Highlight Wig', price: 98000, originalPrice: 120000, image: 'https://images.pexels.com/photos/2531556/pexels-photo-2531556.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'wigs', color: 'Red', sizes: ['16"','18"','20"'], description: 'Eye-catching burgundy highlight wig with body wave texture. Stand out from the crowd with this unique color blend.', rating: 4.7, reviews: 19, badge: 'sale', inStock: true },
-
-    // --- CLOTHING ---
-    { id: 9, name: 'Silk Evening Gown', price: 67500, originalPrice: 85000, image: 'https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Black', sizes: ['S','M','L','XL'], description: 'Stunning silk evening gown perfect for formal occasions. Features an elegant drape and flattering silhouette.', rating: 4.8, reviews: 16, badge: 'hot', inStock: true },
-    { id: 10, name: 'Casual Linen Jumpsuit', price: 38000, originalPrice: null, image: 'https://images.pexels.com/photos/2220316/pexels-photo-2220316.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'White', sizes: ['S','M','L'], description: 'Effortlessly chic linen jumpsuit for casual outings. Comfortable, breathable fabric perfect for warm weather.', rating: 4.5, reviews: 11, badge: null, inStock: true },
-    { id: 11, name: 'Ankara Print Maxi Dress', price: 25000, originalPrice: null, image: 'https://images.pexels.com/photos/2065195/pexels-photo-2065195.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Multi', sizes: ['S','M','L','XL','XXL'], description: 'Beautiful Ankara print maxi dress celebrating African heritage. Vibrant colors and comfortable fit for any occasion.', rating: 4.6, reviews: 20, badge: null, inStock: true },
-    { id: 12, name: 'Off-Shoulder Cocktail Dress', price: 42000, originalPrice: 55000, image: 'https://images.pexels.com/photos/985635/pexels-photo-985635.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Red', sizes: ['S','M','L'], description: 'Elegant off-shoulder cocktail dress perfect for parties and special events. Flattering fit with a modern twist.', rating: 4.7, reviews: 14, badge: 'sale', inStock: true },
-    { id: 13, name: 'Sequin Party Dress', price: 55000, originalPrice: null, image: 'https://images.pexels.com/photos/3622614/pexels-photo-3622614.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Gold', sizes: ['S','M','L'], description: 'Dazzling sequin party dress that commands attention. Perfect for nights out and celebrations.', rating: 4.8, reviews: 9, badge: 'new', inStock: true },
-    { id: 14, name: 'Chiffon Blouse', price: 18000, originalPrice: null, image: 'https://images.pexels.com/photos/1030946/pexels-photo-1030946.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'White', sizes: ['S','M','L','XL'], description: 'Lightweight chiffon blouse with delicate details. Versatile piece that pairs beautifully with skirts or trousers.', rating: 4.3, reviews: 8, badge: null, inStock: true },
-    { id: 15, name: 'High-Waist Palazzo Pants', price: 22000, originalPrice: null, image: 'https://images.pexels.com/photos/2529157/pexels-photo-2529157.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Black', sizes: ['S','M','L','XL'], description: 'Flowing high-waist palazzo pants for a sophisticated look. Comfortable elastic waist with a flattering wide leg.', rating: 4.4, reviews: 7, badge: null, inStock: true },
-    { id: 16, name: 'Denim Jacket', price: 35000, originalPrice: 42000, image: 'https://images.pexels.com/photos/1021693/pexels-photo-1021693.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'clothing', color: 'Blue', sizes: ['S','M','L','XL'], description: 'Classic denim jacket with a modern fit. A wardrobe essential that never goes out of style.', rating: 4.6, reviews: 13, badge: null, inStock: true },
-
-    // --- SHOES ---
-    { id: 17, name: 'Stiletto Heel Pumps', price: 42000, originalPrice: 52000, image: 'https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'Red', sizes: ['37','38','39','40','41'], description: 'Classic stiletto heel pumps in a bold red. Elevate any outfit with these stunning statement shoes.', rating: 4.7, reviews: 21, badge: 'sale', inStock: true },
-    { id: 18, name: 'Leather Ankle Boots', price: 54000, originalPrice: null, image: 'https://images.pexels.com/photos/2562992/pexels-photo-2562992.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'Black', sizes: ['37','38','39','40','41','42'], description: 'Premium leather ankle boots with a comfortable block heel. Perfect for both casual and dressed-up looks.', rating: 4.8, reviews: 17, badge: 'hot', inStock: true },
-    { id: 19, name: 'Platform Sandals', price: 28000, originalPrice: null, image: 'https://images.pexels.com/photos/1240892/pexels-photo-1240892.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'Brown', sizes: ['37','38','39','40'], description: 'Trendy platform sandals perfect for summer. Comfortable sole with adjustable straps for the perfect fit.', rating: 4.4, reviews: 10, badge: null, inStock: true },
-    { id: 20, name: 'Pointed Toe Flats', price: 19500, originalPrice: null, image: 'https://images.pexels.com/photos/1102777/pexels-photo-1102777.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'Black', sizes: ['36','37','38','39','40'], description: 'Elegant pointed toe flats for everyday sophistication. Cushioned insole for all-day comfort.', rating: 4.5, reviews: 14, badge: null, inStock: true },
-    { id: 21, name: 'Block Heel Mules', price: 33000, originalPrice: 40000, image: 'https://images.pexels.com/photos/1537671/pexels-photo-1537671.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'White', sizes: ['37','38','39','40'], description: 'Stylish block heel mules that combine comfort and fashion. Easy slip-on design for effortless elegance.', rating: 4.6, reviews: 11, badge: null, inStock: true },
-    { id: 22, name: 'Embellished Sneakers', price: 26000, originalPrice: null, image: 'https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'shoes', color: 'White', sizes: ['37','38','39','40','41'], description: 'Fashion-forward embellished sneakers for the style-conscious. Comfortable enough for all-day wear with eye-catching details.', rating: 4.3, reviews: 8, badge: 'new', inStock: true },
-
-    // --- ACCESSORIES ---
-    { id: 23, name: 'Gold Statement Necklace', price: 33000, originalPrice: null, image: 'https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'Gold', sizes: [], description: 'Bold gold statement necklace that transforms any outfit. Hypoallergenic material with a stunning design.', rating: 4.7, reviews: 19, badge: 'hot', inStock: true },
-    { id: 24, name: 'Designer Handbag', price: 157000, originalPrice: 195000, image: 'https://images.pexels.com/photos/1204464/pexels-photo-1204464.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'Brown', sizes: [], description: 'Luxurious designer handbag crafted from premium leather. Spacious interior with multiple compartments for organization.', rating: 4.9, reviews: 26, badge: 'hot', inStock: true },
-    { id: 25, name: 'Pearl Earring Set', price: 15000, originalPrice: null, image: 'https://images.pexels.com/photos/1413420/pexels-photo-1413420.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'White', sizes: [], description: 'Elegant pearl earring set for a timeless look. Includes stud and drop styles for versatile wear.', rating: 4.5, reviews: 12, badge: null, inStock: true },
-    { id: 26, name: 'Leather Belt', price: 12000, originalPrice: null, image: 'https://images.pexels.com/photos/904350/pexels-photo-904350.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'Black', sizes: ['S','M','L'], description: 'Premium leather belt with a polished buckle. A wardrobe essential that adds a finishing touch to any outfit.', rating: 4.4, reviews: 9, badge: null, inStock: true },
-    { id: 27, name: 'Silk Head Scarf', price: 8500, originalPrice: null, image: 'https://images.pexels.com/photos/2584269/pexels-photo-2584269.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'Multi', sizes: [], description: 'Luxurious silk head scarf with a beautiful print. Can be worn as a headwrap, neck scarf, or bag accessory.', rating: 4.6, reviews: 15, badge: null, inStock: true },
-    { id: 28, name: 'Oversized Sunglasses', price: 18000, originalPrice: 22000, image: 'https://images.pexels.com/photos/701877/pexels-photo-701877.jpeg?auto=compress&cs=tinysrgb&w=600', category: 'accessories', color: 'Black', sizes: [], description: 'Fashion-forward oversized sunglasses with UV400 protection. Make a statement while protecting your eyes in style.', rating: 4.5, reviews: 11, badge: 'sale', inStock: true }
-];
+// Note: Products are stored in the database only - managed via Admin panel
 
 const NIGERIAN_STATES = ['Abia','Adamawa','Akwa Ibom','Anambra','Bauchi','Bayelsa','Benue','Borno','Cross River','Delta','Ebonyi','Edo','Ekiti','Enugu','FCT Abuja','Gombe','Imo','Jigawa','Kaduna','Kano','Katsina','Kebbi','Kogi','Kwara','Lagos','Nasarawa','Niger','Ogun','Ondo','Osun','Oyo','Plateau','Rivers','Sokoto','Taraba','Yobe','Zamfara'];
 
@@ -151,7 +117,34 @@ const TESTIMONIALS = [
 // ===========================================
 // 2. UTILITY FUNCTIONS
 // ===========================================
-const formatPrice = (price) => `\u20A6${price.toLocaleString()}`;
+// Format price with Naira symbol and commas (no decimals for whole numbers)
+const formatPrice = (price) => {
+    const num = parseFloat(price) || 0;
+    // Check if it's a whole number
+    if (num % 1 === 0) {
+        return `\u20A6${num.toLocaleString('en-NG', { maximumFractionDigits: 0 })}`;
+    }
+    return `\u20A6${num.toLocaleString('en-NG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+};
+
+// Parse price string with commas to number
+const parsePrice = (priceStr) => {
+    if (typeof priceStr === 'number') return priceStr;
+    // Remove currency symbol, commas, and spaces
+    const cleaned = String(priceStr).replace(/[₦\s,]/g, '');
+    return parseFloat(cleaned) || 0;
+};
+
+// Format price input while typing (add commas)
+const formatPriceInput = (input) => {
+    let value = input.value.replace(/[^0-9.]/g, '');
+    // Handle decimal
+    const parts = value.split('.');
+    // Add commas to integer part
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    input.value = parts.join('.');
+};
+
 const generateId = () => 'ORD-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).substring(2, 6).toUpperCase();
 const getInitials = (name) => name ? name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2) : '?';
 
@@ -232,6 +225,28 @@ const API = {
         return admin?.token || null;
     },
 
+    // Handle expired session - auto logout
+    handleSessionExpired() {
+        // Check if we're on an admin page
+        const isAdminPage = window.location.pathname.includes('adminacc');
+
+        // Clear all session data
+        localStorage.removeItem('chommzyCurrentUser');
+        localStorage.removeItem('chommzyAdminSession');
+        sessionStorage.removeItem('chommzyCurrentUser');
+        sessionStorage.removeItem('chommzyAdminSession');
+        document.cookie = 'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+
+        // Show message and redirect
+        if (isAdminPage) {
+            alert('Your session has expired. Please login again.');
+            window.location.href = 'ec-mgt-9k7x2.html';
+        } else {
+            // For regular users, just clear session - they can continue browsing
+            console.log('User session expired');
+        }
+    },
+
     // Make API request
     async request(endpoint, options = {}) {
         if (!API_CONFIG.useAPI) {
@@ -241,11 +256,18 @@ const API = {
         const url = `${API_CONFIG.baseURL}/${endpoint}`;
         const token = this.getToken();
 
+        // Debug: Log if token is present for admin actions
+        if (endpoint.includes('create') || endpoint.includes('update') || endpoint.includes('delete')) {
+            console.log('API Request:', endpoint, '| Token:', token ? 'Present' : 'MISSING!');
+        }
+
         const config = {
             method: options.method || 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                // Use both headers - X-Auth-Token works on Hostinger, Authorization as fallback
                 ...(token && { 'Authorization': `Bearer ${token}` }),
+                ...(token && { 'X-Auth-Token': token }),
                 ...options.headers
             },
             ...options
@@ -262,6 +284,13 @@ const API = {
             const response = await fetch(url, { ...config, signal: controller.signal });
             clearTimeout(timeoutId);
 
+            // Handle 401 Unauthorized - auto logout
+            if (response.status === 401) {
+                console.warn('Session expired - logging out');
+                this.handleSessionExpired();
+                return { success: false, message: 'Session expired. Please login again.', sessionExpired: true };
+            }
+
             // Check if response is empty
             const text = await response.text();
             if (!text) {
@@ -276,6 +305,15 @@ const API = {
                     console.error('Server debug:', data.debug);
                     data.message = data.message + ': ' + data.debug;
                 }
+
+                // Check for auth errors in response body
+                if (!data.success && (data.message?.toLowerCase().includes('unauthorized') ||
+                    data.message?.toLowerCase().includes('token') ||
+                    data.message?.toLowerCase().includes('session expired'))) {
+                    this.handleSessionExpired();
+                    return { ...data, sessionExpired: true };
+                }
+
                 return data;
             } catch (parseError) {
                 console.error('JSON parse error:', text.substring(0, 200));
@@ -290,16 +328,24 @@ const API = {
         }
     },
 
-    // GET request
+    // GET request - properly handles URLs that already have query params
     async get(endpoint, params = {}) {
-        const queryString = Object.keys(params).length
-            ? '?' + new URLSearchParams(params).toString()
-            : '';
-        return this.request(endpoint + queryString);
+        if (Object.keys(params).length === 0) {
+            return this.request(endpoint);
+        }
+        // Check if endpoint already has query params
+        const separator = endpoint.includes('?') ? '&' : '?';
+        const queryString = new URLSearchParams(params).toString();
+        return this.request(endpoint + separator + queryString);
     },
 
-    // POST request
+    // POST request - includes auth token in body for Hostinger compatibility
     async post(endpoint, body = {}) {
+        const token = this.getToken();
+        // Add token to body since headers are blocked by Hostinger
+        if (token) {
+            body._auth_token = token;
+        }
         return this.request(endpoint, { method: 'POST', body });
     },
 
@@ -341,35 +387,38 @@ const API = {
         }
     },
 
-    // Products endpoints
+    // Products endpoints - with cache busting for Cloudflare/LiteSpeed
     products: {
         async list(params = {}) {
-            return API.get('products.php?action=list', params);
+            // Add timestamp to bypass all caching layers
+            params._t = Date.now();
+            return API.get('store.php?action=list', params);
         },
         async get(id) {
-            return API.get('products.php?action=get', { id });
+            return API.get('store.php?action=get', { id, _t: Date.now() });
         },
         async create(data) {
-            return API.post('products.php?action=create', data);
+            return API.post('store.php?action=create', data);
         },
         async update(data) {
-            return API.post('products.php?action=update', data);
+            return API.post('store.php?action=update', data);
         },
         async delete(id) {
-            return API.post('products.php?action=delete', { id });
+            return API.post('store.php?action=delete', { id });
         },
         async search(query) {
-            return API.get('products.php?action=search', { q: query });
+            return API.get('store.php?action=search', { q: query, _t: Date.now() });
         }
     },
 
     // Orders endpoints
     orders: {
         async list(params = {}) {
-            return API.get('orders.php?action=list', params);
+            // Use POST to bypass cache
+            return API.post('orders.php?action=list', { ...params, _nocache: Date.now() });
         },
         async get(id) {
-            return API.get('orders.php?action=get', { id });
+            return API.post('orders.php?action=get', { id, _nocache: Date.now() });
         },
         async create(data) {
             return API.post('orders.php?action=create', data);
@@ -381,10 +430,10 @@ const API = {
             return API.post('orders.php?action=confirm-payment', { orderId, status });
         },
         async userOrders() {
-            return API.get('orders.php?action=user-orders');
+            return API.post('orders.php?action=user-orders', { _nocache: Date.now() });
         },
         async stats() {
-            return API.get('orders.php?action=stats');
+            return API.post('orders.php?action=stats', { _nocache: Date.now() });
         },
         async confirmReceipt(orderId) {
             return API.post('orders.php?action=confirm-receipt', { orderId });
@@ -394,26 +443,27 @@ const API = {
     // Referrals endpoints
     referrals: {
         async list() {
-            return API.get('referrals.php?action=list');
+            return API.post('referrals.php?action=list', { _nocache: Date.now() });
         },
         async userReferrals() {
-            return API.get('referrals.php?action=user-referrals');
+            return API.post('referrals.php?action=user-referrals', { _nocache: Date.now() });
         },
         async userStats() {
-            return API.get('referrals.php?action=user-stats');
+            return API.post('referrals.php?action=user-stats', { _nocache: Date.now() });
         },
         async allStats() {
-            return API.get('referrals.php?action=all-stats');
+            return API.post('referrals.php?action=all-stats', { _nocache: Date.now() });
         },
         async validateCode(code) {
-            return API.get('referrals.php?action=validate-code', { code });
+            return API.post('referrals.php?action=validate-code', { code });
         }
     },
 
     // Users endpoints
     users: {
         async list(params = {}) {
-            return API.get('users.php?action=list', params);
+            // Use POST to bypass cache
+            return API.post('users.php?action=list', { ...params, _nocache: Date.now() });
         },
         async get(id) {
             return API.get('users.php?action=get', { id });
@@ -482,17 +532,45 @@ const API = {
 
     // Settings endpoints
     settings: {
-        async getFlashDeals() {
-            return API.get('settings.php?action=flash-deals');
-        },
-        async updateFlashDeals(settings) {
-            return API.post('settings.php?action=update-flash-deals', settings);
-        },
         async get() {
             return API.get('settings.php?action=get');
         },
         async update(key, value) {
             return API.post('settings.php?action=update', { key, value });
+        }
+    },
+
+    // Flash Deals API (database-backed)
+    flashDeals: {
+        async list() {
+            // Use POST to bypass Hostinger/LiteSpeed cache
+            return API.post('store.php?action=flash-deals-list', { _nocache: Date.now() });
+        },
+        async getActive() {
+            // Use POST to bypass Hostinger/LiteSpeed cache
+            return API.post('store.php?action=flash-deals-active', { _nocache: Date.now() });
+        },
+        async create(deal) {
+            return API.post('store.php?action=flash-deals-create', deal);
+        },
+        async update(deal) {
+            return API.post('store.php?action=flash-deals-update', deal);
+        },
+        async delete(id) {
+            return API.post('store.php?action=flash-deals-delete', { id });
+        }
+    },
+
+    // Reviews API (database-backed)
+    reviews: {
+        async list(productId) {
+            return API.get(`store.php?action=reviews-list&product_id=${productId}`);
+        },
+        async checkEligibility(productId) {
+            return API.get(`store.php?action=reviews-check-eligibility&product_id=${productId}`);
+        },
+        async submit(productId, orderId, rating, reviewText) {
+            return API.post('store.php?action=reviews-submit', { productId, orderId, rating, reviewText });
         }
     },
 
@@ -534,34 +612,74 @@ function initializeDefaults() {
         users.push(DEFAULT_ADMIN);
         saveToStorage('chommzyUsers', users);
     }
-    // Save products to storage so admin can manage them
-    if (!localStorage.getItem('chommzyProducts')) {
-        saveToStorage('chommzyProducts', ALL_PRODUCTS);
-    }
+    // Products are fetched from API/database only - no local defaults
 }
 initializeDefaults();
+
+// ALWAYS clear cached products on page load to ensure fresh data from database
+(function clearCachedProductsOnLoad() {
+    localStorage.removeItem('chommzyProducts');
+    sessionStorage.removeItem('chommzyProducts');
+    console.log('Cleared product cache - will fetch fresh from database');
+})();
 
 // ===========================================
 // 2.2 DATA ACCESS FUNCTIONS (API + LocalStorage hybrid)
 // ===========================================
-// Products - fetches from API if available, falls back to localStorage
+// Products - ALWAYS fetches from database via API (no localStorage caching for products)
 let cachedProducts = null;
+let productsFetchPromise = null;
+
 async function fetchProducts(forceRefresh = false) {
-    if (cachedProducts && !forceRefresh) return cachedProducts;
+    // If forcing refresh, clear cache first
+    if (forceRefresh) {
+        cachedProducts = null;
+        productsFetchPromise = null;
+        console.log('Force refresh - cleared product cache');
+    }
+
+    // If already fetching, wait for that promise
+    if (productsFetchPromise) {
+        return productsFetchPromise;
+    }
+
+    // If we have cached products, return them
+    if (cachedProducts && cachedProducts.length > 0) {
+        console.log('Using memory cached products:', cachedProducts.length);
+        return cachedProducts;
+    }
 
     if (API_CONFIG.useAPI) {
-        const result = await API.products.list();
-        if (result.success && result.data?.products) {
-            cachedProducts = result.data.products;
-            saveToStorage('chommzyProducts', cachedProducts);
-            return cachedProducts;
-        }
+        console.log('Fetching products from API...');
+        productsFetchPromise = API.products.list().then(result => {
+            console.log('API products result:', result);
+
+            if (result.success && result.data?.products) {
+                cachedProducts = result.data.products;
+                console.log('Loaded', cachedProducts.length, 'products from database');
+                return cachedProducts;
+            } else {
+                console.error('API fetch failed:', result.message || 'Unknown error');
+                cachedProducts = [];
+                return [];
+            }
+        }).catch(err => {
+            console.error('API error:', err);
+            cachedProducts = [];
+            return [];
+        }).finally(() => {
+            productsFetchPromise = null;
+        });
+
+        return productsFetchPromise;
     }
-    return getFromStorage('chommzyProducts', ALL_PRODUCTS);
+
+    // Local development fallback
+    return [];
 }
 
-// Synchronous getters (use cached/localStorage data)
-function getProducts() { return cachedProducts || getFromStorage('chommzyProducts', ALL_PRODUCTS); }
+// Synchronous getters (use memory cache only for products - no localStorage)
+function getProducts() { return cachedProducts || []; }
 function getCart() { return getFromStorage('chommzyCart', []); }
 function getWishlist() { return getFromStorage('chommzyWishlist', []); }
 function getOrders() { return getFromStorage('chommzyOrders', []); }
@@ -625,6 +743,58 @@ function showToast(message, type = 'success') {
 function removeToast(toast) {
     toast.classList.remove('show');
     setTimeout(() => toast.remove(), 400);
+}
+
+// ===========================================
+// 3.1 BEAUTIFUL CONFIRMATION MODAL
+// ===========================================
+function showDeleteConfirmModal(productName, onConfirm) {
+    const modal = document.getElementById('delete-confirm-modal');
+    if (!modal) {
+        // Fallback to native confirm if modal doesn't exist
+        if (confirm(`Are you sure you want to delete "${productName}"?`)) {
+            onConfirm();
+        }
+        return;
+    }
+
+    const textEl = document.getElementById('delete-confirm-text');
+    if (textEl) {
+        textEl.textContent = `Are you sure you want to delete "${productName}"? This action cannot be undone.`;
+    }
+
+    modal.style.display = 'flex';
+    modal.style.alignItems = 'center';
+    modal.style.justifyContent = 'center';
+
+    // Add animation
+    setTimeout(() => modal.classList.add('active'), 10);
+
+    const confirmBtn = document.getElementById('delete-confirm-btn');
+    const cancelBtn = document.getElementById('delete-cancel-btn');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        setTimeout(() => modal.style.display = 'none', 300);
+    };
+
+    // Remove old listeners by cloning
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    newConfirmBtn.addEventListener('click', () => {
+        closeModal();
+        onConfirm();
+    });
+
+    newCancelBtn.addEventListener('click', closeModal);
+
+    // Close on overlay click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
 }
 
 // Custom Confirm Modal
@@ -808,6 +978,145 @@ function renderStars(rating) {
     return stars;
 }
 
+// Load reviews for a product from database
+async function loadProductReviews(container, productId) {
+    // Show loading state
+    container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text-muted);"><i class="fas fa-spinner fa-spin"></i> Loading reviews...</div>';
+
+    try {
+        // Fetch real reviews from database
+        const reviewsResult = await API.reviews.list(productId);
+        const reviews = reviewsResult?.data?.reviews || [];
+
+        // Check if user is eligible to write a review
+        let eligibility = { eligible: false, reason: 'not_logged_in' };
+        const currentUser = getFromStorage('chommzyCurrentUser', null);
+        if (currentUser && API_CONFIG.useAPI) {
+            const eligibilityResult = await API.reviews.checkEligibility(productId);
+            eligibility = eligibilityResult?.data || eligibility;
+        }
+
+        // Build reviews HTML
+        let html = '';
+
+        // Review form for eligible users
+        if (eligibility.eligible) {
+            html += `
+                <div class="write-review-section" style="background:var(--bg-soft);padding:1.5rem;border-radius:var(--radius-md);margin-bottom:1.5rem;">
+                    <h4 style="margin-bottom:1rem;font-size:1rem;"><i class="fas fa-pen"></i> Write a Review</h4>
+                    <form id="review-form" data-product-id="${productId}" data-order-id="${eligibility.orderId}">
+                        <div style="margin-bottom:1rem;">
+                            <label style="display:block;margin-bottom:0.5rem;font-size:0.9rem;">Your Rating *</label>
+                            <div class="star-rating-input" id="star-rating-input">
+                                ${[1,2,3,4,5].map(i => `<i class="far fa-star" data-rating="${i}" style="cursor:pointer;font-size:1.5rem;color:var(--accent);"></i>`).join('')}
+                            </div>
+                            <input type="hidden" id="review-rating" value="0">
+                        </div>
+                        <div style="margin-bottom:1rem;">
+                            <label for="review-text" style="display:block;margin-bottom:0.5rem;font-size:0.9rem;">Your Review (optional)</label>
+                            <textarea id="review-text" rows="3" placeholder="Share your experience with this product..." style="width:100%;padding:0.75rem;border:1px solid var(--border-light);border-radius:var(--radius-sm);resize:vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Review</button>
+                    </form>
+                </div>
+            `;
+        } else if (eligibility.reason === 'already_reviewed') {
+            html += `<div style="background:var(--green);color:#fff;padding:1rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;"><i class="fas fa-check-circle"></i> You have already reviewed this product. Thank you!</div>`;
+        } else if (currentUser && eligibility.reason === 'not_purchased_or_not_delivered') {
+            html += `<div style="background:var(--bg-soft);padding:1rem;border-radius:var(--radius-sm);margin-bottom:1.5rem;color:var(--text-secondary);"><i class="fas fa-info-circle"></i> Purchase this product and once it's delivered, you can leave a review.</div>`;
+        }
+
+        // Display reviews
+        if (reviews.length > 0) {
+            html += reviews.map(r => `
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-avatar">${escapeHtml(r.initials || getInitials(r.userName || r.user_name || 'U'))}</div>
+                        <div>
+                            <div class="review-author">${escapeHtml(r.userName || r.user_name || 'Customer')}</div>
+                            <div class="review-date">${escapeHtml(r.date || '')}</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">${renderStars(r.rating)}</div>
+                    <div class="review-text">${escapeHtml(r.text || r.review_text || '')}</div>
+                </div>
+            `).join('');
+        } else {
+            html += `<div style="text-align:center;padding:2rem;color:var(--text-muted);"><i class="far fa-comment-dots" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>No reviews yet. Be the first to review this product!</div>`;
+        }
+
+        container.innerHTML = html;
+
+        // Initialize star rating interaction
+        const starInput = container.querySelector('#star-rating-input');
+        const ratingInput = container.querySelector('#review-rating');
+        if (starInput && ratingInput) {
+            const stars = starInput.querySelectorAll('i');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    ratingInput.value = rating;
+                    stars.forEach((s, idx) => {
+                        s.className = idx < rating ? 'fas fa-star' : 'far fa-star';
+                    });
+                });
+                star.addEventListener('mouseenter', () => {
+                    const rating = parseInt(star.dataset.rating);
+                    stars.forEach((s, idx) => {
+                        s.className = idx < rating ? 'fas fa-star' : 'far fa-star';
+                    });
+                });
+            });
+            starInput.addEventListener('mouseleave', () => {
+                const currentRating = parseInt(ratingInput.value) || 0;
+                stars.forEach((s, idx) => {
+                    s.className = idx < currentRating ? 'fas fa-star' : 'far fa-star';
+                });
+            });
+        }
+
+        // Handle review form submission
+        const reviewForm = container.querySelector('#review-form');
+        if (reviewForm) {
+            reviewForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const rating = parseInt(ratingInput.value);
+                const reviewText = container.querySelector('#review-text').value.trim();
+                const orderId = parseInt(reviewForm.dataset.orderId);
+
+                if (!rating || rating < 1 || rating > 5) {
+                    showToast('Please select a rating', 'error');
+                    return;
+                }
+
+                const submitBtn = reviewForm.querySelector('button[type="submit"]');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+
+                try {
+                    const result = await API.reviews.submit(productId, orderId, rating, reviewText);
+                    if (result.success) {
+                        showToast('Thank you for your review!', 'success');
+                        // Reload reviews to show the new one
+                        await loadProductReviews(container, productId);
+                    } else {
+                        showToast(result.message || 'Failed to submit review', 'error');
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+                    }
+                } catch (err) {
+                    showToast('Error submitting review', 'error');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+                }
+            });
+        }
+    } catch (err) {
+        console.error('Error loading reviews:', err);
+        container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--text-muted);"><i class="far fa-comment-dots" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>No reviews yet. Be the first to review this product!</div>`;
+    }
+}
+
 function createProductCard(product) {
     const wishlist = getWishlist();
     const isWishlisted = wishlist.includes(product.id);
@@ -864,29 +1173,56 @@ function displayProducts(container, products) {
 // ===========================================
 // 7. HOMEPAGE SECTIONS
 // ===========================================
-// Featured products on home
-const featuredGrid = document.getElementById('featured-products-grid');
-if (featuredGrid) {
-    const products = getProducts();
-    const featured = products.filter(p => p.badge === 'hot' || p.badge === 'new').slice(0, 8);
-    displayProducts(featuredGrid, featured.length ? featured : products.slice(0, 8));
-}
+// Featured products, Flash deals, New arrivals - MUST wait for API fetch
+(async function initHomePageProducts() {
+    const featuredGrid = document.getElementById('featured-products-grid');
+    const flashGrid = document.getElementById('flash-deals-grid');
+    const newGrid = document.getElementById('new-arrivals-grid');
 
-// Flash deals
-const flashGrid = document.getElementById('flash-deals-grid');
-if (flashGrid) {
-    const products = getProducts();
-    const deals = products.filter(p => p.originalPrice).slice(0, 4);
-    displayProducts(flashGrid, deals);
-}
+    // Only run on pages with these grids
+    if (!featuredGrid && !flashGrid && !newGrid) return;
 
-// New arrivals
-const newGrid = document.getElementById('new-arrivals-grid');
-if (newGrid) {
-    const products = getProducts();
-    const newItems = products.filter(p => p.badge === 'new').slice(0, 4);
-    displayProducts(newGrid, newItems.length ? newItems : products.slice(4, 8));
-}
+    // Wait for products to load from API (force fresh fetch)
+    const products = await fetchProducts(true);
+    console.log('Home page loaded', products.length, 'products from database');
+
+    // Update category card counts on home page
+    const categoryCountSpans = document.querySelectorAll('.category-count[data-category]');
+    if (categoryCountSpans.length > 0) {
+        // Log all unique categories from products for debugging
+        console.log('Home page - All product categories:', [...new Set(products.map(p => p.category))]);
+        console.log('Home page - Category breakdown:', products.reduce((acc, p) => {
+            const cat = p.category?.toLowerCase() || 'uncategorized';
+            acc[cat] = (acc[cat] || 0) + 1;
+            return acc;
+        }, {}));
+
+        categoryCountSpans.forEach(span => {
+            const category = span.dataset.category?.toLowerCase();
+            const count = products.filter(p => p.category?.toLowerCase() === category).length;
+            span.textContent = `${count} Product${count !== 1 ? 's' : ''}`;
+            console.log(`Home page - Category "${category}": ${count} products`);
+        });
+    }
+
+    // Featured products
+    if (featuredGrid) {
+        const featured = products.filter(p => p.badge === 'hot' || p.badge === 'new').slice(0, 8);
+        displayProducts(featuredGrid, featured.length ? featured : products.slice(0, 8));
+    }
+
+    // Flash deals
+    if (flashGrid) {
+        const deals = products.filter(p => p.originalPrice).slice(0, 4);
+        displayProducts(flashGrid, deals);
+    }
+
+    // New arrivals
+    if (newGrid) {
+        const newItems = products.filter(p => p.badge === 'new').slice(0, 4);
+        displayProducts(newGrid, newItems.length ? newItems : products.slice(4, 8));
+    }
+})();
 
 // Testimonials
 const testimonialsGrid = document.getElementById('testimonials-grid');
@@ -900,73 +1236,77 @@ if (testimonialsGrid) {
     `).join('');
 }
 
-// Countdown timer - Flash deals with admin settings
-const flashDealSection = document.querySelector('.flash-deal-header')?.closest('section');
-const countdownEls = document.querySelectorAll('.countdown-box .number');
+// Countdown timer - Flash deals from database API
+const flashDealSection = document.getElementById('flash-deals-section');
+const countdownDays = document.getElementById('countdown-days');
+const countdownHours = document.getElementById('countdown-hours');
+const countdownMins = document.getElementById('countdown-mins');
+const countdownSecs = document.getElementById('countdown-secs');
 
-function getFlashDealsSettingsLocal() {
-    const defaults = {
-        enabled: true,
-        endDate: '',
-        endTime: '23:59',
-        title: 'Flash Deals',
-        subtitle: "Hurry, these deals won't last long!"
-    };
-    const saved = localStorage.getItem('chommzyFlashDealsSettings');
-    return saved ? { ...defaults, ...JSON.parse(saved) } : defaults;
-}
+// Cache active deal for countdown
+let cachedActiveDeal = null;
 
-// Fetch flash deals settings (from API or localStorage)
-async function initFlashDeals() {
-    let settings = getFlashDealsSettingsLocal();
-
-    // Try API to get latest settings
+// Fetch active flash deal from API (database)
+async function fetchActiveFlashDeal() {
     if (API_CONFIG.useAPI) {
         try {
-            const result = await API.settings.getFlashDeals();
+            const result = await API.flashDeals.getActive();
+            console.log('Active flash deal response:', result);
             if (result.success && result.data) {
-                settings = result.data;
-                // Cache in localStorage
-                localStorage.setItem('chommzyFlashDealsSettings', JSON.stringify(settings));
+                cachedActiveDeal = result.data;
+                console.log('Active deal loaded:', result.data.title, 'ends:', result.data.endDate, result.data.endTime);
+                return result.data;
+            } else {
+                console.log('No active flash deal found');
             }
         } catch (e) {
-            // Use cached settings
+            console.error('Failed to fetch active flash deal:', e);
         }
     }
-
-    if (flashDealSection) {
-        // Hide section if disabled
-        if (!settings.enabled) {
-            flashDealSection.style.display = 'none';
-        } else {
-            flashDealSection.style.display = '';
-
-            // Update title and subtitle
-            const titleEl = flashDealSection.querySelector('h2');
-            const subtitleEl = flashDealSection.querySelector('.text-muted');
-            if (titleEl && settings.title) titleEl.textContent = settings.title;
-            if (subtitleEl && settings.subtitle) subtitleEl.textContent = settings.subtitle;
-        }
-    }
-
-    return settings;
+    return null;
 }
 
-if (countdownEls.length === 4) {
-    let currentSettings = getFlashDealsSettingsLocal();
+// Update flash deals display with fetched data
+function updateFlashDealsDisplay(deal) {
+    const titleEl = document.getElementById('flash-deals-title');
+    const subtitleEl = document.getElementById('flash-deals-subtitle');
 
-    // Initialize and get settings
-    initFlashDeals().then(s => { currentSettings = s; });
+    if (deal) {
+        if (titleEl && deal.title) titleEl.textContent = deal.title;
+        if (subtitleEl && deal.subtitle) subtitleEl.textContent = deal.subtitle;
+        if (flashDealSection) flashDealSection.style.display = '';
+    } else {
+        // No active deal - use defaults
+        if (titleEl) titleEl.textContent = 'Flash Deals';
+        if (subtitleEl) subtitleEl.textContent = "Hurry, these deals won't last long!";
+    }
+}
+
+// Run flash deals countdown
+if (countdownDays && countdownHours && countdownMins && countdownSecs) {
+    // Initial fetch from API - wait for it before starting countdown
+    fetchActiveFlashDeal().then(deal => {
+        updateFlashDealsDisplay(deal);
+        // Start countdown AFTER deal is loaded
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    });
+
+    // Re-fetch every 60 seconds to check for updates
+    setInterval(() => {
+        fetchActiveFlashDeal().then(deal => {
+            updateFlashDealsDisplay(deal);
+        });
+    }, 60000);
 
     function updateCountdown() {
-        const settings = currentSettings;
         const now = new Date();
         let cycleEnd;
 
-        // Use admin-set end date if available
-        if (settings.endDate) {
-            const [year, month, day] = settings.endDate.split('-');
-            const [hours, minutes] = (settings.endTime || '23:59').split(':');
+        if (cachedActiveDeal && cachedActiveDeal.endDate) {
+            // Use the active deal's end date/time
+            const [year, month, day] = cachedActiveDeal.endDate.split('-');
+            const [hours, minutes] = (cachedActiveDeal.endTime || '23:59').split(':');
             cycleEnd = new Date(year, month - 1, day, hours, minutes, 0);
         } else {
             // Default: Flash deal resets every 3 days from a fixed start point
@@ -979,28 +1319,28 @@ if (countdownEls.length === 4) {
 
         const diff = cycleEnd - now;
         if (diff <= 0) {
-            countdownEls[0].textContent = '00';
-            countdownEls[1].textContent = '00';
-            countdownEls[2].textContent = '00';
-            countdownEls[3].textContent = '00';
+            countdownDays.textContent = '00';
+            countdownHours.textContent = '00';
+            countdownMins.textContent = '00';
+            countdownSecs.textContent = '00';
             return;
         }
 
         const days = Math.floor(diff / (24 * 60 * 60 * 1000));
         const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
-        const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
-        const seconds = Math.floor((diff % (60 * 1000)) / 1000);
+        const mins = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+        const secs = Math.floor((diff % (60 * 1000)) / 1000);
 
-        countdownEls[0].textContent = String(days).padStart(2, '0');
-        countdownEls[1].textContent = String(hours).padStart(2, '0');
-        countdownEls[2].textContent = String(minutes).padStart(2, '0');
-        countdownEls[3].textContent = String(seconds).padStart(2, '0');
+        countdownDays.textContent = String(days).padStart(2, '0');
+        countdownHours.textContent = String(hours).padStart(2, '0');
+        countdownMins.textContent = String(mins).padStart(2, '0');
+        countdownSecs.textContent = String(secs).padStart(2, '0');
     }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
 } else if (flashDealSection) {
-    // No countdown elements, just apply settings
-    initFlashDeals();
+    // No countdown elements with IDs, just fetch and apply
+    fetchActiveFlashDeal().then(deal => {
+        updateFlashDealsDisplay(deal);
+    });
 }
 
 // ===========================================
@@ -1008,16 +1348,94 @@ if (countdownEls.length === 4) {
 // ===========================================
 const productGrid = document.getElementById('product-grid');
 if (productGrid) {
-    const products = getProducts();
+    // Initialize products page asynchronously
+    (async function initProductsPage() {
+    // Force refresh to get latest products from database
+    const products = await fetchProducts(true); // Force fresh fetch from API
     const urlParams = new URLSearchParams(window.location.search);
+
+    // ========== DYNAMIC CATEGORY FILTERS ==========
+    const categoryFiltersContainer = document.getElementById('category-filters');
+    if (categoryFiltersContainer) {
+        // Get unique categories from products
+        const categories = [...new Set(products.map(p => p.category?.toLowerCase()).filter(Boolean))];
+
+        // Build category HTML - "All" is already in HTML
+        let categoryHTML = '<a href="#" class="filter-option active" data-category="all">All</a>';
+        categories.sort().forEach(cat => {
+            const displayName = cat.charAt(0).toUpperCase() + cat.slice(1);
+            categoryHTML += `<a href="#" class="filter-option" data-category="${cat}">${displayName}</a>`;
+        });
+        categoryFiltersContainer.innerHTML = categoryHTML;
+    }
+
+    // ========== DYNAMIC COLOR FILTERS ==========
+    const colorFiltersContainer = document.getElementById('color-filters');
+    if (colorFiltersContainer) {
+        // Get unique colors from products
+        const allColors = products.flatMap(p => {
+            if (!p.color) return [];
+            return p.color.split(',').map(c => c.trim());
+        });
+        const uniqueColors = [...new Set(allColors)].filter(Boolean);
+
+        // Color to hex mapping
+        const colorMap = {
+            'black': '#111',
+            'white': '#fff',
+            'red': '#D32F2F',
+            'blue': '#1976D2',
+            'green': '#388E3C',
+            'brown': '#795548',
+            'gold': '#c9a96e',
+            'pink': '#E91E63',
+            'purple': '#9C27B0',
+            'orange': '#FF9800',
+            'grey': '#9E9E9E',
+            'gray': '#9E9E9E',
+            'multi': '#E91E63',
+            'beige': '#D4C4A8',
+            'navy': '#1A237E',
+            'burgundy': '#800020',
+            'cream': '#FFFDD0',
+            'tan': '#D2B48C'
+        };
+
+        let colorHTML = '';
+        uniqueColors.forEach(color => {
+            const colorLower = color.toLowerCase();
+            const bgColor = colorMap[colorLower] || '#888';
+            const borderStyle = colorLower === 'white' ? 'border:1px solid #ddd;' : '';
+            colorHTML += `<button class="color-swatch" style="background-color: ${bgColor}; ${borderStyle}" data-color="${color}" aria-label="${color}" title="${color}"></button>`;
+        });
+        colorFiltersContainer.innerHTML = colorHTML;
+    }
+
+    // Calculate max price from actual products (or use high default)
+    const highestPrice = Math.max(...products.map(p => parseFloat(p.price) || 0), 1000000);
+    const defaultMaxPrice = Math.ceil(highestPrice / 100000) * 100000; // Round up to nearest 100k
 
     let filters = {
         category: urlParams.get('category') || 'all',
         search: urlParams.get('search') || '',
         color: null,
-        maxPrice: 250000,
+        maxPrice: defaultMaxPrice,
         sort: 'default'
     };
+
+    // Debug: Log category info
+    console.log('Products page - URL Category filter:', filters.category);
+    console.log('Products page - Total products in DB:', products.length);
+    console.log('Products page - All categories found:', [...new Set(products.map(p => p.category))]);
+    console.log('Products page - Products by category:', products.reduce((acc, p) => {
+        const cat = p.category?.toLowerCase() || 'uncategorized';
+        acc[cat] = (acc[cat] || 0) + 1;
+        return acc;
+    }, {}));
+    const categoryProducts = filters.category === 'all'
+        ? products
+        : products.filter(p => p.category?.toLowerCase() === filters.category?.toLowerCase());
+    console.log('Products page - Filtered by "' + filters.category + '":', categoryProducts.length);
 
     // Set search input value
     if (filters.search) {
@@ -1067,30 +1485,44 @@ if (productGrid) {
 
     function applyFilters() {
         let filtered = [...products];
+        console.log('applyFilters - Starting with', filtered.length, 'products');
 
-        // Category filter
+        // Category filter (case-insensitive)
         if (filters.category !== 'all') {
-            filtered = filtered.filter(p => p.category === filters.category);
+            filtered = filtered.filter(p => p.category?.toLowerCase() === filters.category?.toLowerCase());
+            console.log('applyFilters - After category filter:', filtered.length);
         }
 
-        // Search filter
+        // Search filter (with null checks)
         if (filters.search) {
             const q = filters.search.toLowerCase();
             filtered = filtered.filter(p =>
-                p.name.toLowerCase().includes(q) ||
-                p.category.toLowerCase().includes(q) ||
-                p.description.toLowerCase().includes(q) ||
-                p.color.toLowerCase().includes(q)
+                (p.name || '').toLowerCase().includes(q) ||
+                (p.category || '').toLowerCase().includes(q) ||
+                (p.description || '').toLowerCase().includes(q) ||
+                (p.color || '').toLowerCase().includes(q)
             );
+            console.log('applyFilters - After search filter:', filtered.length);
         }
 
-        // Color filter
+        // Color filter (case-insensitive, checks if product has this color)
         if (filters.color) {
-            filtered = filtered.filter(p => p.color === filters.color);
+            const selectedColor = filters.color.toLowerCase();
+            filtered = filtered.filter(p => {
+                if (!p.color) return false;
+                return p.color.toLowerCase().includes(selectedColor);
+            });
+            console.log('applyFilters - After color filter:', filtered.length);
         }
 
-        // Price filter
-        filtered = filtered.filter(p => p.price <= filters.maxPrice);
+        // Price filter - ensure price comparison works correctly
+        const beforePrice = filtered.length;
+        console.log('applyFilters - Products before price filter:', filtered.map(p => ({ name: p.name, price: p.price, priceType: typeof p.price })));
+        filtered = filtered.filter(p => {
+            const price = parseFloat(p.price) || 0;
+            return price <= filters.maxPrice;
+        });
+        console.log('applyFilters - After price filter (max:', filters.maxPrice, '):', filtered.length, '(was', beforePrice, ')');
 
         // Sorting
         switch (filters.sort) {
@@ -1104,6 +1536,9 @@ if (productGrid) {
         const countEl = document.querySelector('.result-count');
         if (countEl) countEl.textContent = `${filtered.length} product${filtered.length !== 1 ? 's' : ''} found`;
 
+        console.log('=== FINAL DISPLAY ===');
+        console.log('Displaying', filtered.length, 'products');
+        console.log('Product names:', filtered.map(p => p.name));
         displayProducts(productGrid, filtered);
         updateTitle();
     }
@@ -1135,10 +1570,15 @@ if (productGrid) {
         });
     });
 
-    // Price range
+    // Price range - update max value based on products
     const priceRange = document.getElementById('price-range');
     const priceValue = document.getElementById('price-value');
     if (priceRange) {
+        // Set slider max to match highest priced product
+        priceRange.max = defaultMaxPrice;
+        priceRange.value = defaultMaxPrice;
+        if (priceValue) priceValue.textContent = defaultMaxPrice.toLocaleString();
+
         priceRange.addEventListener('input', (e) => {
             filters.maxPrice = parseInt(e.target.value);
             if (priceValue) priceValue.textContent = parseInt(e.target.value).toLocaleString();
@@ -1159,11 +1599,11 @@ if (productGrid) {
     const resetBtn = document.getElementById('reset-filters');
     if (resetBtn) {
         resetBtn.addEventListener('click', () => {
-            filters = { category: 'all', search: '', color: null, maxPrice: 250000, sort: 'default' };
+            filters = { category: 'all', search: '', color: null, maxPrice: defaultMaxPrice, sort: 'default' };
             document.querySelectorAll('.filter-option[data-category]').forEach(b => b.classList.remove('active'));
             document.querySelector('.filter-option[data-category="all"]')?.classList.add('active');
             document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
-            if (priceRange) { priceRange.value = 250000; priceValue.textContent = '250,000'; }
+            if (priceRange) { priceRange.value = defaultMaxPrice; priceValue.textContent = defaultMaxPrice.toLocaleString(); }
             if (sortSelect) sortSelect.value = 'default';
             searchInputs.forEach(input => input.value = '');
             syncNavCategoryHighlight('all');
@@ -1189,6 +1629,7 @@ if (productGrid) {
     }
 
     applyFilters();
+    })(); // End of initProductsPage async IIFE
 }
 
 // ===========================================
@@ -1196,9 +1637,10 @@ if (productGrid) {
 // ===========================================
 const productDetailSection = document.querySelector('.product-detail-section');
 if (productDetailSection) {
+    (async function initProductDetail() {
     const urlParams = new URLSearchParams(window.location.search);
     const productId = parseInt(urlParams.get('id'));
-    const products = getProducts();
+    const products = await fetchProducts(); // Wait for API fetch
     const product = products.find(p => p.id === productId);
 
     if (product) {
@@ -1279,39 +1721,23 @@ if (productDetailSection) {
             });
         });
 
-        // Reviews
+        // Reviews - fetch real reviews from database
         const reviewsContainer = document.getElementById('detail-reviews');
         if (reviewsContainer) {
-            const sampleReviews = [
-                { name: 'Chioma A.', date: '2 weeks ago', rating: 5, text: 'Absolutely love this! The quality exceeded my expectations. Will order again.' },
-                { name: 'Ngozi E.', date: '1 month ago', rating: 4, text: 'Great product, fast delivery. The color is exactly as shown in the pictures.' },
-                { name: 'Amaka O.', date: '1 month ago', rating: 5, text: 'Perfect! Received so many compliments. Everything Chommzy is the best.' }
-            ];
-            reviewsContainer.innerHTML = sampleReviews.map(r => `
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="review-avatar">${escapeHtml(getInitials(r.name))}</div>
-                        <div>
-                            <div class="review-author">${escapeHtml(r.name)}</div>
-                            <div class="review-date">${escapeHtml(r.date)}</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">${renderStars(r.rating)}</div>
-                    <div class="review-text">${escapeHtml(r.text)}</div>
-                </div>
-            `).join('');
+            await loadProductReviews(reviewsContainer, product.id);
         }
 
         // Related products
         const relatedGrid = document.getElementById('related-products-grid');
         if (relatedGrid) {
-            const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
+            const related = products.filter(p => p.category?.toLowerCase() === product.category?.toLowerCase() && p.id !== product.id).slice(0, 4);
             displayProducts(relatedGrid, related);
         }
 
         // Page title
         document.title = `${product.name} - Everything Chommzy`;
     }
+    })(); // End of initProductDetail async IIFE
 }
 
 // ===========================================
@@ -1422,11 +1848,11 @@ function renderCart() {
 
     // Calculate totals
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = subtotal >= 100000 ? 0 : 5000;
+    const shipping = 0; // Shipping calculated via WhatsApp
     const total = subtotal + shipping;
 
     document.getElementById('cart-subtotal').textContent = formatPrice(subtotal);
-    document.getElementById('cart-shipping').textContent = shipping === 0 ? 'FREE' : formatPrice(shipping);
+    document.getElementById('cart-shipping').textContent = 'Contact us';
     document.getElementById('cart-total').textContent = formatPrice(total);
 
     // Event listeners for cart actions
@@ -2271,7 +2697,7 @@ if (checkoutPage) {
     // Fill order summary
     const summaryItems = document.getElementById('checkout-items');
     const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const shipping = subtotal >= 100000 ? 0 : 5000;
+    const shipping = 0; // Shipping calculated via WhatsApp contact
     let discount = 0;
     let appliedPromo = null;
 
@@ -2280,16 +2706,15 @@ if (checkoutPage) {
         'WELCOME10': { type: 'percent', value: 10, description: '10% off' },
         'SAVE5000': { type: 'fixed', value: 5000, description: '₦5,000 off' },
         'CHOMMZY15': { type: 'percent', value: 15, description: '15% off' },
-        'FLASH20': { type: 'percent', value: 20, description: '20% off', minOrder: 50000 },
-        'FREESHIP': { type: 'freeship', value: 0, description: 'Free shipping' }
+        'FLASH20': { type: 'percent', value: 20, description: '20% off', minOrder: 50000 }
     };
 
     function updateOrderTotals() {
-        const currentShipping = appliedPromo?.type === 'freeship' ? 0 : (subtotal >= 100000 ? 0 : 5000);
+        const currentShipping = 0; // Contact via WhatsApp for delivery pricing
         const finalTotal = subtotal - discount + currentShipping;
 
         document.getElementById('checkout-subtotal').textContent = formatPrice(subtotal);
-        document.getElementById('checkout-shipping').textContent = currentShipping === 0 ? 'FREE' : formatPrice(currentShipping);
+        document.getElementById('checkout-shipping').textContent = 'Contact us';
 
         const discountRow = document.getElementById('discount-row');
         if (discount > 0 && discountRow) {
@@ -2934,19 +3359,14 @@ if (accountPage) {
     // ===========================================
     const securitySection = document.getElementById('section-security');
     if (securitySection) {
-        const getAuthHeaders = () => {
-            const headers = { 'Content-Type': 'application/json' };
-            if (user.token) headers['Authorization'] = `Bearer ${user.token}`;
-            return headers;
-        };
-
         const User2FAAPI = {
             setup: async () => {
                 try {
                     const res = await fetch('/api/two-factor.php?action=setup', {
                         method: 'POST',
-                        headers: getAuthHeaders(),
-                        credentials: 'include'
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ _auth_token: user.token })
                     });
                     return await res.json();
                 } catch { return { success: false, message: 'Network error' }; }
@@ -2955,9 +3375,9 @@ if (accountPage) {
                 try {
                     const res = await fetch('/api/two-factor.php?action=enable', {
                         method: 'POST',
-                        headers: getAuthHeaders(),
+                        headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
-                        body: JSON.stringify({ code })
+                        body: JSON.stringify({ code, _auth_token: user.token })
                     });
                     return await res.json();
                 } catch { return { success: false, message: 'Network error' }; }
@@ -2966,9 +3386,9 @@ if (accountPage) {
                 try {
                     const res = await fetch('/api/two-factor.php?action=disable', {
                         method: 'POST',
-                        headers: getAuthHeaders(),
+                        headers: { 'Content-Type': 'application/json' },
                         credentials: 'include',
-                        body: JSON.stringify({ code, password })
+                        body: JSON.stringify({ code, password, _auth_token: user.token })
                     });
                     return await res.json();
                 } catch { return { success: false, message: 'Network error' }; }
@@ -2976,8 +3396,10 @@ if (accountPage) {
             status: async () => {
                 try {
                     const res = await fetch('/api/two-factor.php?action=status', {
-                        headers: getAuthHeaders(),
-                        credentials: 'include'
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ _auth_token: user.token })
                     });
                     return await res.json();
                 } catch { return { success: false, message: 'Network error' }; }
@@ -3063,11 +3485,13 @@ if (accountPage) {
         // Show disable modal
         document.getElementById('user-disable-2fa-btn')?.addEventListener('click', () => {
             disableModal.style.display = 'flex';
+            disableModal.classList.add('active');
         });
 
         // Close disable modal
         disableModal?.querySelector('.modal-close')?.addEventListener('click', () => {
-            disableModal.style.display = 'none';
+            disableModal.classList.remove('active');
+            setTimeout(() => { disableModal.style.display = 'none'; }, 300);
         });
 
         // Disable 2FA
@@ -3083,7 +3507,8 @@ if (accountPage) {
             const result = await User2FAAPI.disable(code, password);
             if (result.success) {
                 showToast('2FA disabled', 'info');
-                disableModal.style.display = 'none';
+                disableModal.classList.remove('active');
+                setTimeout(() => { disableModal.style.display = 'none'; }, 300);
                 enabledView.style.display = 'none';
                 disabledView.style.display = 'block';
                 e.target.reset();
@@ -3537,8 +3962,37 @@ if (adminBody) {
     activateAdminSection(adminSectionToActivate, false);
 
     // Mobile sidebar toggle
-    document.getElementById('admin-mobile-toggle')?.addEventListener('click', () => {
-        document.querySelector('.admin-sidebar')?.classList.toggle('open');
+    const sidebar = document.querySelector('.admin-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+
+    function openSidebar() {
+        sidebar?.classList.add('open');
+        overlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeSidebar() {
+        sidebar?.classList.remove('open');
+        overlay?.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    // Open sidebar button
+    document.getElementById('admin-mobile-toggle')?.addEventListener('click', openSidebar);
+
+    // Close sidebar button
+    document.getElementById('sidebar-close-btn')?.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking overlay
+    overlay?.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking a nav link (on mobile)
+    document.querySelectorAll('.admin-nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth <= 900) {
+                closeSidebar();
+            }
+        });
     });
 
     // --- DASHBOARD STATS ---
@@ -3575,25 +4029,65 @@ if (adminBody) {
 
     function updateCategoryCounts() {
         const products = getProducts();
-        const counts = {
-            all: products.length,
-            wigs: products.filter(p => p.category === 'wigs').length,
-            clothing: products.filter(p => p.category === 'clothing').length,
-            shoes: products.filter(p => p.category === 'shoes').length,
-            accessories: products.filter(p => p.category === 'accessories').length
+        const categoryTabs = document.getElementById('product-category-tabs');
+        if (!categoryTabs) return;
+
+        // Default categories with icons
+        const defaultCategories = {
+            wigs: { icon: 'fa-cut', label: 'Wigs' },
+            clothing: { icon: 'fa-tshirt', label: 'Clothing' },
+            shoes: { icon: 'fa-shoe-prints', label: 'Shoes' },
+            accessories: { icon: 'fa-gem', label: 'Accessories' }
         };
 
-        Object.keys(counts).forEach(cat => {
-            const countEl = document.getElementById(`count-${cat}`);
-            if (countEl) countEl.textContent = counts[cat];
+        // Get all unique categories from products
+        const allCategories = [...new Set(products.map(p => p.category?.toLowerCase()))].filter(Boolean);
+
+        // Build category counts
+        const counts = { all: products.length };
+        allCategories.forEach(cat => {
+            counts[cat] = products.filter(p => p.category?.toLowerCase() === cat).length;
         });
+
+        // Generate tabs HTML
+        let tabsHTML = `
+            <button type="button" class="category-tab ${activeProductCategory === 'all' ? 'active' : ''}" data-category="all">
+                <i class="fas fa-th-large"></i> All <span class="tab-count" id="count-all">${counts.all}</span>
+            </button>
+        `;
+
+        // Add default categories first (even if empty)
+        Object.keys(defaultCategories).forEach(cat => {
+            const { icon, label } = defaultCategories[cat];
+            const count = counts[cat] || 0;
+            tabsHTML += `
+                <button type="button" class="category-tab ${activeProductCategory === cat ? 'active' : ''}" data-category="${cat}">
+                    <i class="fas ${icon}"></i> ${label} <span class="tab-count" id="count-${cat}">${count}</span>
+                </button>
+            `;
+        });
+
+        // Add custom categories (not in defaults)
+        allCategories.forEach(cat => {
+            if (!defaultCategories[cat]) {
+                const count = counts[cat] || 0;
+                const label = cat.charAt(0).toUpperCase() + cat.slice(1);
+                tabsHTML += `
+                    <button type="button" class="category-tab ${activeProductCategory === cat ? 'active' : ''}" data-category="${cat}">
+                        <i class="fas fa-tag"></i> ${escapeHtml(label)} <span class="tab-count" id="count-${cat}">${count}</span>
+                    </button>
+                `;
+            }
+        });
+
+        categoryTabs.innerHTML = tabsHTML;
     }
 
     function renderAdminProducts(category = activeProductCategory) {
         const allProducts = getProducts();
         const products = category === 'all'
             ? allProducts
-            : allProducts.filter(p => p.category === category);
+            : allProducts.filter(p => p.category?.toLowerCase() === category?.toLowerCase());
 
         const tbody = document.getElementById('admin-products-tbody');
         if (!tbody) return;
@@ -3624,31 +4118,55 @@ if (adminBody) {
             </tr>
         `).join('');
 
-        // Delete handlers
+        // Delete handlers with beautiful modal
         tbody.querySelectorAll('.delete-product-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                if (confirm('Are you sure you want to delete this product?')) {
-                    const productId = parseInt(btn.dataset.id);
+            btn.addEventListener('click', () => {
+                const productId = parseInt(btn.dataset.id);
+                const product = getProducts().find(p => p.id === productId);
+                const productName = product?.name || 'this product';
+
+                // Show beautiful confirmation modal
+                showDeleteConfirmModal(productName, async () => {
+                    const deleteBtn = btn;
+                    deleteBtn.disabled = true;
+                    deleteBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
                     // Try API first
                     if (API_CONFIG.useAPI) {
+                        console.log('Deleting product ID:', productId);
                         const result = await API.products.delete(productId);
-                        if (!result.success && !result.useLocalStorage) {
-                            showToast(result.message || 'Failed to delete product', 'error');
+                        console.log('Delete result:', result);
+
+                        if (!result.success) {
+                            showToast(result.message || 'Failed to delete product from database', 'error');
+                            deleteBtn.disabled = false;
+                            deleteBtn.innerHTML = '<i class="fas fa-trash"></i>';
                             return;
                         }
+
+                        // Force refresh from database to ensure sync
+                        try {
+                            const dbProducts = await fetchProducts(true);
+                            cachedProducts = dbProducts;
+                            saveToStorage('chommzyProducts', dbProducts);
+                            renderAdminProducts();
+                            updateAdminStats();
+                            showToast('Product deleted successfully', 'success');
+                        } catch (err) {
+                            console.error('Error refreshing products after delete:', err);
+                            showToast('Product deleted but refresh failed', 'warning');
+                        }
+                    } else {
+                        // Local development fallback
+                        let products = getProducts();
+                        products = products.filter(p => p.id !== productId);
+                        saveToStorage('chommzyProducts', products);
+                        cachedProducts = products;
+                        renderAdminProducts();
+                        updateAdminStats();
+                        showToast('Product deleted', 'info');
                     }
-
-                    // Update localStorage
-                    let products = getProducts();
-                    products = products.filter(p => p.id !== productId);
-                    saveToStorage('chommzyProducts', products);
-                    cachedProducts = products;
-
-                    renderAdminProducts();
-                    updateAdminStats();
-                    showToast('Product deleted', 'info');
-                }
+                });
             });
         });
 
@@ -3672,12 +4190,46 @@ if (adminBody) {
         });
     }
 
-    renderAdminProducts();
+    // Initial load - fetch products from API first, then render
+    (async function initAdminProducts() {
+        if (API_CONFIG.useAPI) {
+            try {
+                console.log('Admin: Fetching products from database...');
+                const dbProducts = await fetchProducts(true);
+                cachedProducts = dbProducts;
+                saveToStorage('chommzyProducts', dbProducts);
+                console.log('Admin: Loaded', dbProducts.length, 'products');
+            } catch (err) {
+                console.error('Admin: Failed to fetch products:', err);
+            }
+        }
+        renderAdminProducts();
+        updateCategoryCounts();
+    })();
 
     // Add product modal
     const addProductBtn = document.getElementById('add-product-btn');
     const productModal = document.getElementById('product-modal');
     const productForm = document.getElementById('admin-product-form');
+
+    // Price input formatting - add commas while typing
+    const priceInput = document.getElementById('pf-price');
+    const originalPriceInput = document.getElementById('pf-original-price');
+
+    [priceInput, originalPriceInput].forEach(input => {
+        if (input) {
+            input.addEventListener('input', () => formatPriceInput(input));
+            // Also format on blur for clean display
+            input.addEventListener('blur', () => {
+                if (input.value) {
+                    const num = parsePrice(input.value);
+                    if (num > 0) {
+                        input.value = num.toLocaleString();
+                    }
+                }
+            });
+        }
+    });
 
     // Image upload handling
     let currentProductImage = '';
@@ -3732,10 +4284,125 @@ if (adminBody) {
         imagePreview?.classList.remove('hidden');
     }
 
+    // Category selection handling with custom categories
+    const categorySelect = document.getElementById('pf-category');
+    const categoryOtherInput = document.getElementById('pf-category-other');
+    let customCategories = [];
+
+    // Load custom categories from API
+    async function loadCustomCategories() {
+        try {
+            const response = await fetch(`${API_CONFIG.baseURL}/store.php?action=categories`);
+            const result = await response.json();
+            if (result.success && result.data?.categories) {
+                customCategories = result.data.categories;
+                // Add custom categories to dropdown
+                customCategories.forEach(cat => {
+                    if (!categorySelect.querySelector(`option[value="${cat}"]`)) {
+                        const option = document.createElement('option');
+                        option.value = cat;
+                        option.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+                        // Insert before "Add New Category" option
+                        const otherOption = categorySelect.querySelector('option[value="__other__"]');
+                        categorySelect.insertBefore(option, otherOption);
+                    }
+                });
+            }
+        } catch (e) {
+            console.log('Could not load custom categories');
+        }
+    }
+
+    if (categorySelect) {
+        loadCustomCategories();
+
+        categorySelect.addEventListener('change', () => {
+            if (categorySelect.value === '__other__') {
+                categoryOtherInput.style.display = 'block';
+                categoryOtherInput.focus();
+                categoryOtherInput.required = true;
+            } else {
+                categoryOtherInput.style.display = 'none';
+                categoryOtherInput.value = '';
+                categoryOtherInput.required = false;
+            }
+        });
+    }
+
+    function getSelectedCategory() {
+        if (categorySelect.value === '__other__' && categoryOtherInput.value.trim()) {
+            return categoryOtherInput.value.trim().toLowerCase();
+        }
+        return categorySelect.value;
+    }
+
+    function setProductCategory(category) {
+        // Check if it's a standard category
+        const standardCategories = ['wigs', 'clothing', 'shoes', 'accessories'];
+        if (standardCategories.includes(category) || customCategories.includes(category)) {
+            // Check if option exists, if not add it
+            if (!categorySelect.querySelector(`option[value="${category}"]`)) {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+                const otherOption = categorySelect.querySelector('option[value="__other__"]');
+                categorySelect.insertBefore(option, otherOption);
+            }
+            categorySelect.value = category;
+            categoryOtherInput.style.display = 'none';
+            categoryOtherInput.value = '';
+        } else if (category) {
+            // Custom category not in list yet
+            const option = document.createElement('option');
+            option.value = category;
+            option.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            const otherOption = categorySelect.querySelector('option[value="__other__"]');
+            categorySelect.insertBefore(option, otherOption);
+            categorySelect.value = category;
+            categoryOtherInput.style.display = 'none';
+        }
+    }
+
+    function resetCategorySelection() {
+        if (categorySelect) categorySelect.value = 'wigs';
+        if (categoryOtherInput) {
+            categoryOtherInput.style.display = 'none';
+            categoryOtherInput.value = '';
+            categoryOtherInput.required = false;
+        }
+    }
+
     // Color selection handling
     const colorGrid = document.getElementById('pf-color-grid');
     const otherColorCheck = document.getElementById('pf-color-other-check');
     const otherColorInput = document.getElementById('pf-color-other');
+    let customColors = [];
+
+    // Load custom colors from API
+    async function loadCustomColors() {
+        try {
+            const response = await fetch(`${API_CONFIG.baseURL}/store.php?action=colors`);
+            const result = await response.json();
+            if (result.success && result.data?.colors) {
+                customColors = result.data.colors;
+                // Add custom colors to the grid
+                customColors.forEach(color => {
+                    if (!colorGrid.querySelector(`input[value="${color}"]`)) {
+                        const label = document.createElement('label');
+                        label.className = 'color-checkbox';
+                        label.innerHTML = `<input type="checkbox" value="${color}"><span class="color-swatch" style="background:#888;"></span> ${color}`;
+                        colorGrid.appendChild(label);
+                    }
+                });
+            }
+        } catch (e) {
+            console.log('Could not load custom colors');
+        }
+    }
+
+    if (colorGrid) {
+        loadCustomColors();
+    }
 
     otherColorCheck?.addEventListener('change', () => {
         if (otherColorInput) {
@@ -3828,6 +4495,7 @@ if (adminBody) {
         resetImageUpload();
         resetColorSelection();
         resetBadgeSelection();
+        resetCategorySelection();
         document.getElementById('product-modal-title').textContent = 'Add New Product';
         document.getElementById('product-form-id').value = '';
         productModal?.classList.add('active');
@@ -3838,6 +4506,7 @@ if (adminBody) {
         resetImageUpload();
         resetColorSelection();
         resetBadgeSelection();
+        resetCategorySelection();
     });
     productModal?.addEventListener('click', (e) => {
         if (e.target === productModal) {
@@ -3865,9 +4534,9 @@ if (adminBody) {
         let products = getProducts();
         const formData = {
             name: document.getElementById('pf-name').value.trim(),
-            price: parseInt(document.getElementById('pf-price').value),
-            originalPrice: document.getElementById('pf-original-price').value ? parseInt(document.getElementById('pf-original-price').value) : null,
-            category: document.getElementById('pf-category').value,
+            price: parsePrice(document.getElementById('pf-price').value),
+            originalPrice: document.getElementById('pf-original-price').value ? parsePrice(document.getElementById('pf-original-price').value) : null,
+            category: getSelectedCategory(),
             color: getSelectedColors() || 'Black',
             image: currentProductImage || 'https://placehold.co/400x500/f5f0eb/333?text=Product',
             description: document.getElementById('pf-description').value || '',
@@ -3884,50 +4553,76 @@ if (adminBody) {
 
             // Try API first
             if (API_CONFIG.useAPI) {
+                console.log('Updating product:', formData);
                 const result = await API.products.update(formData);
-                if (!result.success && !result.useLocalStorage) {
-                    showToast(result.message || 'Failed to update product', 'error');
+                console.log('Update result:', result);
+
+                if (!result.success) {
+                    showToast(result.message || 'Failed to update product in database', 'error');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Save Product';
                     return;
                 }
+                console.log('Product updated in database successfully');
             }
 
             const idx = products.findIndex(p => p.id === parseInt(editId));
             if (idx > -1) {
                 products[idx] = { ...products[idx], ...formData };
             }
-            showToast('Product updated!', 'success');
+            showToast('Product updated successfully!', 'success');
         } else {
-            // Create new product
-            // Try API first
+            // Create new product - MUST save to database first
             if (API_CONFIG.useAPI) {
+                console.log('Sending product to API:', formData);
                 const result = await API.products.create(formData);
+                console.log('API Response:', result);
+
                 if (result.success && result.data?.id) {
+                    // Product saved to database successfully
                     formData.id = result.data.id;
-                } else if (!result.useLocalStorage) {
-                    showToast(result.message || 'Failed to add product', 'error');
+                    products.push(formData);
+                    console.log('Product saved with ID:', result.data.id);
+                    showToast('Product added successfully! ID: ' + result.data.id, 'success');
+                } else {
+                    // API failed - show detailed error
+                    const errorMsg = result.message || 'Unknown error';
+                    console.error('API Error:', result);
+                    alert('PRODUCT SAVE FAILED!\n\nError: ' + errorMsg + '\n\nCheck console for details.');
+                    showToast(errorMsg, 'error');
                     submitBtn.disabled = false;
                     submitBtn.innerHTML = 'Save Product';
                     return;
-                } else {
-                    formData.id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
                 }
             } else {
+                // Local development only
                 formData.id = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
+                products.push(formData);
+                showToast('Product added!', 'success');
             }
-            products.push(formData);
-            showToast('Product added!', 'success');
         }
 
         saveToStorage('chommzyProducts', products);
         cachedProducts = products;
-        renderAdminProducts();
-        updateAdminStats();
+
+        // Force refresh from database to ensure sync
+        if (API_CONFIG.useAPI) {
+            fetchProducts(true).then(dbProducts => {
+                cachedProducts = dbProducts;
+                saveToStorage('chommzyProducts', dbProducts);
+                renderAdminProducts();
+                updateAdminStats();
+            });
+        } else {
+            renderAdminProducts();
+            updateAdminStats();
+        }
+
         productModal?.classList.remove('active');
         resetImageUpload();
         resetColorSelection();
         resetBadgeSelection();
+        resetCategorySelection();
         submitBtn.disabled = false;
         submitBtn.innerHTML = 'Save Product';
     });
@@ -3942,9 +4637,10 @@ if (adminBody) {
                 document.getElementById('product-modal-title').textContent = 'Edit Product';
                 document.getElementById('product-form-id').value = product.id;
                 document.getElementById('pf-name').value = product.name;
-                document.getElementById('pf-price').value = product.price;
-                document.getElementById('pf-original-price').value = product.originalPrice || '';
-                document.getElementById('pf-category').value = product.category;
+                // Format price with commas for display
+                document.getElementById('pf-price').value = product.price ? product.price.toLocaleString() : '';
+                document.getElementById('pf-original-price').value = product.originalPrice ? product.originalPrice.toLocaleString() : '';
+                setProductCategory(product.category);
                 setProductColors(product.color);
                 setImagePreview(product.image);
                 document.getElementById('pf-description').value = product.description;
@@ -4299,20 +4995,61 @@ if (adminBody) {
     bankModal?.addEventListener('click', (e) => { if (e.target === bankModal) bankModal.classList.remove('active'); });
 
     // --- ADMIN CUSTOMERS ---
-    function renderAdminCustomers() {
-        const users = getUsers().filter(u => u.role !== 'admin');
+    async function renderAdminCustomers() {
         const tbody = document.getElementById('admin-customers-tbody');
         if (!tbody) return;
+
+        let users = [];
+
+        // Fetch from API (database)
+        if (API_CONFIG.useAPI) {
+            try {
+                console.log('Fetching customers from API...');
+                const result = await API.users.list();
+                console.log('Customers API response:', result);
+                if (result.success && result.data?.users) {
+                    users = result.data.users.filter(u => u.role !== 'admin');
+                    console.log('Filtered customers (non-admin):', users.length);
+                } else if (result.success && Array.isArray(result.data)) {
+                    // Handle if users are directly in data
+                    users = result.data.filter(u => u.role !== 'admin');
+                    console.log('Filtered customers (alt format):', users.length);
+                } else {
+                    console.warn('Customers API returned:', result.message || 'No users data');
+                }
+            } catch (e) {
+                console.error('Failed to fetch customers:', e);
+            }
+        }
+
+        // Fallback to localStorage
+        if (users.length === 0 && !API_CONFIG.useAPI) {
+            users = getUsers().filter(u => u.role !== 'admin');
+        }
 
         if (users.length === 0) {
             tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;padding:2rem;color:var(--text-muted);">No customers yet</td></tr>';
             return;
         }
 
-        const orders = getOrders();
+        // Fetch orders from API
+        let orders = [];
+        if (API_CONFIG.useAPI) {
+            try {
+                const ordersResult = await API.orders.list();
+                if (ordersResult.success && ordersResult.data?.orders) {
+                    orders = ordersResult.data.orders;
+                }
+            } catch (e) {
+                console.error('Failed to fetch orders for customers:', e);
+            }
+        } else {
+            orders = getOrders();
+        }
+
         tbody.innerHTML = users.map(u => {
-            const userOrders = orders.filter(o => o.userId === u.id);
-            const totalSpent = userOrders.reduce((sum, o) => sum + o.total, 0);
+            const userOrders = orders.filter(o => o.userId === u.id || o.user_id === u.id);
+            const totalSpent = userOrders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
             return `
                 <tr>
                     <td><div class="product-cell"><div class="review-avatar" style="width:35px;height:35px;font-size:0.75rem;">${escapeHtml(getInitials(u.name))}</div><span>${escapeHtml(u.name)}</span></div></td>
@@ -4667,35 +5404,47 @@ if (adminBody) {
     renderAdminAnnouncements();
 
     // --- SETTINGS ---
-    // ===== FLASH DEALS MANAGEMENT =====
+    // ===== FLASH DEALS MANAGEMENT (API-backed) =====
+    let cachedFlashDeals = [];
+
+    // Fetch flash deals from API
+    async function fetchFlashDeals() {
+        if (API_CONFIG.useAPI) {
+            try {
+                const result = await API.flashDeals.list();
+                console.log('Flash deals API response:', result);
+                if (result.success && result.data?.deals) {
+                    cachedFlashDeals = result.data.deals;
+                    console.log('Flash deals loaded:', cachedFlashDeals.length, 'deals');
+                    return cachedFlashDeals;
+                } else if (result.success && Array.isArray(result.data)) {
+                    // Handle case where deals are directly in data
+                    cachedFlashDeals = result.data;
+                    console.log('Flash deals loaded (alt format):', cachedFlashDeals.length, 'deals');
+                    return cachedFlashDeals;
+                } else {
+                    console.warn('Flash deals fetch returned:', result);
+                }
+            } catch (e) {
+                console.error('Failed to fetch flash deals:', e);
+            }
+        }
+        return cachedFlashDeals;
+    }
+
     function getFlashDeals() {
-        const saved = localStorage.getItem('chommzyFlashDeals');
-        return saved ? JSON.parse(saved) : [];
-    }
-
-    function saveFlashDeals(deals) {
-        localStorage.setItem('chommzyFlashDeals', JSON.stringify(deals));
-    }
-
-    function getActiveFlashDeal() {
-        const deals = getFlashDeals();
-        const now = new Date();
-        return deals.find(deal => {
-            if (!deal.enabled) return false;
-            const start = new Date(`${deal.startDate}T${deal.startTime || '00:00'}`);
-            const end = new Date(`${deal.endDate}T${deal.endTime || '23:59'}`);
-            return now >= start && now <= end;
-        });
+        return cachedFlashDeals;
     }
 
     // Render flash deals list
-    function renderFlashDealsList() {
+    async function renderFlashDealsList() {
         const listEl = document.getElementById('flash-deals-list');
         const noDealsEl = document.getElementById('no-flash-deals');
         const tableEl = document.getElementById('flash-deals-table');
         if (!listEl) return;
 
-        const deals = getFlashDeals();
+        // Fetch from API
+        const deals = await fetchFlashDeals();
 
         if (deals.length === 0) {
             if (tableEl) tableEl.style.display = 'none';
@@ -4801,7 +5550,8 @@ if (adminBody) {
     // Edit flash deal
     function editFlashDeal(id) {
         const deals = getFlashDeals();
-        const deal = deals.find(d => d.id === id);
+        const numId = parseInt(id);
+        const deal = deals.find(d => d.id === numId || d.id === id);
         if (!deal) return;
 
         const editIdEl = document.getElementById('flash-deal-edit-id');
@@ -4827,25 +5577,28 @@ if (adminBody) {
         showFlashDealForm(true);
     }
 
-    // Delete flash deal
-    function deleteFlashDeal(id) {
+    // Delete flash deal (API)
+    async function deleteFlashDeal(id) {
         if (!confirm('Are you sure you want to delete this flash deal?')) return;
 
-        let deals = getFlashDeals();
-        deals = deals.filter(d => d.id !== id);
-        saveFlashDeals(deals);
-        renderFlashDealsList();
-        showToast('Flash deal deleted!', 'success');
+        if (API_CONFIG.useAPI) {
+            const result = await API.flashDeals.delete(id);
+            if (result.success) {
+                showToast('Flash deal deleted!', 'success');
+                renderFlashDealsList();
+                return;
+            }
+            showToast(result.message || 'Failed to delete flash deal', 'error');
+        }
     }
 
-    // Flash deals form submission
+    // Flash deals form submission (API)
     document.getElementById('flash-deals-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
 
         const editIdEl = document.getElementById('flash-deal-edit-id');
-        const editId = editIdEl?.value;
+        const editId = editIdEl?.value ? parseInt(editIdEl.value) : null;
         const deal = {
-            id: editId || 'fd-' + Date.now().toString(36),
             title: document.getElementById('flash-deals-title')?.value.trim() || '',
             subtitle: document.getElementById('flash-deals-subtitle')?.value.trim() || '',
             startDate: document.getElementById('flash-deals-start-date')?.value || '',
@@ -4853,8 +5606,7 @@ if (adminBody) {
             endDate: document.getElementById('flash-deals-end-date')?.value || '',
             endTime: document.getElementById('flash-deals-end-time')?.value || '23:59',
             discount: parseInt(document.getElementById('flash-deals-discount')?.value) || 20,
-            enabled: document.getElementById('flash-deals-enabled')?.checked ?? true,
-            createdAt: editId ? undefined : new Date().toISOString()
+            enabled: document.getElementById('flash-deals-enabled')?.checked ?? true
         };
 
         if (!deal.title || !deal.startDate || !deal.endDate) {
@@ -4862,23 +5614,33 @@ if (adminBody) {
             return;
         }
 
-        let deals = getFlashDeals();
-
-        if (editId) {
-            // Update existing deal
-            const index = deals.findIndex(d => d.id === editId);
-            if (index > -1) {
-                deals[index] = { ...deals[index], ...deal };
+        if (API_CONFIG.useAPI) {
+            let result;
+            if (editId) {
+                // Update existing deal
+                deal.id = editId;
+                result = await API.flashDeals.update(deal);
+            } else {
+                // Create new deal
+                console.log('Creating flash deal:', deal);
+                result = await API.flashDeals.create(deal);
+                console.log('Create result:', result);
             }
-        } else {
-            // Add new deal
-            deals.unshift(deal);
-        }
 
-        saveFlashDeals(deals);
-        hideFlashDealForm();
-        renderFlashDealsList();
-        showToast(editId ? 'Flash deal updated!' : 'Flash deal created!', 'success');
+            console.log('Flash deal save response:', JSON.stringify(result, null, 2));
+            if (result.success) {
+                hideFlashDealForm();
+                // Force refresh the list after a brief delay to ensure DB commit
+                setTimeout(async () => {
+                    console.log('Refreshing flash deals list...');
+                    await renderFlashDealsList();
+                }, 500);
+                showToast(editId ? 'Flash deal updated!' : 'Flash deal created!', 'success');
+            } else {
+                console.error('Flash deal save failed:', result);
+                showToast(result.message || 'Failed to save flash deal', 'error');
+            }
+        }
     });
 
     // Initialize flash deals list
@@ -5015,13 +5777,8 @@ if (adminBody) {
     // ===========================================
     const securitySection = document.getElementById('section-security');
     if (securitySection) {
-        // Helper to get auth headers
-        const getAdminAuthHeaders = () => {
-            const token = getFromStorage('chommzyAdminSession', {})?.token;
-            const headers = { 'Content-Type': 'application/json' };
-            if (token) headers['Authorization'] = `Bearer ${token}`;
-            return headers;
-        };
+        // Get admin token for API calls
+        const getAdminToken = () => getFromStorage('chommzyAdminSession', {})?.token;
 
         // API endpoints for 2FA and security
         const SecurityAPI = {
@@ -5030,8 +5787,9 @@ if (adminBody) {
                     try {
                         const res = await fetch('/api/two-factor.php?action=setup', {
                             method: 'POST',
-                            headers: getAdminAuthHeaders(),
-                            credentials: 'include'
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ _auth_token: getAdminToken() })
                         });
                         return await res.json();
                     } catch { return { success: false, message: 'Network error' }; }
@@ -5040,9 +5798,9 @@ if (adminBody) {
                     try {
                         const res = await fetch('/api/two-factor.php?action=enable', {
                             method: 'POST',
-                            headers: getAdminAuthHeaders(),
+                            headers: { 'Content-Type': 'application/json' },
                             credentials: 'include',
-                            body: JSON.stringify({ code })
+                            body: JSON.stringify({ code, _auth_token: getAdminToken() })
                         });
                         return await res.json();
                     } catch { return { success: false, message: 'Network error' }; }
@@ -5051,9 +5809,9 @@ if (adminBody) {
                     try {
                         const res = await fetch('/api/two-factor.php?action=disable', {
                             method: 'POST',
-                            headers: getAdminAuthHeaders(),
+                            headers: { 'Content-Type': 'application/json' },
                             credentials: 'include',
-                            body: JSON.stringify({ code, password })
+                            body: JSON.stringify({ code, password, _auth_token: getAdminToken() })
                         });
                         return await res.json();
                     } catch { return { success: false, message: 'Network error' }; }
@@ -5061,8 +5819,10 @@ if (adminBody) {
                 status: async () => {
                     try {
                         const res = await fetch('/api/two-factor.php?action=status', {
-                            headers: getAdminAuthHeaders(),
-                            credentials: 'include'
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            credentials: 'include',
+                            body: JSON.stringify({ _auth_token: getAdminToken() })
                         });
                         return await res.json();
                     } catch { return { success: false, message: 'Network error' }; }
@@ -5199,11 +5959,13 @@ if (adminBody) {
         // Show disable 2FA modal
         disable2FABtn?.addEventListener('click', () => {
             disable2FAModal.style.display = 'flex';
+            disable2FAModal.classList.add('active');
         });
 
         // Close disable modal
         disable2FAModal?.querySelector('.modal-close')?.addEventListener('click', () => {
-            disable2FAModal.style.display = 'none';
+            disable2FAModal.classList.remove('active');
+            setTimeout(() => { disable2FAModal.style.display = 'none'; }, 300);
         });
 
         // Disable 2FA
@@ -5220,7 +5982,8 @@ if (adminBody) {
 
             if (result.success) {
                 showToast('2FA disabled', 'info');
-                disable2FAModal.style.display = 'none';
+                disable2FAModal.classList.remove('active');
+                setTimeout(() => { disable2FAModal.style.display = 'none'; }, 300);
                 enabledView.style.display = 'none';
                 disabledView.style.display = 'block';
                 document.getElementById('security-2fa-status').textContent = 'Disabled';

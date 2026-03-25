@@ -18,10 +18,16 @@ A modern, fully responsive e-commerce platform for premium wigs, fashion, shoes,
 
 ### Admin Features
 - **Dashboard** - Overview of sales, orders, and customer stats
-- **Product Management** - Add, edit, and delete products
-- **Order Management** - View and update order statuses
-- **Customer Management** - View customer details and order history
+- **Product Management** - Add, edit, and delete products with multiple images, sizes, and colors
+- **Order Management** - View and update order statuses, confirm payments
+- **Customer Management** - View customer details, order history, and referral stats
+- **Flash Deals** - Create time-limited promotional deals with countdown timers
+- **Bank Account Management** - Manage payment bank accounts
+- **Newsletter Management** - View and export newsletter subscribers
+- **Store Settings** - Configure store-wide settings
 - **Analytics** - Sales reports and customer insights
+- **Security Logs** - Track admin actions and security events
+- **Notifications** - Real-time notifications for orders and updates
 
 ### Security Features
 - JWT-based authentication with httpOnly cookies
@@ -94,6 +100,7 @@ A modern, fully responsive e-commerce platform for premium wigs, fashion, shoes,
 ```
 everythingchommzy/
 ├── api/                    # Backend API endpoints
+│   ├── .htaccess           # Apache URL rewriting & security
 │   ├── config.php          # Database & app configuration (not in repo)
 │   ├── config.example.php  # Configuration template
 │   ├── auth.php            # Authentication endpoints
@@ -101,18 +108,35 @@ everythingchommzy/
 │   ├── orders.php          # Order management
 │   ├── users.php           # User management
 │   ├── otp.php             # OTP email verification
-│   └── two-factor.php      # 2FA management
-├── home.html               # Homepage
-├── products.html           # Product listing
+│   ├── two-factor.php      # 2FA management
+│   ├── store.php           # Store API (products, flash deals, banners)
+│   ├── referrals.php       # Referral system management
+│   ├── notifications.php   # User notifications
+│   ├── newsletter.php      # Newsletter subscriptions
+│   ├── bank.php            # Bank account management
+│   ├── cart.php            # Server-side cart management
+│   ├── settings.php        # Store settings
+│   └── security-log.php    # Security event logging
+├── images/                 # Product and site images
+├── fav/                    # Favicon files
+├── home.html               # Homepage with hero slider & flash deals
+├── products.html           # Product listing with filters
 ├── product-detail.html     # Single product view
 ├── cart.html               # Shopping cart
-├── checkout.html           # Checkout page
+├── checkout.html           # Checkout with bank transfer
 ├── account.html            # User account/dashboard
-├── login.html              # Login page
-├── signup.html             # Registration page
+├── adminacc.html           # Admin dashboard
+├── ec-mgt-9k7x2.html       # Admin login portal
+├── login.html              # User login page
+├── signup.html             # User registration page
+├── forgot-password.html    # Password recovery
 ├── contact.html            # Contact page
 ├── faq.html                # FAQ page
-├── chommzy.css             # Main stylesheet
+├── privacy.html            # Privacy policy
+├── terms.html              # Terms and conditions
+├── wishlist.html           # User wishlist
+├── 404.html                # Custom 404 page
+├── chommzy.css             # Main stylesheet (responsive)
 ├── chommzy.js              # Main JavaScript file
 └── README.md               # This file
 ```
@@ -144,8 +168,30 @@ everythingchommzy/
 
 ### Orders
 - `POST /api/orders.php?action=create` - Create order
-- `GET /api/orders.php?action=list` - Get user orders
-- `GET /api/orders.php?action=get&id={id}` - Get order details
+- `POST /api/orders.php?action=list` - Get all orders (Admin)
+- `POST /api/orders.php?action=user-orders` - Get user's orders
+- `POST /api/orders.php?action=get` - Get order details
+- `POST /api/orders.php?action=update-status` - Update order status (Admin)
+- `POST /api/orders.php?action=confirm-payment` - Confirm payment (Admin)
+- `POST /api/orders.php?action=confirm-receipt` - Customer confirms delivery
+
+### Flash Deals (Admin)
+- `POST /api/store.php?action=flash-deals-list` - List all flash deals
+- `POST /api/store.php?action=flash-deals-active` - Get active flash deal
+- `POST /api/store.php?action=flash-deals-create` - Create flash deal
+- `POST /api/store.php?action=flash-deals-update` - Update flash deal
+- `POST /api/store.php?action=flash-deals-delete` - Delete flash deal
+
+### Referrals
+- `POST /api/referrals.php?action=list` - List all referrals (Admin)
+- `POST /api/referrals.php?action=user-referrals` - Get user's referrals
+- `POST /api/referrals.php?action=user-stats` - Get user's referral stats
+- `GET /api/referrals.php?action=validate-code` - Validate referral code
+
+### Notifications
+- `POST /api/notifications.php?action=list` - Get user notifications
+- `POST /api/notifications.php?action=mark-read` - Mark notification as read
+- `POST /api/notifications.php?action=mark-all-read` - Mark all as read
 
 ## Environment Variables
 
@@ -176,6 +222,18 @@ Create `api/config.php` from the example file and configure:
 - Optimized font loading with preconnect
 - Efficient database queries with indexes
 - Caching headers for static assets
+- LiteSpeed cache bypass for dynamic API data (uses POST requests)
+- Anti-caching headers for real-time data endpoints
+
+## Hosting Considerations
+
+### LiteSpeed/Hostinger Cache
+The API uses POST requests for data-fetching endpoints to bypass aggressive LiteSpeed caching. Anti-caching headers are included:
+```php
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+header('Pragma: no-cache');
+```
 
 ## Security Recommendations
 

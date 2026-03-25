@@ -20,9 +20,7 @@ switch ($action) {
         break;
 
     case 'list':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleListUsers($db);
         break;
 
@@ -74,6 +72,11 @@ function handleGetProfile($db) {
 }
 
 function handleListUsers($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     requireAdmin();
 
     $role = $_GET['role'] ?? null;

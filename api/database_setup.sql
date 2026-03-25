@@ -24,25 +24,19 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
-    description TEXT,
     price DECIMAL(12, 2) NOT NULL,
     original_price DECIMAL(12, 2),
-    category ENUM('wigs', 'clothing', 'shoes', 'accessories') NOT NULL,
-    image VARCHAR(500),
-    images JSON,
-    sizes JSON,
-    colors JSON,
-    rating DECIMAL(2, 1) DEFAULT 4.5,
-    reviews INT DEFAULT 0,
-    stock INT DEFAULT 100,
-    is_featured BOOLEAN DEFAULT FALSE,
-    is_new BOOLEAN DEFAULT FALSE,
-    is_active BOOLEAN DEFAULT TRUE,
+    image TEXT,
+    category VARCHAR(50) NOT NULL,
+    color VARCHAR(100),
+    sizes VARCHAR(255),
+    description TEXT,
+    badge VARCHAR(50),
+    in_stock TINYINT(1) DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     INDEX idx_category (category),
-    INDEX idx_featured (is_featured),
-    INDEX idx_active (is_active)
+    INDEX idx_badge (badge)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Create orders table

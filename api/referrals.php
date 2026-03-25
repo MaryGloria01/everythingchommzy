@@ -13,30 +13,22 @@ $action = $_GET['action'] ?? 'list';
 
 switch ($action) {
     case 'list':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleListReferrals($db);
         break;
 
     case 'user-referrals':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleUserReferrals($db);
         break;
 
     case 'user-stats':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleUserReferralStats($db);
         break;
 
     case 'all-stats':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleAllReferralStats($db);
         break;
 
@@ -52,6 +44,11 @@ switch ($action) {
 }
 
 function handleListReferrals($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     requireAdmin();
 
     $limit = (int)($_GET['limit'] ?? 50);
@@ -91,6 +88,11 @@ function handleListReferrals($db) {
 }
 
 function handleUserReferrals($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     $user = requireAuth();
 
     try {
@@ -115,6 +117,11 @@ function handleUserReferrals($db) {
 }
 
 function handleUserReferralStats($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     $user = requireAuth();
 
     try {
@@ -151,6 +158,11 @@ function handleUserReferralStats($db) {
 }
 
 function handleAllReferralStats($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     requireAdmin();
 
     try {

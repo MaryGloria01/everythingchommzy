@@ -13,16 +13,12 @@ $action = $_GET['action'] ?? 'list';
 
 switch ($action) {
     case 'list':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleListOrders($db);
         break;
 
     case 'get':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleGetOrder($db);
         break;
 
@@ -48,16 +44,12 @@ switch ($action) {
         break;
 
     case 'user-orders':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleUserOrders($db);
         break;
 
     case 'stats':
-        if ($method !== 'GET') {
-            sendJsonResponse(false, 'Method not allowed', null, 405);
-        }
+        // Accept both GET and POST (POST bypasses cache)
         handleOrderStats($db);
         break;
 
@@ -73,6 +65,11 @@ switch ($action) {
 }
 
 function handleListOrders($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     requireAdmin();
 
     $status = $_GET['status'] ?? null;
@@ -134,6 +131,11 @@ function handleListOrders($db) {
 }
 
 function handleGetOrder($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     $id = sanitizeInput($_GET['id'] ?? '');
 
     if (empty($id)) {
@@ -357,6 +359,11 @@ function handleConfirmPayment($db) {
 }
 
 function handleUserOrders($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     $user = requireAuth();
 
     try {
@@ -380,6 +387,11 @@ function handleUserOrders($db) {
 }
 
 function handleOrderStats($db) {
+    // Prevent caching
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('X-LiteSpeed-Cache-Control: no-cache, no-store, esi=off');
+    header('Pragma: no-cache');
+
     requireAdmin();
 
     try {

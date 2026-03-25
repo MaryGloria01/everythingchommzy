@@ -36,9 +36,8 @@ try {
 }
 
 // Resend API configuration
-// IMPORTANT: Replace with your actual Resend API key from https://resend.com
-define('RESEND_API_KEY', 'your_resend_api_key_here');
-define('RESEND_FROM_EMAIL', 'Your Brand <noreply@yourdomain.com>');
+define('RESEND_API_KEY', 're_WVy1qwyq_ERb2s8FK2CvtBqFhJx6qfaEp');
+define('RESEND_FROM_EMAIL', 'Everything Chommzy <noreply@everythingchommzy.com>');
 
 // Handle actions
 switch ($action) {

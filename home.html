@@ -36,8 +36,8 @@
     </style>
 
     <!-- Preload critical resources -->
-    <link rel="preload" href="chommzy.css?v=19" as="style">
-    <link rel="preload" href="chommzy.js?v=19" as="script">
+    <link rel="preload" href="chommzy.css?v=40" as="style">
+    <link rel="preload" href="chommzy.js?v=49" as="script">
 
     <!-- Fonts with display swap for faster text rendering -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -48,13 +48,13 @@
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 
     <!-- Main stylesheet -->
-    <link rel="stylesheet" href="chommzy.css?v=19">
+    <link rel="stylesheet" href="chommzy.css?v=40">
 </head>
 <body>
 
     <!-- Announcement Bar -->
     <div class="announcement-bar">
-        Free shipping on orders over &#8358;100,000 &nbsp;|&nbsp; <a href="https://wa.me/2347062719113" target="_blank">WhatsApp: +234 706 271 9113</a>
+        <a href="https://wa.me/2347062719113" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Contact us on WhatsApp with your location for delivery pricing</a>
     </div>
 
     <!-- Header -->
@@ -160,35 +160,35 @@
                 <div class="accent-line"></div>
             </div>
             <div class="category-grid">
-                <a href="products?category=wigs" class="category-card">
+                <a href="products?category=wigs" class="category-card" data-category="wigs">
                     <img src="https://images.pexels.com/photos/3065209/pexels-photo-3065209.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wigs Collection">
                     <div class="category-card-overlay">
                         <h3>Wigs</h3>
-                        <span>8 Products</span>
+                        <span class="category-count" data-category="wigs">0 Products</span>
                         <span class="shop-link">Shop Now &rarr;</span>
                     </div>
                 </a>
-                <a href="products?category=clothing" class="category-card">
+                <a href="products?category=clothing" class="category-card" data-category="clothing">
                     <img src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Clothing Collection">
                     <div class="category-card-overlay">
                         <h3>Clothing</h3>
-                        <span>8 Products</span>
+                        <span class="category-count" data-category="clothing">0 Products</span>
                         <span class="shop-link">Shop Now &rarr;</span>
                     </div>
                 </a>
-                <a href="products?category=shoes" class="category-card">
+                <a href="products?category=shoes" class="category-card" data-category="shoes">
                     <img src="https://images.pexels.com/photos/336372/pexels-photo-336372.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Shoes Collection">
                     <div class="category-card-overlay">
                         <h3>Shoes</h3>
-                        <span>6 Products</span>
+                        <span class="category-count" data-category="shoes">0 Products</span>
                         <span class="shop-link">Shop Now &rarr;</span>
                     </div>
                 </a>
-                <a href="products?category=accessories" class="category-card">
+                <a href="products?category=accessories" class="category-card" data-category="accessories">
                     <img src="https://images.pexels.com/photos/1152077/pexels-photo-1152077.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Accessories Collection">
                     <div class="category-card-overlay">
                         <h3>Accessories</h3>
-                        <span>6 Products</span>
+                        <span class="category-count" data-category="accessories">0 Products</span>
                         <span class="shop-link">Shop Now &rarr;</span>
                     </div>
                 </a>
@@ -226,18 +226,18 @@
     </section>
 
     <!-- Flash Deals -->
-    <section>
+    <section id="flash-deals-section">
         <div class="container">
             <div class="flash-deal-header">
                 <div>
-                    <h2 style="font-size: 1.6rem;">Flash Deals</h2>
-                    <p class="text-muted">Hurry, these deals won't last long!</p>
+                    <h2 style="font-size: 1.6rem;" id="flash-deals-title">Flash Deals</h2>
+                    <p class="text-muted" id="flash-deals-subtitle">Hurry, these deals won't last long!</p>
                 </div>
                 <div class="countdown-timer">
-                    <div class="countdown-box"><span class="number">00</span><span class="label">Days</span></div>
-                    <div class="countdown-box"><span class="number">00</span><span class="label">Hrs</span></div>
-                    <div class="countdown-box"><span class="number">00</span><span class="label">Min</span></div>
-                    <div class="countdown-box"><span class="number">00</span><span class="label">Sec</span></div>
+                    <div class="countdown-box"><span class="number" id="countdown-days">00</span><span class="label">Days</span></div>
+                    <div class="countdown-box"><span class="number" id="countdown-hours">00</span><span class="label">Hrs</span></div>
+                    <div class="countdown-box"><span class="number" id="countdown-mins">00</span><span class="label">Min</span></div>
+                    <div class="countdown-box"><span class="number" id="countdown-secs">00</span><span class="label">Sec</span></div>
                 </div>
             </div>
             <div class="product-grid" id="flash-deals-grid"></div>
@@ -324,6 +324,6 @@
     <!-- Back to Top -->
     <button class="back-to-top" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
-    <script src="chommzy.js?v=19" defer></script>
+    <script src="chommzy.js?v=49" defer></script>
 </body>
 </html>

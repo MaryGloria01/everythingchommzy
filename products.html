@@ -16,11 +16,11 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="chommzy.css?v=19">
+    <link rel="stylesheet" href="chommzy.css?v=40">
 </head>
 <body>
     <div class="announcement-bar">
-        Free shipping on orders over &#8358;100,000 &nbsp;|&nbsp; <a href="https://wa.me/2347062719113" target="_blank">WhatsApp: +234 706 271 9113</a>
+        <a href="https://wa.me/2347062719113" target="_blank"><i class="fab fa-whatsapp"></i> Contact us on WhatsApp with your location for delivery pricing</a>
     </div>
 
     <header class="main-header">
@@ -67,22 +67,15 @@
             <h3><i class="fas fa-sliders-h"></i> Filters</h3>
             <div class="filter-group">
                 <h4>Category</h4>
-                <a href="#" class="filter-option active" data-category="all">All</a>
-                <a href="#" class="filter-option" data-category="wigs">Wigs</a>
-                <a href="#" class="filter-option" data-category="clothing">Clothing</a>
-                <a href="#" class="filter-option" data-category="shoes">Shoes</a>
-                <a href="#" class="filter-option" data-category="accessories">Accessories</a>
+                <div id="category-filters">
+                    <a href="#" class="filter-option active" data-category="all">All</a>
+                    <!-- Categories will be populated dynamically from products -->
+                </div>
             </div>
             <div class="filter-group">
                 <h4>Color</h4>
-                <div class="color-swatches">
-                    <button class="color-swatch" style="background-color: #111;" data-color="Black" aria-label="Black"></button>
-                    <button class="color-swatch" style="background-color: #D32F2F;" data-color="Red" aria-label="Red"></button>
-                    <button class="color-swatch" style="background-color: #fff; border:1px solid #ddd;" data-color="White" aria-label="White"></button>
-                    <button class="color-swatch" style="background-color: #795548;" data-color="Brown" aria-label="Brown"></button>
-                    <button class="color-swatch" style="background-color: #c9a96e;" data-color="Gold" aria-label="Gold"></button>
-                    <button class="color-swatch" style="background-color: #1976D2;" data-color="Blue" aria-label="Blue"></button>
-                    <button class="color-swatch" style="background-color: linear-gradient(135deg, #ff6b6b, #4ecdc4, #ffe66d); background: #e91e63;" data-color="Multi" aria-label="Multi"></button>
+                <div class="color-swatches" id="color-filters">
+                    <!-- Colors will be populated dynamically from products -->
                 </div>
             </div>
             <div class="filter-group">
@@ -142,6 +135,6 @@
 
     <a href="https://wa.me/2347062719113" target="_blank" class="whatsapp-float"><i class="fab fa-whatsapp"></i></a>
     <button class="back-to-top"><i class="fas fa-arrow-up"></i></button>
-    <script src="chommzy.js?v=19" defer></script>
+    <script src="chommzy.js?v=49" defer></script>
 </body>
 </html>
