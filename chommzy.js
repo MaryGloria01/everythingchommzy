@@ -909,6 +909,16 @@ if (navToggle && mainNav) {
     navToggle.addEventListener('click', () => mainNav.classList.toggle('active'));
 }
 
+// Nav link click - immediate active state feedback
+document.querySelectorAll('.nav-links .nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // Remove active from all nav links
+        document.querySelectorAll('.nav-links .nav-link').forEach(l => l.classList.remove('active'));
+        // Add active to clicked link immediately
+        this.classList.add('active');
+    });
+});
+
 // Search functionality
 const searchInputs = document.querySelectorAll('.search-bar-wrapper input');
 searchInputs.forEach(input => {
