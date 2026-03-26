@@ -1168,6 +1168,42 @@ function createProductCard(product) {
     return card;
 }
 
+// Product Loading Indicator
+function showProductsLoader(container) {
+    if (!container) return;
+    container.innerHTML = `
+        <div class="products-loader">
+            <div class="loader-spinner"></div>
+            <div class="loader-text">
+                Loading products
+                <span class="loader-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </span>
+            </div>
+        </div>
+    `;
+}
+
+function showSkeletonLoader(container, count = 8) {
+    if (!container) return;
+    let skeletonHTML = '';
+    for (let i = 0; i < count; i++) {
+        skeletonHTML += `
+            <div class="skeleton-card">
+                <div class="skeleton-image"></div>
+                <div class="skeleton-content">
+                    <div class="skeleton-title"></div>
+                    <div class="skeleton-price"></div>
+                    <div class="skeleton-btn"></div>
+                </div>
+            </div>
+        `;
+    }
+    container.innerHTML = skeletonHTML;
+}
+
 function displayProducts(container, products) {
     if (!container) return;
     container.innerHTML = '';
@@ -1191,6 +1227,11 @@ function displayProducts(container, products) {
 
     // Only run on pages with these grids
     if (!featuredGrid && !flashGrid && !newGrid) return;
+
+    // Show skeleton loaders while fetching
+    if (featuredGrid) showSkeletonLoader(featuredGrid, 8);
+    if (flashGrid) showSkeletonLoader(flashGrid, 4);
+    if (newGrid) showSkeletonLoader(newGrid, 4);
 
     // Wait for products to load from API (force fresh fetch)
     const products = await fetchProducts(true);
@@ -1358,6 +1399,9 @@ if (countdownDays && countdownHours && countdownMins && countdownSecs) {
 // ===========================================
 const productGrid = document.getElementById('product-grid');
 if (productGrid) {
+    // Show skeleton loader immediately
+    showSkeletonLoader(productGrid, 8);
+
     // Initialize products page asynchronously
     (async function initProductsPage() {
     // Force refresh to get latest products from database
@@ -3416,6 +3460,47 @@ if (accountPage) {
             }
         };
 
+        // Initialize TFA digit inputs for auto-focus and combining
+        function initTfaDigitInputs() {
+            const digits = document.querySelectorAll('.tfa-digit');
+            digits.forEach((input, index) => {
+                // Auto-focus next input on entry
+                input.addEventListener('input', (e) => {
+                    const value = e.target.value;
+                    if (value.length === 1 && index < digits.length - 1) {
+                        digits[index + 1].focus();
+                    }
+                    // Update hidden combined input
+                    const combined = Array.from(digits).map(d => d.value).join('');
+                    document.getElementById('user-2fa-code').value = combined;
+                });
+
+                // Handle backspace to go to previous input
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && !input.value && index > 0) {
+                        digits[index - 1].focus();
+                    }
+                });
+
+                // Handle paste - distribute digits across inputs
+                input.addEventListener('paste', (e) => {
+                    e.preventDefault();
+                    const pastedData = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+                    pastedData.split('').forEach((char, i) => {
+                        if (digits[i]) digits[i].value = char;
+                    });
+                    if (digits[pastedData.length - 1]) digits[pastedData.length - 1].focus();
+                    // Update hidden combined input
+                    document.getElementById('user-2fa-code').value = pastedData;
+                });
+
+                // Only allow numbers
+                input.addEventListener('keypress', (e) => {
+                    if (!/\d/.test(e.key)) e.preventDefault();
+                });
+            });
+        }
+
         const disabledView = document.getElementById('user-2fa-disabled');
         const setupView = document.getElementById('user-2fa-setup');
         const enabledView = document.getElementById('user-2fa-enabled');
@@ -3449,9 +3534,12 @@ if (accountPage) {
 
                 if (result.data.backup_codes) {
                     const list = document.getElementById('user-backup-codes-list');
-                    list.innerHTML = result.data.backup_codes.map(c => `<code style="display:inline-block;margin:2px;padding:2px 6px;background:#fff;border-radius:3px;font-size:0.75rem;">${escapeHtml(c)}</code>`).join('');
+                    list.innerHTML = result.data.backup_codes.map(c => `<div class="tfa-backup-code">${escapeHtml(c)}</div>`).join('');
                     document.getElementById('user-backup-codes').style.display = 'block';
                 }
+
+                // Initialize TFA digit inputs
+                initTfaDigitInputs();
 
                 disabledView.style.display = 'none';
                 setupView.style.display = 'block';
@@ -3460,20 +3548,24 @@ if (accountPage) {
             }
 
             btn.disabled = false;
-            btn.innerHTML = '<i class="fas fa-lock"></i> Enable 2FA';
+            btn.innerHTML = '<i class="fas fa-shield-alt"></i> Enable 2FA Now';
         });
 
         // Cancel setup
         document.getElementById('user-cancel-2fa')?.addEventListener('click', () => {
             setupView.style.display = 'none';
             disabledView.style.display = 'block';
+            // Clear all digit inputs
+            document.querySelectorAll('.tfa-digit').forEach(input => input.value = '');
             document.getElementById('user-2fa-code').value = '';
         });
 
         // Verify and enable
         document.getElementById('user-verify-2fa-form')?.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const code = document.getElementById('user-2fa-code').value;
+            // Combine digit inputs into full code
+            const digits = document.querySelectorAll('.tfa-digit');
+            const code = Array.from(digits).map(d => d.value).join('');
             const btn = e.target.querySelector('button[type="submit"]');
 
             btn.disabled = true;

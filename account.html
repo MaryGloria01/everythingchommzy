@@ -16,7 +16,7 @@
     <noscript><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Jost:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-    <link rel="stylesheet" href="chommzy.css?v=41">
+    <link rel="stylesheet" href="chommzy.css?v=43">
 </head>
 <body>
     <div class="announcement-bar">
@@ -181,60 +181,100 @@
                     <div class="account-section" id="section-security">
                         <h2>Security Settings</h2>
 
-                        <!-- Two-Factor Authentication -->
-                        <div class="account-card" style="max-width:600px;padding:1.5rem;border-radius:12px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.08);margin-bottom:1.5rem;">
-                            <h3 style="font-size:1.1rem;margin-bottom:0.5rem;display:flex;align-items:center;gap:8px;">
-                                <i class="fas fa-mobile-alt" style="color:#f47920;"></i> Two-Factor Authentication
-                            </h3>
-                            <p style="color:#6b7c93;font-size:0.9rem;margin-bottom:1rem;">Add an extra layer of security to your account using an authenticator app.</p>
-
-                            <div id="user-2fa-status">
-                                <!-- 2FA Disabled View -->
-                                <div id="user-2fa-disabled">
-                                    <button type="button" class="btn btn-primary" id="user-setup-2fa-btn">
-                                        <i class="fas fa-lock"></i> Enable 2FA
-                                    </button>
+                        <!-- Two-Factor Authentication - Modern Design -->
+                        <div class="tfa-card">
+                            <div class="tfa-header">
+                                <div class="tfa-header-icon">
+                                    <i class="fas fa-shield-alt"></i>
                                 </div>
+                                <div class="tfa-header-text">
+                                    <h3>Two-Factor Authentication</h3>
+                                    <p>Add an extra layer of security using an authenticator app</p>
+                                </div>
+                            </div>
 
-                                <!-- 2FA Setup View -->
-                                <div id="user-2fa-setup" style="display:none;">
-                                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
-                                        <div>
-                                            <p style="font-size:0.9rem;margin-bottom:0.75rem;"><strong>Step 1:</strong> Scan this QR code with Google Authenticator or Authy</p>
-                                            <div style="background:#f5f5f5;padding:1rem;border-radius:8px;text-align:center;">
-                                                <img id="user-2fa-qr-img" src="" alt="QR Code" style="max-width:180px;">
+                            <div class="tfa-body">
+                                <div id="user-2fa-status">
+                                    <!-- 2FA Disabled View -->
+                                    <div id="user-2fa-disabled">
+                                        <div style="text-align:center;padding:2rem 0;">
+                                            <div style="width:80px;height:80px;background:var(--bg-alt);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;">
+                                                <i class="fas fa-lock" style="font-size:2rem;color:var(--text-muted);"></i>
                                             </div>
-                                            <p style="margin-top:0.5rem;font-size:0.75rem;color:#6b7c93;">Or enter manually: <code id="user-2fa-secret" style="background:#f0f0f0;padding:2px 6px;border-radius:4px;font-size:0.7rem;"></code></p>
+                                            <h4 style="margin-bottom:0.5rem;color:var(--primary);">Protect Your Account</h4>
+                                            <p style="color:var(--text-secondary);font-size:0.9rem;margin-bottom:1.5rem;max-width:300px;margin-left:auto;margin-right:auto;">Two-factor authentication adds an extra layer of security by requiring a code from your phone.</p>
+                                            <button type="button" class="btn btn-primary btn-lg" id="user-setup-2fa-btn">
+                                                <i class="fas fa-shield-alt"></i> Enable 2FA Now
+                                            </button>
                                         </div>
-                                        <div>
-                                            <p style="font-size:0.9rem;margin-bottom:0.75rem;"><strong>Step 2:</strong> Enter the 6-digit code</p>
-                                            <form id="user-verify-2fa-form">
-                                                <div class="form-group" style="margin-bottom:1rem;">
-                                                    <input type="text" id="user-2fa-code" maxlength="6" inputmode="numeric" placeholder="000000" style="font-size:1.3rem;text-align:center;letter-spacing:6px;font-family:monospace;" autocomplete="one-time-code">
+                                    </div>
+
+                                    <!-- 2FA Setup View -->
+                                    <div id="user-2fa-setup" style="display:none;">
+                                        <div class="tfa-setup-grid">
+                                            <div class="tfa-step">
+                                                <div class="tfa-step-header">
+                                                    <div class="tfa-step-number">1</div>
+                                                    <span class="tfa-step-title">Scan QR Code</span>
                                                 </div>
-                                                <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Verify & Enable</button>
-                                                <button type="button" class="btn btn-outline" id="user-cancel-2fa" style="margin-left:0.5rem;">Cancel</button>
-                                            </form>
-                                            <div id="user-backup-codes" style="display:none;margin-top:1rem;padding:0.75rem;background:#fef3c7;border-radius:8px;font-size:0.85rem;">
-                                                <p style="font-weight:600;margin-bottom:0.25rem;"><i class="fas fa-exclamation-triangle" style="color:#d97706;"></i> Save these backup codes!</p>
-                                                <div id="user-backup-codes-list" style="font-family:monospace;margin-top:0.5rem;"></div>
+                                                <div class="tfa-qr-container">
+                                                    <img id="user-2fa-qr-img" src="" alt="QR Code">
+                                                </div>
+                                                <div class="tfa-manual-code">
+                                                    <span>Or enter manually:</span>
+                                                    <code id="user-2fa-secret"></code>
+                                                </div>
+                                            </div>
+                                            <div class="tfa-step">
+                                                <div class="tfa-step-header">
+                                                    <div class="tfa-step-number">2</div>
+                                                    <span class="tfa-step-title">Enter Verification Code</span>
+                                                </div>
+                                                <p style="color:var(--text-secondary);font-size:0.85rem;margin-bottom:1rem;">Enter the 6-digit code from your authenticator app</p>
+                                                <form id="user-verify-2fa-form">
+                                                    <div class="tfa-code-inputs">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="0" autocomplete="off">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="1" autocomplete="off">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="2" autocomplete="off">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="3" autocomplete="off">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="4" autocomplete="off">
+                                                        <input type="text" maxlength="1" inputmode="numeric" class="tfa-digit" data-index="5" autocomplete="off">
+                                                    </div>
+                                                    <input type="hidden" id="user-2fa-code">
+                                                    <div class="tfa-buttons">
+                                                        <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Verify & Enable</button>
+                                                        <button type="button" class="btn btn-outline" id="user-cancel-2fa">Cancel</button>
+                                                    </div>
+                                                </form>
+                                                <div id="user-backup-codes" style="display:none;">
+                                                    <div class="tfa-backup-codes">
+                                                        <div class="tfa-backup-header">
+                                                            <i class="fas fa-exclamation-triangle"></i>
+                                                            <span>Save these backup codes!</span>
+                                                        </div>
+                                                        <p style="font-size:0.8rem;color:#92400e;margin-bottom:1rem;">Store these codes safely. You can use them to access your account if you lose your phone.</p>
+                                                        <div id="user-backup-codes-list" class="tfa-backup-grid"></div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <!-- 2FA Enabled View -->
-                                <div id="user-2fa-enabled" style="display:none;">
-                                    <div style="display:flex;align-items:center;gap:1rem;padding:1rem;background:#d1fae5;border-radius:8px;margin-bottom:1rem;">
-                                        <i class="fas fa-check-circle" style="font-size:1.5rem;color:#10b981;"></i>
-                                        <div>
-                                            <p style="font-weight:600;color:#065f46;margin:0;">2FA is Enabled</p>
-                                            <p style="font-size:0.85rem;color:#047857;margin:0;">Your account is protected.</p>
+                                    <!-- 2FA Enabled View -->
+                                    <div id="user-2fa-enabled" style="display:none;">
+                                        <div class="tfa-enabled-badge">
+                                            <div class="tfa-enabled-icon">
+                                                <i class="fas fa-check"></i>
+                                            </div>
+                                            <div class="tfa-enabled-text">
+                                                <h4>Two-Factor Authentication is Active</h4>
+                                                <p>Your account is protected with an extra layer of security</p>
+                                            </div>
                                         </div>
+                                        <button type="button" class="btn btn-danger-outline" id="user-disable-2fa-btn">
+                                            <i class="fas fa-shield-alt"></i> Disable 2FA
+                                        </button>
                                     </div>
-                                    <button type="button" class="btn btn-outline" id="user-disable-2fa-btn" style="color:#dc2626;border-color:#dc2626;">
-                                        <i class="fas fa-times"></i> Disable 2FA
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -311,6 +351,6 @@
 
     <a href="https://wa.me/2347062719113" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
     <button class="back-to-top" type="button" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
-    <script src="chommzy.js?v=50" defer></script>
+    <script src="chommzy.js?v=52" defer></script>
 </body>
 </html>
