@@ -1,6 +1,6 @@
 # Everything Chommzy
 
-A modern, fully responsive e-commerce platform for premium wigs, fashion, shoes, and accessories. Built with vanilla HTML, CSS, JavaScript, and PHP backend.
+A modern, fully responsive e-commerce platform for premium wigs, fashion, shoes, and accessories. Built with vanilla HTML, CSS, JavaScript and PHP backend.
 
 ![Everything Chommzy](https://img.shields.io/badge/Status-Live-brightgreen) ![PHP](https://img.shields.io/badge/PHP-8.0+-blue) ![License](https://img.shields.io/badge/License-Proprietary-red)
 
@@ -11,16 +11,16 @@ A modern, fully responsive e-commerce platform for premium wigs, fashion, shoes,
 - **User Authentication** - Secure signup/login with email OTP verification
 - **Two-Factor Authentication** - Optional 2FA using Google Authenticator (TOTP)
 - **Password Recovery** - Email-based password reset with OTP
-- **Shopping Cart** - Add, remove, and manage cart items
+- **Shopping Cart** - Add, remove and manage cart items
 - **Wishlist** - Save favorite products for later
 - **Order Tracking** - Track order status and history
 - **Referral System** - Earn rewards by referring friends
 
 ### Admin Features
-- **Dashboard** - Overview of sales, orders, and customer stats
-- **Product Management** - Add, edit, and delete products with multiple images, sizes, and colors
+- **Dashboard** - Overview of sales, orders and customer stats
+- **Product Management** - Add, edit, and delete products with multiple images, sizes and colors
 - **Order Management** - View and update order statuses, confirm payments
-- **Customer Management** - View customer details, order history, and referral stats
+- **Customer Management** - View customer details, order history and referral stats
 - **Flash Deals** - Create time-limited promotional deals with countdown timers
 - **Bank Account Management** - Manage payment bank accounts
 - **Newsletter Management** - View and export newsletter subscribers
